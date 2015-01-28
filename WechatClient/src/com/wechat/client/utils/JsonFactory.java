@@ -29,13 +29,41 @@ public class JsonFactory{
 		Assert.hasText(json, "待序列化的参数为空.");
 	}
 	
-	public <T> T getJson(String json, T t) throws JsonParseException, JsonMappingException, IOException{
+	public <T> T getJson(String json) throws JsonParseException, JsonMappingException, IOException{
 		Assert.hasText(json, "待序列化的参数为空.");
 		ObjectMapper om = new ObjectMapper();
 		om.configure(Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
 		T j = om.readValue(json, new TypeReference<T>(){});
 		return j;
 	}
+	
+	public <T> List<T> getJson(String json, Class<T> c) throws JsonParseException, JsonMappingException, IOException{
+		Assert.hasText(json, "待序列化的参数为空.");
+		ObjectMapper om = new ObjectMapper();
+		om.configure(Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+		List<Map<String, Object>> ttl = om.readValue(json, new TypeReference<List<T>>(){});
+		if(ttl != null && ttl.size() > 0){
+			List<T> rl = new ArrayList<T>();
+			for(Map<String, Object> m : ttl){
+				try {
+					T tempEntity = convertMapToT(m, c.newInstance());
+					rl.add(tempEntity);
+				} catch (InstantiationException e) {
+					Logger.getLogger(JsonFactory.class).error("把JSON转化时，把map转成java对象时出错.", e);
+					break;
+				} catch (IllegalAccessException e) {
+					Logger.getLogger(JsonFactory.class).error("把JSON转化时，把map转成java对象时出错.", e);
+					break;
+				} catch (SecurityException e) {
+					Logger.getLogger(JsonFactory.class).error("把JSON转化时，把map转成java对象时出错.", e);
+					break;
+				}
+			}
+			return rl;
+		}
+		return new ArrayList<T>();
+	}
+	
 	
 	public <T> String toJson(T t) throws JsonGenerationException, JsonMappingException, IOException{
 		ObjectMapper om = new ObjectMapper();
@@ -126,5 +154,9 @@ public class JsonFactory{
 			}
 		}
 		return r;
+	}
+	
+	public static void main(String[] args){
+		System.out.println(String.class.getName());
 	}
 }
