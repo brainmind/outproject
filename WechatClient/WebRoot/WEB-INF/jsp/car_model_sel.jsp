@@ -21,14 +21,17 @@
     	<span class="click" rel="tab" name="carmodelvin" url="<%=path %>/<%=Constants.ROOT %>/car/sel">车型选择</span>
         <span rel="tab" name="carmodelvin" url="<%=path %>/<%=Constants.ROOT %>/car/toVin">VIN码</span>
     </div>
-    <div class="che_pic">
+    <div id="cartypelistdivid" class="che_pic">
     	<ul>
         	<li>
             	<dl class="che_c">
                 	<dt>A</dt>
-                	<dd><a href="<%=path %>/<%=Constants.ROOT %>/car/subsel"><img src="<%=path %>/styles/images/9.jpg">阿尔法罗密欧</a></dd>
-                    <dd><a href="<%=path %>/<%=Constants.ROOT %>/car/subsel"><img src="<%=path %>/styles/images/9.jpg">阿尔法罗密欧</a></dd>
-                    <dd><a href="<%=path %>/<%=Constants.ROOT %>/car/subsel"><img src="<%=path %>/styles/images/9.jpg">阿尔法罗密欧</a></dd>
+                	<dd>
+                		<a href="<%=path %>/<%=Constants.ROOT %>/car/subsel" rel="firstselect" dataid="1234" target="cartypelistdivid">
+                		<img src="<%=path %>/styles/images/9.jpg">阿尔法罗密欧</a>
+                	</dd>
+                    <dd><a href="<%=path %>/<%=Constants.ROOT %>/car/subsel" target="cartypelistdivid"><img src="<%=path %>/styles/images/9.jpg">阿尔法罗密欧</a></dd>
+                    <dd><a href="<%=path %>/<%=Constants.ROOT %>/car/subsel" target="cartypelistdivid"><img src="<%=path %>/styles/images/9.jpg">阿尔法罗密欧</a></dd>
                     <dt>B</dt>
                 	<dd><a href="7.htm"><img src="<%=path %>/styles/images/9.jpg">阿尔法罗密欧</a></dd>
                     <dd><a href="7.htm"><img src="<%=path %>/styles/images/9.jpg">阿尔法罗密欧</a></dd>

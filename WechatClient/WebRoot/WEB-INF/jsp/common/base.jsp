@@ -10,33 +10,9 @@
 <script type="text/javascript" src="<%=path %>/common/js/jquery.touchSlider.js"></script>
 <script type="text/javascript" src="<%=path %>/common/js/zepto.min.js"></script>
 <script type="text/javascript" src="<%=path %>/common/js/show.js"></script>
-<script type="text/javascript" src="<%=path %>/common/cookie/chatcookie-1.0.js"></script>
+<script type="text/javascript" src="<%=path %>/common/cookie/wxchatclient-cookie-1.0.js"></script>
+<script type="text/javascript" src="<%=path %>/common/business/wxchatclient-pageload-1.0.js"></script>
 <script type="text/javascript">
 var contextPath = "<%=path %>";
 var projectRoot = "<%=Constants.ROOT %>";
-$(document).ready(function () {
-	$("span[rel=tab][name=carmodelvin]").each(function(){
-		var $this = $(this);
-		var url = $this.attr("url");
-		var target = $this.attr("target");
-		$this.on("click", function(event){
-			$("span[rel=tab][name=carmodelvin]").removeClass("click");
-			$this.addClass("click");
-			if(url && url != null && url != ""){
-				if(target && target != null && target != ""){
-					$.ajax({
-						url:url,
-						type:"get",
-						dataType:"html",
-						success:function(r){
-							$("#"+target).html(r);
-						}
-					});
-				}else{
-					window.location.href = url;
-				}
-			}
-		});
-	});
-});
 </script>

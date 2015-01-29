@@ -173,35 +173,6 @@ public class MethodMapping {
 				return rt;
 			}
 		},
-		Patch{
-			public RequestMethod toRequestMethod(){
-				return RequestMethod.PATCH;
-			}
-			
-			public String getName(){
-				return "selectObjectBy";
-			}
-			
-			private Class<?>[] pt = null;
-
-			public Class<?>[] getParameterType(){
-				return pt;
-			}
-			
-			public Class<?>[] setParameterType(Class<?>[] pt){
-				return this.pt = pt;
-			}
-			
-			private Class<?> rt = Object.class;
-			
-			public void setReturnType(Class<?> rt){
-				this.rt = rt;
-			}
-			
-			public Class<?> getReturnType(){
-				return rt;
-			}
-		},
 		Trace{
 			public RequestMethod toRequestMethod(){
 				return RequestMethod.TRACE;
@@ -276,8 +247,6 @@ public class MethodMapping {
 			this.m = Method.Delete;
 		}else if(Method.Options.toRequestMethod().equals(rm)){
 			this.m = Method.Options;
-		}else if(Method.Patch.toRequestMethod().equals(rm)){
-			this.m = Method.Patch;
 		}else{
 			throw new Exception("没有相匹配的方法或属性.");
 		}

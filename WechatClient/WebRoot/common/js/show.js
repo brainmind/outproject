@@ -91,7 +91,7 @@ window.onload = function() {
 		});
 	}
 	$(".idx_car_o,.idx_car_a").click(function() {
-		if(WechatClient.currentCarType == null){
+		if(WxchatClient.currentCarType() == null){
 			window.location.href = contextPath+projectRoot+"/car/sel";
 			return false;
 		}
@@ -108,7 +108,7 @@ window.onload = function() {
 				"margin-left" : "0"
 			});
 		}
-		var myCarTypeList = WechatClient.Cookie.getCookieVal(WechatClient.Cookie_CarType_Key);
+		var myCarTypeList = WxchatClient.Cookie.getCookieVal(WxchatClient.Cookie_CarType_Key);
 		var ul = $("ul", myCarTypeSel);
 		if(myCarTypeList != null && myCarTypeList.length > 0){
 			for(var i=0; i<myCarTypeList.length; i++){
@@ -120,7 +120,7 @@ window.onload = function() {
 				var $li = $(this);
 				var cid = $li.attr("dataid");
 				var clabel = $li.html();
-				WechatClient.setCurrentCarType({id:cid, label:clabel});
+				WxchatClient.setCurrentCarType({id:cid, label:clabel});
 				$(".idx_car").html("<h1>"+clabel+"</h1><a href="+contextPath+projectRoot+"\"/car/sel\" class=\"idx_car_a\">更改车型</a>");
 			});
 		}
@@ -130,7 +130,7 @@ window.onload = function() {
 		$(".tcmain").animate({
 			"left" : "-100%"
 		});
-		if(WechatClient.currentCarType != null){
+		if(WxchatClient.currentCarType() != null){
 			$(".idx_car_o").hide();
 			$(".idx_car").show();
 		}

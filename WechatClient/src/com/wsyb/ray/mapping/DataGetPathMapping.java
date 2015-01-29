@@ -170,35 +170,6 @@ public class DataGetPathMapping {
 				return rt;
 			}
 		},
-		Patch{
-			public RequestMethod toRequestMethod(){
-				return RequestMethod.PATCH;
-			}
-			
-			public String getURL(){
-				return "selectObjectBy";
-			}
-			
-			private String pt = null;
-
-			public String getParameter(){
-				return pt;
-			}
-			
-			public void setParameter(String pt){
-				this.pt = pt;
-			}
-			
-			private Class<?> rt = Object.class;
-			
-			public void setReturnType(Class<?> rt){
-				this.rt = rt;
-			}
-			
-			public Class<?> getReturnType(){
-				return rt;
-			}
-		},
 		Trace{
 			public RequestMethod toRequestMethod(){
 				return RequestMethod.TRACE;
@@ -273,8 +244,6 @@ public class DataGetPathMapping {
 			this.m = DataAccessPath.Delete;
 		}else if(DataAccessPath.Options.toRequestMethod().equals(rm)){
 			this.m = DataAccessPath.Options;
-		}else if(DataAccessPath.Patch.toRequestMethod().equals(rm)){
-			this.m = DataAccessPath.Patch;
 		}else{
 			throw new Exception("没有相匹配的方法或属性.");
 		}
