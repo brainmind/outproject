@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page import="com.wechat.client.utils.*" %>
 <%
 	String path = request.getContextPath();
 %>
@@ -9,8 +10,10 @@
 <script type="text/javascript" src="<%=path %>/common/js/jquery.touchSlider.js"></script>
 <script type="text/javascript" src="<%=path %>/common/js/zepto.min.js"></script>
 <script type="text/javascript" src="<%=path %>/common/js/show.js"></script>
+<script type="text/javascript" src="<%=path %>/common/cookie/chatcookie-1.0.js"></script>
 <script type="text/javascript">
 var contextPath = "<%=path %>";
+var projectRoot = "<%=Constants.ROOT %>";
 $(document).ready(function () {
 	$("span[rel=tab][name=carmodelvin]").each(function(){
 		var $this = $(this);

@@ -63,5 +63,5 @@
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	
 	<!-- 扫描service -->
-	<context:component-scan base-package="com.accu.**.impl" />
+	<context:component-scan base-package="com.wechat.**.impl" />
 </beans>

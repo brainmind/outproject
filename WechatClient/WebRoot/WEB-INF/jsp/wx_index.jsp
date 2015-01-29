@@ -17,10 +17,10 @@
 <script type="text/javascript">
 $(document).ready(function () {
 	$(".main_visual").hover(function(){
-		$("#btn_prev,#btn_next").fadeIn()
+			$("#btn_prev,#btn_next").fadeIn();
 		},function(){
-		$("#btn_prev,#btn_next").fadeOut()
-		})
+			$("#btn_prev,#btn_next").fadeOut();
+		});
 	$dragBln = false;
 	$(".main_image").touchSlider({
 		flexible : true,
@@ -34,26 +34,26 @@ $(document).ready(function () {
 	});
 	$(".main_image").bind("mousedown", function() {
 		$dragBln = false;
-	})
+	});
 	$(".main_image").bind("dragstart", function() {
 		$dragBln = true;
-	})
+	});
 	$(".main_image a").click(function() {
 		if($dragBln) {
 			return false;
 		}
-	})
+	});
 	timer = setInterval(function() { $("#btn_next").click();}, 5000);
 	$(".main_visual").hover(function() {
 		clearInterval(timer);
 	}, function() {
 		timer = setInterval(function() { $("#btn_next").click();}, 5000);
-	})
+	});
 	$(".main_image").bind("touchstart", function() {
 		clearInterval(timer);
 	}).bind("touchend", function() {
 		timer = setInterval(function() { $("#btn_next").click();}, 5000);
-	})
+	});
 });
 </script>
 </head>
@@ -107,7 +107,7 @@ $(document).ready(function () {
     <div class="close"></div>
     <h1>我的车型库</h1>
     <ul>
-        <li>本田 歌诗图 2.4L 2013年产</li>
+        <li >本田 歌诗图 2.4L 2013年产</li>
         <li>本田 歌诗图 2.4L 2013年产</li>
     </ul>
     <a href="<%=path %>/<%=Constants.ROOT %>/car/sel" class="other">其它车型</a>

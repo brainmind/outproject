@@ -30,7 +30,7 @@ public class DataGetPathMapping {
 				return RequestMethod.GET;
 			}
 			
-			public String getName(){
+			public String getURL(){
 				return "selectByPrimaryKey";
 			}
 			
@@ -59,7 +59,7 @@ public class DataGetPathMapping {
 				return RequestMethod.POST;
 			}
 			
-			public String getName(){
+			public String getURL(){
 				return "insertSelective";
 			}
 			
@@ -88,7 +88,7 @@ public class DataGetPathMapping {
 				return RequestMethod.PUT;
 			}
 			
-			public String getName(){
+			public String getURL(){
 				return "updateByPrimaryKeySelective";
 			}
 			
@@ -117,7 +117,7 @@ public class DataGetPathMapping {
 				return RequestMethod.DELETE;
 			}
 			
-			public String getName(){
+			public String getURL(){
 				return "deleteByPrimaryKey";
 			}
 			
@@ -146,7 +146,7 @@ public class DataGetPathMapping {
 				return RequestMethod.OPTIONS;
 			}
 			
-			public String getName(){
+			public String getURL(){
 				return "selectBy";
 			}
 			
@@ -175,7 +175,7 @@ public class DataGetPathMapping {
 				return RequestMethod.PATCH;
 			}
 			
-			public String getName(){
+			public String getURL(){
 				return "selectObjectBy";
 			}
 			
@@ -204,7 +204,7 @@ public class DataGetPathMapping {
 				return RequestMethod.TRACE;
 			}
 			
-			public String getName(){
+			public String getURL(){
 				return "deleteObjectsBy";
 			}
 			
@@ -234,7 +234,7 @@ public class DataGetPathMapping {
 			throw new AbstractMethodError();
 		}
 		
-		public String getName(){
+		public String getURL(){
 			throw new AbstractMethodError();
 		}
 		
