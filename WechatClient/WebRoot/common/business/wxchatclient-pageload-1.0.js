@@ -28,10 +28,19 @@ $(document).ready(function () {
 		var url = $this.attr("href");
 		$this.removeAttr("href");
 		var targetId = $this.attr("target");
+		var dataref = $this.attr("dataref");
+		var po = $("#"+dataref);
+		var param = $this.attr("param");
+		if(!param || param == null){
+			param = (po && po != null) ? po.attr("name")+"="+po.val() : "";
+		}else{
+			param += "&" + (po && po != null) ? po.attr("name")+"="+po.val() : "";
+		}
 		$this.on("click", function(){
 			var rel = $this.attr("rel");
 			$.ajax({
 				url:url,
+				data:param,
 				type:"get",
 				dataType:"html",
 				success:function(r){
@@ -49,7 +58,7 @@ $(document).ready(function () {
 						var name = $subtype.text();
 						var url = $subtype.attr("href");
 						$subtype.removeAttr("href");
-						$subtype.on("click",function(){
+						$subtype.parent().on("click",function(){
 							var carType = container.data("cartype");
 							if(carType && carType != null){
 								var cookiecartype = "{id:\""+carType.id+"\",label:\""+carType.label+"\",logourl:\""+carType.logourl+"\"," +
@@ -57,6 +66,16 @@ $(document).ready(function () {
 								WxchatClient.setCurrentCarType(cookiecartype);
 							}
 							window.location.href = url;
+						});
+					});
+					
+					$("div.che_vin > dl > dd").each(function(){
+						var $vinlist = $(this);
+						var dataid = $vinlist.attr("dataid");
+						var label = $vinlist.children("span").first().text();
+						var sername = $vinlist.children("span").last().text();
+						$vinlist.on("click",function(){
+							
 						});
 					});
 				}

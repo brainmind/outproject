@@ -20,14 +20,14 @@
     	<span rel="tab" name="carmodelvin" url="<%=path %>/<%=Constants.ROOT %>/car/sel">车型选择</span>
         <span class="click" rel="tab" name="carmodelvin" url="<%=path %>/<%=Constants.ROOT %>/car/toVin">VIN码</span>
     </div>
-    <div class="che_pic">
+    <div class="che_pic" id="vinselectdivid">
     	<ul>
             <li>
             	<div class="vinbox">
 					<p>请输入VIN码，以精确匹配您的爱车</p>
-                	<p><input name="" type="text"></p>
+                	<p><input name="vin" type="text" id="vincode"></p>
                 </div>
-                <a href="<%=path %>/<%=Constants.ROOT %>/car/selVin" class="ensure">确定</a>
+                <a href="<%=path %>/<%=Constants.ROOT %>/car/selVin" target="vinselectdivid" dataref="vincode" class="ensure">确定</a>
             </li>
         </ul>
     </div>

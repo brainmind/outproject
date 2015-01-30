@@ -5,29 +5,24 @@
  */
 package com.wechat.client.business.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.wechat.client.business.model.CarType;
-import com.wechat.client.business.model.ResultData;
-import com.wechat.client.business.service.CarService;
+import com.wechat.client.business.model.LoginUser;
 import com.wechat.client.utils.Constants;
 
 @Controller
 @RequestMapping(Constants.ROOT)
 public class IndexController extends BaseController {
-	@Autowired
-	private CarService carService;
-	
 	@RequestMapping("/index")
 	public String index(HttpServletRequest request){
-		ResultData<List<CarType>> rd = carService.getCarTypeList(request);
-		request.setAttribute("carTypeList", rd.getData());
+		HttpSession session = request.getSession();
+		LoginUser user = new LoginUser();
+		user.setOpenId("12345688");
+		session.setAttribute(Constants.USER_SESSION_KEY, user);
 		return "wx_index";
 	}
 }

@@ -54,11 +54,14 @@ $(document).ready(function () {
 	}).bind("touchend", function() {
 		timer = setInterval(function() { $("#btn_next").click();}, 5000);
 	});
+
 	var carType = WxchatClient.currentCarType();
-	alert(carType.id);
-	if(carType != null){
+	if(carType && carType != null && carType != ""){
 		$(".idx_car_o").hide();
 		$(".idx_car").show();
+		var carName = carType.label;
+		var serName = carType.sername;
+		$("div.idx_car > h1").first().html(carName+" "+serName);
 	}
 });
 </script>

@@ -16,17 +16,20 @@ import com.wechat.client.business.model.ResultData;
 
 public class JsonHttpRequestUtil {
 	private Logger log = Logger.getLogger(JsonHttpRequestUtil.class);
-	private final String basePath = Constants.APIBasePath+"wechat.do?method=getCarsByVIN&openid=12345688&unionid=&version=1.0&encrypt_type=0&timestamp=149876543211&mobile=15132103560&vin17=12345678901234567";
+	private final String basePath = Constants.APIBasePath;
 	
 	public JsonHttpRequestUtil(){}
 	
-	public <T> ResultData<T> doGet(HttpServletRequest request, Class<?> clazz){
+	@SuppressWarnings("unchecked")
+	public <T> ResultData<T> doGet(HttpServletRequest request){
 		String queryString = request.getQueryString();
 		HttpURLConnection connect = null;
 		ResultData<T> rd = new ResultData<T>();
 		try {
-			queryString = queryString==null?"":queryString;
-			URL url = new URL(basePath+queryString);
+			String methodPath = (String)request.getAttribute("methodPath");
+			String param = (String)request.getAttribute("param");
+			queryString = queryString==null?"":"&"+queryString;
+			URL url = new URL(basePath+methodPath+param+queryString);
 			connect = (HttpURLConnection)url.openConnection();
 			connect.setConnectTimeout(10000);
 			connect.setRequestMethod("GET");
@@ -34,10 +37,7 @@ public class JsonHttpRequestUtil {
 			if(connect.getResponseCode() == 200){
 				String json = readContent(connect.getInputStream());
 				JsonFactory jf = new JsonFactory();
-				T tList = jf.getJson(json, clazz);
-				if(tList != null){
-					rd.setData(tList);
-				}
+				rd = jf.getJson(json, ResultData.class);
 				return rd;
 			}
 		} catch (MalformedURLException e) {
@@ -55,7 +55,8 @@ public class JsonHttpRequestUtil {
 		return rd;
 	}
 	
-	public <T> ResultData<?> doPost(HttpServletRequest request, Class<?> clazz){
+	@SuppressWarnings("unchecked")
+	public <T> ResultData<?> doPost(HttpServletRequest request){
 		String queryString = request.getQueryString();
 		HttpURLConnection connect = null;
 		ResultData<T> rd = new ResultData<T>();
@@ -69,10 +70,7 @@ public class JsonHttpRequestUtil {
 			if(connect.getResponseCode() == 200){
 				String json = readContent(connect.getInputStream());
 				JsonFactory jf = new JsonFactory();
-				T tList = jf.getJson(json, clazz);
-				if(tList != null){
-					rd.setData(tList);
-				}
+				rd = jf.getJson(json, ResultData.class);
 				return rd;
 			}
 		} catch (MalformedURLException e) {

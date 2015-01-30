@@ -31,7 +31,7 @@ public class DataGetPathMapping {
 			}
 			
 			public String getURL(){
-				return "selectByPrimaryKey";
+				return "";
 			}
 			
 			private String pt = null;
