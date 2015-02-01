@@ -23,6 +23,10 @@ $(document).ready(function () {
 		});
 	});
 	
+	initHref();
+});
+
+function initHref(){
 	$("a[target]").each(function(){
 		var $this = $(this);
 		var url = $this.attr("href");
@@ -82,4 +86,4 @@ $(document).ready(function () {
 			});
 		});
 	});
-});
+}

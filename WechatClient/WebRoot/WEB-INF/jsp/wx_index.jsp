@@ -96,7 +96,7 @@ $(document).ready(function () {
         <div class="idx_car_o"><a href="#"></a></div>
         <div class="idx_car">
         	<h1>奥迪 A3 （进口）<br/>1.4TFSI 手动 </h1>
-            <a href="<%=path %>/<%=Constants.ROOT %>/car/sel" class="idx_car_a">更改车型</a>
+            <a href="#" class="idx_car_a">更改车型</a>
         </div>        
     </div>
     <div class="idx_nav">

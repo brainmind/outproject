@@ -8,11 +8,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import javax.servlet.http.HttpServletRequest;
-
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-
-import com.wechat.client.business.model.ResultData;
 
 public class JsonHttpRequestUtil {
 	private Logger log = Logger.getLogger(JsonHttpRequestUtil.class);
@@ -20,72 +17,36 @@ public class JsonHttpRequestUtil {
 	
 	public JsonHttpRequestUtil(){}
 	
-	@SuppressWarnings("unchecked")
-	public <T> ResultData<T> doGet(HttpServletRequest request){
-		String queryString = request.getQueryString();
+	public String doGet(String accessUrl){
 		HttpURLConnection connect = null;
-		ResultData<T> rd = new ResultData<T>();
+		int code = 0;
+		String msg = "";
 		try {
-			String methodPath = (String)request.getAttribute("methodPath");
-			String param = (String)request.getAttribute("param");
-			queryString = queryString==null?"":"&"+queryString;
-			URL url = new URL(basePath+methodPath+param+queryString);
+			URL url = new URL(basePath + accessUrl);
 			connect = (HttpURLConnection)url.openConnection();
 			connect.setConnectTimeout(10000);
 			connect.setRequestMethod("GET");
 			connect.connect();
 			if(connect.getResponseCode() == 200){
 				String json = readContent(connect.getInputStream());
-				JsonFactory jf = new JsonFactory();
-				rd = jf.getJson(json, ResultData.class);
-				return rd;
+				if(StringUtils.isNotEmpty(json)){
+					json = json.replaceAll("\\\\", "").replaceAll("null", "\"\"").replaceAll("\"\"\"\"", "\"\"");
+				}
+				return json;
 			}
+			code = 500;
 		} catch (MalformedURLException e) {
-			log.error("不是正确的URL", e);
-			rd.setMsg("不是正确的URL");
+			msg = "不是正确的URL";
+			log.error(msg, e);
 		} catch (IOException e) {
-			log.error("读取URL时发生错误", e);
-			rd.setMsg("读取URL时发生错误,检查网格连接.");
+			msg = "读取URL时发生错误";
+			log.error(msg, e);
 		}finally {
 			if(connect != null){
 				connect.disconnect();
 			}
 		}
-		rd.setCode(500);
-		return rd;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public <T> ResultData<?> doPost(HttpServletRequest request){
-		String queryString = request.getQueryString();
-		HttpURLConnection connect = null;
-		ResultData<T> rd = new ResultData<T>();
-		try {
-			queryString = queryString==null?"":queryString;
-			URL url = new URL(basePath+queryString);
-			connect = (HttpURLConnection)url.openConnection();
-			connect.setConnectTimeout(10000);
-			connect.setRequestMethod("POST");
-			connect.connect();
-			if(connect.getResponseCode() == 200){
-				String json = readContent(connect.getInputStream());
-				JsonFactory jf = new JsonFactory();
-				rd = jf.getJson(json, ResultData.class);
-				return rd;
-			}
-		} catch (MalformedURLException e) {
-			log.error("不是正确的URL", e);
-			rd.setMsg("不是正确的URL");
-		} catch (IOException e) {
-			log.error("读取URL时发生错误", e);
-			rd.setMsg("读取URL时发生错误,检查网格连接.");
-		}finally {
-			if(connect != null){
-				connect.disconnect();
-			}
-		}
-		rd.setCode(500);
-		return rd;
+		return "{'code':"+code+",'msg':'"+msg+"'}";
 	}
 	
 	public String readContent(InputStream is){

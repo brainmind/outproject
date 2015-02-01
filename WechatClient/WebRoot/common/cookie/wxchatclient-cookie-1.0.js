@@ -18,6 +18,7 @@ var WxchatClient={
 			if(properties != null && properties.length > 0){
 				for(var i = 0; i < properties.length; i++){
 					var pro = properties[i].split("=");
+					pro[0] = pro[0].replace(/ /g, "");
 					if(pro[0] == key){
 						var cookie_val = unescape(pro[1]);
 						if(cookie_val.indexOf("[") != -1 || cookie_val.indexOf("{") != -1){
@@ -36,7 +37,11 @@ var WxchatClient={
 		}
 	},
 	currentCarType:function(){
-		return this.Cookie.getCookieVal(WxchatClient.Cookie_CarType_Key);
+		var resVal = this.Cookie.getCookieVal(WxchatClient.Cookie_CarType_Key);
+		if(resVal){
+			
+		}
+		return resVal;
 	},
 	setCurrentCarType:function(carType){
 		WxchatClient.Cookie.addCookie(WxchatClient.Cookie_CarType_Key, carType);

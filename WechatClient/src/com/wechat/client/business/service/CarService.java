@@ -8,8 +8,8 @@ import com.wechat.client.business.model.CarType;
 import com.wechat.client.business.model.ResultData;
 
 public interface CarService {
-	
+/*	
 	public ResultData<List<CarType>> getCarTypeList(HttpServletRequest request);
 	
-	public ResultData<List<CarType>> getCarTypeListByVin(HttpServletRequest request);
+	public ResultData<List<CarType>> getCarTypeListByVin(HttpServletRequest request);*/
 }

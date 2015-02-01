@@ -20,6 +20,9 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.springframework.util.Assert;
 
+import com.wechat.client.business.model.Brands;
+import com.wechat.client.business.model.ResultData;
+
 public class JsonFactory{
 	
 	public JsonFactory(){
@@ -29,18 +32,19 @@ public class JsonFactory{
 		Assert.hasText(json, "待序列化的参数为空.");
 	}
 	
-	public <T> T getJson(String json, Class<?> clazz) throws JsonParseException, JsonMappingException, IOException{
+	public <T> ResultData<T> getJson(String json, T t) throws JsonParseException, JsonMappingException, IOException{
 		Assert.hasText(json, "待序列化的参数为空.");
 		ObjectMapper om = new ObjectMapper();
 		om.configure(Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
-		T j = om.readValue(json, new TypeReference<T>(){});
-		if(j != null && clazz != null && j.getClass().getName().endsWith("List")){
+		om.configure(Feature.CANONICALIZE_FIELD_NAMES, true);
+		ResultData<T> rd = om.readValue(json, new TypeReference<ResultData<T>>(){});
+		if(rd != null && t != null && rd.getData() != null && t.getClass().getName().endsWith("List")){
 			List<Object> rl = new ArrayList<Object>();
-			List<Map<String, Object>> tl = (List<Map<String, Object>>)j;
+			List<Map<String, Object>> tl = (List<Map<String, Object>>)rd.getData();
 			if(tl.size() > 0){
 				for(Map<String, Object> m : tl){
 					try {
-						rl.add(convertMapToT(m, clazz.newInstance()));
+						rl.add(convertMapToT(m, t));
 					} catch (InstantiationException e) {
 						Logger.getLogger(JsonFactory.class).error("把JSON转化时，把map转成java对象时出错.", e);
 						break;
@@ -52,10 +56,10 @@ public class JsonFactory{
 						break;
 					}
 				}
-				return (T) rl;
+				return rd;
 			}
 		}
-		return j;
+		return rd;
 	}
 	
 	
@@ -151,6 +155,18 @@ public class JsonFactory{
 	}
 	
 	public static void main(String[] args){
-		System.out.println(String.class.getName());
+		String json = "{\"data\":{\"brands\":[{\"label\":\"奥迪\",\"first_letter\":\"A\",\"logo_url\":\"http: //meicheng.com/brand/logo1.jpg\",\"series\":[{\"label\":\"A4\",\"cars\":[{\"id\":\"34d822d000ds2331a33333se3\",\"label\":\"1.8T(2002.3-2009)\"},{\"id\":\"33d822d000ds2331a33333se3\",\"label\":\"2.0(2002.3-2009)\"}]}]}]} }";
+		JsonFactory jf = new JsonFactory();
+		List<Brands> bList = new ArrayList<Brands>();
+		try {
+			ResultData<List<Brands>> rd = jf.getJson(json, bList);
+			System.out.println(rd.getData());
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

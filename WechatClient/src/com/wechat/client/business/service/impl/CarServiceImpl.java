@@ -1,5 +1,6 @@
 package com.wechat.client.business.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,7 @@ public class CarServiceImpl extends BaseService implements CarService{
 	private final String getByVINPath = "carsByVIN.json?";
 	private final String getCarTypeList = "cars.json?";
 	
-	public ResultData<List<CarType>> getCarTypeList(HttpServletRequest request) {
+	/*public ResultData<List<Brands>> getCarTypeList(HttpServletRequest request) {
 		request.setAttribute("methodPath", getCarTypeList);
 		LoginUser user = (LoginUser)request.getSession().getAttribute(Constants.USER_SESSION_KEY);
 		if(user == null){
@@ -28,13 +29,14 @@ public class CarServiceImpl extends BaseService implements CarService{
 		}
 		String param = HttpEntityUtils.toParameterString(user).substring(1);
 		request.setAttribute("param", param);
-		ResultData<List<CarType>> rd = doGetDataList(request, ResultData.class);
+		List<CarType> ctList = new ArrayList<CarType>();
+		ResultData<?> rd = doGetDataList(request, ctList);
 		return rd;
 	}
 	
 	public ResultData<List<CarType>> getCarTypeListByVin(HttpServletRequest request) {
 		request.setAttribute("methodPath", getByVINPath);
-		ResultData<List<CarType>> rd = doGetDataList(request, CarType.class);
+		ResultData<List<CarType>> rd = doGetDataList(request, List.class);
 		return rd;
-	}
+	}*/
 }

@@ -5,29 +5,35 @@
  */
 package com.wechat.client.business.controller;
 
-import java.util.List;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.wechat.client.business.model.CarType;
-import com.wechat.client.business.model.ResultData;
-import com.wechat.client.business.service.CarService;
+import com.wechat.client.business.model.LoginUser;
 import com.wechat.client.utils.Constants;
+import com.wechat.client.utils.JsonHttpRequestUtil;
+import com.wsyb.ray.HttpEntityUtils;
 
 @Controller
 @RequestMapping(Constants.ROOT+"/car")
 public class CarController extends BaseController {
-	@Autowired
-	private CarService carService;
+	
+	private final String getByVINPath = "/carsByVIN.json";
+	private final String getCarTypeList = "/cars.json";
 
 	@RequestMapping("/sel")
-	public String select(HttpServletRequest request){
-		ResultData<List<CarType>> rd = carService.getCarTypeList(request);
-		request.setAttribute("carTypeList", rd.getData());
+	public String select(HttpServletRequest request, HttpServletResponse response){
+		LoginUser user = getLoginUser(request, response);
+		String accessUrl = getCarTypeList;
+		String param = HttpEntityUtils.toParameterString(user).substring(1);
+		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
+		String json = jr.doGet(accessUrl+"?"+param);
+		request.setAttribute("json", json);
 		return "car_model_sel";
 	}
 	
@@ -41,10 +47,23 @@ public class CarController extends BaseController {
 		return "toVin";
 	}
 	
+	public void search(HttpServletRequest request, HttpServletResponse response){
+		try {
+			LoginUser user = getLoginUser(request, response);
+			String vin = request.getParameter("vin");
+			String accessUrl = getByVINPath;
+			String param = HttpEntityUtils.toParameterString(user).substring(1);
+			JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
+			String json = jr.doGet(accessUrl+"?"+param+"&vin17="+vin);
+			PrintWriter out = response.getWriter();
+			out.print(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@RequestMapping("/selVin")
-	public String selVin(HttpServletRequest request){
-		ResultData<List<CarType>> rd = carService.getCarTypeList(request);
-		request.setAttribute("carTypeList", rd.getData());
+	public String selVin(){
 		return "selVin";
 	}
 	
