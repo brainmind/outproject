@@ -1,4 +1,11 @@
 *.class
+.classpath
+.settings/
+.myeclipse/
+.gitignore
+.mymetadata
+.project
+.springBeans
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
