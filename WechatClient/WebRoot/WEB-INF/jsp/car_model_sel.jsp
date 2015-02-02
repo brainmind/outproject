@@ -31,9 +31,9 @@ $(document).ready(function () {
 					groupdt.html(brand["first_letter"]);
 				}
 				var dd = $(document.createElement("dd"));
-				dd.html("<a href=\"<%=path %>/<%=Constants.ROOT %>/car/subsel\" rel=\"firstselect\" dataid=\"1234\" target=\"cartypelistdivid\">"+
+				dd.html("<a href=\"<%=path %>/<%=Constants.ROOT %>/car/subsel\" rel=\"firstselect\" target=\"cartypelistdivid\">"+
                 		"<img src=\""+brand["logo_url"]+"\">"+brand["label"]+"</a>");
-				dd.data("series", brand["series"]);
+				dd.data("series", brand.series);
 				groupdt.after(dd);
 			}
 			initHref();

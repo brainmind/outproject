@@ -38,8 +38,12 @@ var WxchatClient={
 	},
 	currentCarType:function(){
 		var resVal = this.Cookie.getCookieVal(WxchatClient.Cookie_CarType_Key);
-		if(resVal){
-			
+		if($.type(resVal) == "array"){
+			for(var i=0; i<resVal.length; i++){
+				if(resVal[i].isdefault){
+					return resVal[i];
+				}
+			}
 		}
 		return resVal;
 	},

@@ -29,61 +29,66 @@ $(document).ready(function () {
 function initHref(){
 	$("a[target]").each(function(){
 		var $this = $(this);
-		var url = $this.attr("href");
 		$this.removeAttr("href");
 		var targetId = $this.attr("target");
-		var dataref = $this.attr("dataref");
-		var po = $("#"+dataref);
-		var param = $this.attr("param");
-		if(!param || param == null){
-			param = (po && po != null) ? po.attr("name")+"="+po.val() : "";
-		}else{
-			param += "&" + (po && po != null) ? po.attr("name")+"="+po.val() : "";
-		}
-		$this.on("click", function(){
-			var rel = $this.attr("rel");
-			$.ajax({
-				url:url,
-				data:param,
-				type:"get",
-				dataType:"html",
-				success:function(r){
-					var container = $("#"+targetId);
-					if(rel && rel != null && rel == "firstselect"){
-						var dataid = $this.attr("dataid");
-						var label = $this.text();
-						var logo_url = $this.children("img").first().attr("src");
-						container.data("cartype", {id:dataid, label:label, logourl:logo_url});
+		var rel = $this.attr("rel");
+		var container = $("#"+targetId);
+		if(rel && rel != null && rel == "firstselect"){
+			$this.unbind("click");
+			$this.on("click", function(){
+				var series = $this.parent().data("series");
+				var label = $this.text();
+				var logo_url = $this.children("img").attr("src");
+				container.data("brand", {label:label, logourl:logo_url});
+				if(series && $.type(series) == "array"){
+					var dl = $("dl.che_c");
+					dl.removeClass();
+					dl.addClass("che_cx");
+					dl.empty();
+					for(var i=0; i<series.length; i++){
+						var dd = $(document.createElement("dd"));
+						dd.html("<a rel=\"secondselect\" target=\""+targetId+"\">"+series[i].label+"</a>");
+						dl.append(dd);
+						dd.data("cars", series[i].cars);
 					}
-					container.html(r);
-					$("a[rel=secondselect]").each(function(){
-						var $subtype = $(this);
-						var dataid=$subtype.attr("dataid");
-						var name = $subtype.text();
-						var url = $subtype.attr("href");
-						$subtype.removeAttr("href");
-						$subtype.parent().on("click",function(){
-							var carType = container.data("cartype");
-							if(carType && carType != null){
-								var cookiecartype = "{id:\""+carType.id+"\",label:\""+carType.label+"\",logourl:\""+carType.logourl+"\"," +
-										"serid:\""+dataid+"\",sername:\""+name+"\"}";
-								WxchatClient.setCurrentCarType(cookiecartype);
-							}
-							window.location.href = url;
-						});
-					});
-					
-					$("div.che_vin > dl > dd").each(function(){
-						var $vinlist = $(this);
-						var dataid = $vinlist.attr("dataid");
-						var label = $vinlist.children("span").first().text();
-						var sername = $vinlist.children("span").last().text();
-						$vinlist.on("click",function(){
-							
-						});
-					});
+					initHref();
 				}
 			});
-		});
+		}else if(rel == "secondselect"){
+			$this.on("click", function(){
+				var cars = $this.parent().data("cars");
+				if(cars && $.type(cars) == "array"){
+					container.data("serie", {label:$this.text()});
+					var dl = $("dl.che_cx");
+					dl.empty();
+					for(var i=0; i<cars.length; i++){
+						var dd = $(document.createElement("dd"));
+						dd.html("<a dataid=\""+cars[i].id+"\" rel=\"thirdselect\" target=\""+targetId+"\">"+cars[i].label+"</a>");
+						dl.append(dd);
+					}
+					initHref();
+				}
+			});
+		}else if(rel == "thirdselect"){
+			$this.on("click",function(){
+				var id = $this.attr("dataid");
+				var car = $this.text();
+				var brand = container.data("brand");
+				var serie = container.data("serie");
+				var cookiecartype = "{id:\""+id+"\",brand:\""+brand.label+"\",logourl:\""+brand.logourl+"\"," +
+				"car:\""+car+"\",sername:\""+serie.label+"\",isdefault:true}";
+				WxchatClient.setCurrentCarType(cookiecartype);
+				window.location.href=contextPath+projectRoot+"/index";
+			});
+		}
+		/*$("div.che_vin > dl > dd").each(function(){
+			var $vinlist = $(this);
+			var dataid = $vinlist.attr("dataid");
+			var label = $vinlist.children("span").first().text();
+			var sername = $vinlist.children("span").last().text();
+			$vinlist.on("click",function(){
+				
+			});
+		});*/
 	});
 }

@@ -110,18 +110,44 @@ window.onload = function() {
 		}
 		var myCarTypeList = WxchatClient.Cookie.getCookieVal(WxchatClient.Cookie_CarType_Key);
 		var ul = $("ul", myCarTypeSel);
-		if(myCarTypeList != null && myCarTypeList.length > 0){
-			for(var i=0; i<myCarTypeList.length; i++){
-				var carType = myCarTypeList[i];
-				var li = ul.html();
-				ul.html(li+"<li dataid=\""+carType.id+"\">"+carType.label+"</li>");
+		if(myCarTypeList){
+			if($.type(myCarTypeList)=="array" && myCarTypeList.length > 0){
+				for(var i=0; i<myCarTypeList.length; i++){
+					var carType = myCarTypeList[i];
+					var li = ul.html();
+					ul.html(li+"<li dataid=\""+carType.id+"\" brand=\""+carType.brand+"\" " +
+							"serie=\""+carType.sername+"\" car=\""+carType.car+"\" " +
+							"logourl=\""+carType.logourl+"\" isdefault="+carType.isdefault+">"+carType.brand+" "+carType.sername+""+carType.car+"</li>");
+				}
+			}else{
+				var brand = myCarTypeList.brand;
+				var sername = myCarTypeList.sername;
+				var car = myCarTypeList.car;
+				var id = myCarTypeList.id;
+				var logourl = myCarTypeList.logourl;
+				var isdefault = myCarTypeList.isdefault;
+				ul.html("<li dataid=\""+id+"\" brand=\""+brand+"\" serie=\""+sername+"\" car=\""+car+"\" " +
+						"logourl=\""+logourl+"\" isdefault="+isdefault+">"+brand+" "+sername+" "+car+"</li>");
 			}
 			ul.children("li").on("click", function(){
 				var $li = $(this);
-				var cid = $li.attr("dataid");
-				var clabel = $li.html();
-				WxchatClient.setCurrentCarType({id:cid, label:clabel});
-				$(".idx_car").html("<h1>"+clabel+"</h1><a href="+contextPath+projectRoot+"\"/car/sel\" class=\"idx_car_a\">更改车型</a>");
+				var isdefault = $li.attr("isdefault");
+				if(isdefault || isdefault == "true"){
+					$(".tc_bg").hide();
+					$(".tcmain").animate({
+						"left" : "-100%"
+					});
+					return false;
+				}
+				var id = $li.attr("dataid");
+				var brand = $li.attr("brand");
+				var sername = $li.attr("serie");
+				var car = $li.attr("car");
+				var logourl = $li.attr("logourl");
+				var cookiecartype = "{id:\""+id+"\",brand:\""+brand+"\",logourl:\""+logourl+"\"," +
+				"car:\""+car+"\",sername:\""+sername+"\",isdefault:"+isdefault+"}";
+				WxchatClient.setCurrentCarType(cookiecartype);
+				$(".idx_car").html("<h1>"+brand+" "+sername+"<br/>"+car+"</h1><a href=\"#\" class=\"idx_car_a\">更改车型</a>");
 			});
 		}
 	});

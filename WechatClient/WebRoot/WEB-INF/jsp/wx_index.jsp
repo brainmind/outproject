@@ -59,9 +59,10 @@ $(document).ready(function () {
 	if(carType && carType != null && carType != ""){
 		$(".idx_car_o").hide();
 		$(".idx_car").show();
-		var carName = carType.label;
+		var carName = carType.brand;
 		var serName = carType.sername;
-		$("div.idx_car > h1").first().html(carName+" "+serName);
+		var car = carType.car;
+		$("div.idx_car > h1").first().html(carName+" "+serName+"<br/>"+car);
 	}
 });
 </script>
