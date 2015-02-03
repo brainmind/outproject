@@ -5,10 +5,12 @@
 .project
 .springBeans
 
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 .settings/
 .myeclipse/
+.metadata/*
 
 # Package Files #
 *.jar
