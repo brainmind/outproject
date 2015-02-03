@@ -36,26 +36,8 @@ window.onload = function() {
 	});
 
 	/* 日常保养 */
-	$(".day_list li .day_title").click(function() {
-		$(this).toggleClass("day_cur");
-		$(this).next(".day_more").toggle();
-	});
-	$(".day_more dd").click(function() {
-		$(".day_more dd").removeClass("dd_cur");
-		$(this).addClass("dd_cur");
-		$(".day_more").hide();
-		$(this).parents(".day_more").prev(".day_title").prev(
-				".day_pic").html(
-				$(this).find(".day_pic").html());
-		$(this).parents(".day_more").prev(".day_title").html(
-				$(this).find(".day_title").html());
-	});
-	$(".day_name").click(function() {
-		$(this).prev(".xz").show();
-	});
-	$(".xz").click(function() {
-		$(this).hide();
-	});
+	initRenderingCommandotyService();
+	
 	/* 车辆选择 */
 	$(".che_vin dd").eq(0).addClass("che_click");
 	$(".che_vin dd").click(function() {
@@ -176,3 +158,26 @@ window.onload = function() {
 	});
 	// 获取表格的第一列
 };
+
+function initRenderingCommandotyService(){
+	$(".day_list li .day_title").click(function() {
+		$(this).toggleClass("day_cur");
+		$(this).next(".day_more").toggle();
+	});
+	$(".day_more dd").click(function() {
+		$(".day_more dd").removeClass("dd_cur");
+		$(this).addClass("dd_cur");
+		$(".day_more").hide();
+		$(this).parents(".day_more").prev(".day_title").prev(
+				".day_pic").html(
+				$(this).find(".day_pic").html());
+		$(this).parents(".day_more").prev(".day_title").html(
+				$(this).find(".day_title").html());
+	});
+	$(".day_name").click(function() {
+		$(this).prev(".xz").show();
+	});
+	$(".xz").click(function() {
+		$(this).hide();
+	});
+}
