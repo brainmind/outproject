@@ -47,6 +47,12 @@ public class CarController extends BaseController {
 		return "toVin";
 	}
 	
+	@RequestMapping("/selVin")
+	public String selVin(){
+		return "selVin";
+	}
+	
+	@RequestMapping("/searchVin.json")
 	public void search(HttpServletRequest request, HttpServletResponse response){
 		try {
 			LoginUser user = getLoginUser(request, response);
@@ -60,11 +66,6 @@ public class CarController extends BaseController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	@RequestMapping("/selVin")
-	public String selVin(){
-		return "selVin";
 	}
 	
 	@RequestMapping("/selItem")
