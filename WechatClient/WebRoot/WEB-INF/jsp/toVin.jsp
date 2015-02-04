@@ -27,19 +27,35 @@
 			url:url,
 			data:"vin17="+vin,
 			dataType:"json",
-			type:"get",
+			type:"post",
 			success:function(r){
 				if($.type(r.cars) == "array" && r.cars.length > 0){
-					WxchatClient.Page.load("<%=path %>/<%=Constants.ROOT %>/car/selVin","","vinselectdivid", function(){
+					WxchatClient.Page.load("<%=path %>/<%=Constants.ROOT %>/car/selVin","","vinselectdivid", function(container){
 						$("#vinspanid").html(vin);
 						var carlist = $("#carlistdlid");
-						for(var i=0; i<r.cars; i++){
+						for(var i=0; i<r.cars.length; i++){
 							var car = r.cars[i];
 							var dd = $(document.createElement("dd"));
-							dd.html("<img src=\"<%=path%>/styles/images/1.jpg\"><p><span>广汽本田传祺2014款</span><span>1.6T手自动一体版</span></p>");
-							dd.attr("dataid", "");
+							var label = car.label.split(" ");
+							var logourl = car.logo_url;
+							dd.html("<img src=\"<%=path%>/styles/images/1.jpg\"><p><span>"+label[0]+"</span><span>"+label[1]+"</span><span>"+label[2]+label[3]+"</span></p>");
+							dd.attr("dataid", car.id);
 							carlist.append(dd);
 						}
+						renderSelectByVIN();
+						$("a.ensure", container).on("click", function(){
+							var dd = $("dd.che_click", carlist);
+							var id = dd.attr("dataid");
+							var logourl = dd.children("img").attr("src");
+							var brand = $("span", dd)[0].innerText;
+							var serName = $("span", dd)[1].innerText;
+							var car = $("span", dd)[2].innerText;
+							var carType = "{id:\""+id+"\",brand:\""+brand+"\",logourl:\""+logourl+"\"," +
+							"car:\""+car+"\",sername:\""+serName+"\",isdefault:true}";
+							WxchatClient.setCurrentCarType(carType);
+							window.location.href="<%=path %>/<%=Constants.ROOT %>/index";
+							return false;
+						});
 					});
 				}else{
 					WxchatClient.Dialog.show("查询结果为空.");
@@ -55,9 +71,9 @@
     	<span rel="tab" name="carmodelvin" url="<%=path %>/<%=Constants.ROOT %>/car/sel">车型选择</span>
         <span class="click" rel="tab" name="carmodelvin" url="<%=path %>/<%=Constants.ROOT %>/car/toVin">VIN码</span>
     </div>
-    <div class="che_pic" id="vinselectdivid">
+    <div class="che_pic">
     	<ul>
-            <li>
+            <li id="vinselectdivid">
             	<div class="vinbox">
 					<p>请输入VIN码，以精确匹配您的爱车</p>
                 	<p><input name="vin" type="text" id="vincode"></p>

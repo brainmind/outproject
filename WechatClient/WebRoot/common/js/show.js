@@ -39,11 +39,8 @@ window.onload = function() {
 	initRenderingCommandotyService();
 	
 	/* 车辆选择 */
-	$(".che_vin dd").eq(0).addClass("che_click");
-	$(".che_vin dd").click(function() {
-		$(".che_vin dd").removeClass("che_click");
-		$(this).addClass("che_click");
-	});
+	renderSelectByVIN();
+	
 	/* 评价 */
 	$(".assessment_choice a").eq(0).addClass("cur");
 	$(".assessment_choice a").click(function() {
@@ -176,8 +173,30 @@ function initRenderingCommandotyService(){
 	});
 	$(".day_name").click(function() {
 		$(this).prev(".xz").show();
+		var span = $("span:last" ,$(this).next().next());
+		var fee = span.text();
+		if(fee != null && fee != ""){
+			var totalFee = parseFloat($("#totalprice").text());
+			totalFee+=parseFloat(fee);
+			$("#totalprice").html(totalFee.toFixed(2));
+		}
 	});
 	$(".xz").click(function() {
 		$(this).hide();
+		var span = $("span:last" ,$(this).next().next().next());
+		var fee = span.text();
+		if(fee != null && fee != ""){
+			var totalFee = parseFloat($("#totalprice").text());
+			totalFee-=parseFloat(fee);
+			$("#totalprice").html(totalFee.toFixed(2));
+		}
+	});
+}
+
+function renderSelectByVIN(){
+	$(".che_vin dd").eq(0).addClass("che_click");
+	$(".che_vin dd").click(function() {
+		$(".che_vin dd").removeClass("che_click");
+		$(this).addClass("che_click");
 	});
 }

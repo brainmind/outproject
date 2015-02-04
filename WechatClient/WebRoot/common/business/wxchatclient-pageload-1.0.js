@@ -81,14 +81,5 @@ function initHref(){
 				window.location.href=contextPath+projectRoot+"/index";
 			});
 		}
-		/*$("div.che_vin > dl > dd").each(function(){
-			var $vinlist = $(this);
-			var dataid = $vinlist.attr("dataid");
-			var label = $vinlist.children("span").first().text();
-			var sername = $vinlist.children("span").last().text();
-			$vinlist.on("click",function(){
-				
-			});
-		});*/
 	});
 }

@@ -56,7 +56,7 @@ public class CarController extends BaseController {
 	public void search(HttpServletRequest request, HttpServletResponse response){
 		try {
 			LoginUser user = getLoginUser(request, response);
-			String vin = request.getParameter("vin");
+			String vin = request.getParameter("vin17");
 			String accessUrl = getByVINPath;
 			String param = HttpEntityUtils.toParameterString(user).substring(1);
 			JsonHttpRequestUtil jr = new JsonHttpRequestUtil();

@@ -75,7 +75,7 @@ $.extend(WxchatClient, {
 				success:function(r){
 					$("#"+id).html(r);
 					if($.type(callback) == "function"){
-						callback();
+						callback($("#"+id));
 					}
 				}
 			});
