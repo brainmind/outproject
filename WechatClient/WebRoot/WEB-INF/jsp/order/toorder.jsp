@@ -13,22 +13,59 @@
 <meta name="robots" content="all" />
 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
 <jsp:include page="../common/base.jsp" />
+<script type="text/javascript">
+$(function(){
+	WxchatClient.Region.getProvinces(function(r){
+		WxchatClient.Select.bulid("province_selectId","province",r);
+		$("#province_selectId").on("change", function(){
+			var $this = $(this);
+			WxchatClient.Region.getCities($this.val(), function(c){
+				WxchatClient.Select.bulid("citye_selectId","city", c);
+				$("#citye_selectId").on("change", function(){
+					var $city = $(this);
+					WxchatClient.Region.getDistricts($city.val(), function(d){
+						WxchatClient.Select.bulid("district_selectId","district", d);
+					});
+				});
+				
+				WxchatClient.Region.getDistricts($("#citye_selectId").val(), function(d){
+					WxchatClient.Select.bulid("district_selectId","district", d);
+				});
+			});
+		});
+		
+		WxchatClient.Region.getCities($("#province_selectId").val(), function(c){
+			WxchatClient.Select.bulid("citye_selectId","city", c);
+			$("#citye_selectId").on("change", function(){
+				var $city = $(this);
+				WxchatClient.Region.getDistricts($city.val(), function(d){
+					WxchatClient.Select.bulid("district_selectId","district", d);
+				});
+			});
+			
+			WxchatClient.Region.getDistricts($("#citye_selectId").val(), function(d){
+				WxchatClient.Select.bulid("district_selectId","district", d);
+			});
+			
+		});
+		
+	});
+});
+</script>
 </head>
 <body>
 <div class="wapper">
 	<div class="neir r_dz">
     	<p><strong>请选择地区</strong></p>
         <div class="add_sel">
-        <select name="">
-            <option selected>北京市</option>
-            <option>上海市</option>
-        </select>
-        <select name="">
-            <option selected>海淀区</option>
-            <option>普陀区</option>
-        </select>
+	        <select name="province" id="province_selectId">
+	        </select>
+	        <select name="city" id="citye_selectId">
+	        </select>
+	        <select name="district" id="district_selectId">
+	        </select>
         </div>
-        <div class="add_text"><input name="" type="text" value="详细地址"></div>
+        <div class="add_text"><input name="" type="text" value="" tiptxt="详细地址"></div>
         <p>目前仅提供北京地区五环内及回龙观天通苑地区上门服务</p>
         <p><strong>预约服务时间</strong></p>
     </div>

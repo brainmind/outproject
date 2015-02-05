@@ -24,6 +24,7 @@ $(document).ready(function () {
 	});
 	
 	initHref();
+	renderingInputText();
 });
 
 function initHref(){
@@ -90,5 +91,23 @@ function initHref(){
 				
 			});
 		});*/
+	});
+}
+
+function renderingInputText(){
+	$("input[type=text][tiptxt]").each(function(){
+		var $this = $(this);
+		var tip = $this.attr("tiptxt");
+		$this.val(tip);
+		$this.on("focus", function(){
+			if($this.val() == tip){
+				$this.val("");
+			}
+		});
+		$this.on("blur", function(){
+			if($this.val() == ""){
+				$this.val(tip);
+			}
+		});
 	});
 }
