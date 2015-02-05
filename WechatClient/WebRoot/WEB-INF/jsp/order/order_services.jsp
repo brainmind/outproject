@@ -37,9 +37,12 @@ $(document).ready(function () {
 						if(servName != "" && servName.length > 2){
 							servName = servName.substring(0,2)+"<br/>"+servName.substring(2, servName.length);
 						}
+						li.attr("type", "services");
 						li.html("<div class=\"xz\" style=\"display:block;\"></div><div class=\"day_name\">"+servName+"</div>"+
 								"<div class=\"day_pic\"><img src=\""+commodity["pic_url"]+"\" height=\"100%\"></div>"+
-								"<div class=\"day_title\"><h1>"+commodity["label"]+" SN ("+commodity["number"]+")</h1><h2><span>用量：1</span><span>"+price+"</span></h2></div>");
+								"<div class=\"day_title\"><h1>"+commodity["label"]+" SN ("+commodity["number"]+")</h1><h2><span>用量：1</span><span>"+price+"</span></h2></div>"+
+								"<input type=\"hidden\" name=\"commodities.id\" value=\""+commodity["id"]+"\"/>"+
+								"<input type=\"hidden\" name=\"commodities.category_id\" value=\""+commodity["category_id"]+"\"/>");
 						li.attr("dataid", commodity["id"]);
 						li.attr("typeid", commodity["type"]);
 						li.attr("categoryid", commodity["category_id"]);
@@ -55,9 +58,12 @@ $(document).ready(function () {
 							price = parseFloat(serviceFee["price"]).toFixed(2);
 							totalPrice += parseFloat(serviceFee["price"]);
 						}
+						li.attr("type", "fees");
 						li.html("<div class=\"xz\" style=\"display:block;\"></div><div class=\"day_name\" title=\""+serviceFee["title"]+"\">工时费</div>"+
 								"<div class=\"day_pic\"><img src=\"<%=path %>/styles/images/7.jpg\" height=\"100%\"></div>"+
-								"<div class=\"day_title\"><h1>小马上门服务</h1><h2><span></span>&nbsp;<span>"+price+"</span></h2></div>");
+								"<div class=\"day_title\"><h1>小马上门服务</h1><h2><span></span>&nbsp;<span>"+price+"</span></h2></div>"+
+								"<input type=\"hidden\" name=\"service_fees.type\" value=\""+serviceFee["type"]+"\"/>"+
+								"<input type=\"hidden\" name=\"service_fees.category_id\" value=\""+serviceFee["category_id"]+"\"/>");
 						li.attr("typeid", serviceFee["type"]);
 						li.attr("categoryid", serviceFee["category_id"]);
 					}
@@ -76,9 +82,20 @@ $(document).ready(function () {
 		$("div.add_cars > h1").first().html(carName+" "+serName+"<br/>"+car);
 	}
 });
+
+function applyService(){
+	var selnum = $("div.xz:visible");
+	if(selnum == false || selnum.length == 0){
+		WxchatClient.Dialog.show("请选择至少一项服务项目.");
+		return;
+	}
+	document.serviceForm.submit();
+}
 </script>
 </head>
 <body>
+<form action="<%=path %>/<%=Constants.ROOT %>/order/to" method="post" name="serviceForm">
+
 <div class="wapper">
 	<div class="add_top">
     	<div class="add_logo"><img src="<%=path %>/styles/images/4.png"></div>
@@ -87,7 +104,7 @@ $(document).ready(function () {
             <a href="#">更改车型</a>
         </div>      
 	</div>
-	<div class="day_t"><span>保养项目</span>&nbsp;&nbsp;总价：<span id="totalprice">328.00</span>元 (含工时费）</div>
+	<div class="day_t"><span>保养项目</span>&nbsp;&nbsp;总价：<span id="totalprice">0.00</span>元 (含工时费）</div>
     <div class="day_list">
     	<ul></ul>
         <a href="<%=path %>/<%=Constants.ROOT %>/car/selItem" class="addpro"><img src="<%=path %>/styles/images/2.png">添加新项</a>
@@ -95,9 +112,10 @@ $(document).ready(function () {
 </div>
 <div class="checkbox">
     <div class="check">
-        <input name="isSelfService" type="checkbox" value="" id="isSelfServiceid"><label for="isSelfServiceid">自带配件</label>
+        <input name="isSelfService" type="checkbox" value="1" id="isSelfServiceid"><label for="isSelfServiceid">自带配件</label>
     </div>
-    <a href="<%=path %>/<%=Constants.ROOT %>/order/to" class="res_ser">预约服务</a>
+    <a href="javascript:applyService();" class="res_ser">预约服务</a>
 </div>
+</form>
 </body>
 </html>

@@ -32,6 +32,7 @@ public class TxtFileUtil {
 						Map<String, String> data = new HashMap<String, String>();
 						data.put("id", dsa[0]);
 						data.put("name", StringEscapeUtils.unescapeJava(dsa[1]));
+						data.put("code", dsa[4]);
 						datalist.add(data);
 					}
 				}

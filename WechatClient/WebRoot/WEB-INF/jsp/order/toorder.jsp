@@ -72,13 +72,29 @@ $(function(){
 	<div class="neir ser_nr"> 
     	<ul>
         	<li class="bor">
-            	<select name="">
-                    <option selected>12月&nbsp;28日&nbsp;星期三</option>
-                    <option>12月&nbsp;29日&nbsp;星期四</option>
+            	<select name="orderdate">
+                    <option selected>2月&nbsp;5日&nbsp;星期四</option>
+                    <option>2月&nbsp;6日&nbsp;星期五</option>
+                    <option>2月&nbsp;7日&nbsp;星期六</option>
+                    <option>2月&nbsp;8日&nbsp;星期日</option>
+                    <option>2月&nbsp;9日&nbsp;星期一</option>
+                    <option>2月&nbsp;10日&nbsp;星期二</option>
+                    <option>2月&nbsp;11日&nbsp;星期三</option>
+                    <option>2月&nbsp;12日&nbsp;星期四</option>
                 </select>
-                <select name="">
-                    <option selected>上午10:00－11:00</option>
-                    <option>上午11:00－12:00</option>
+                <select name="ordertime">
+                	<option value="08:00-09:00" selected>上午08:00－09:00</option>
+                	<option value="09:00-10:00">上午09:00－10:00</option>
+                    <option value="10:00-11:00">上午10:00－11:00</option>
+                    <option value="11:00-12:00">上午11:00－12:00</option>
+                    <option value="12:00-13:00">下午12:00－01:00</option>
+                    <option value="13:00-14:00">下午01:00－02:00</option>
+                    <option value="14:00-15:00">下午02:00－03:00</option>
+                    <option value="15:00-16:00">下午03:00－04:00</option>
+                    <option value="16:00-17:00">下午04:00－05:00</option>
+                    <option value="17:00-18:00">下午05:00－06:00</option>
+                    <option value="18:00-19:00">下午06:00－07:00</option>
+                    <option value="19:00-20:00">下午07:00－08:00</option>
                 </select>
             </li>
         	<li class="bor">
