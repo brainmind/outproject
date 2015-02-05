@@ -89,48 +89,13 @@ $(document).ready(function () {
 	</div>
 	<div class="day_t"><span>保养项目</span>&nbsp;&nbsp;总价：<span id="totalprice">328.00</span>元 (含工时费）</div>
     <div class="day_list">
-    	<ul>
-        	<%-- <li>
-            	<div class="xz"></div>
-            	<div class="day_name">更换<br/>机油</div>
-                <div class="day_pic"><img src="<%=path %>/styles/images/5.jpg" height="100%"></div>
-                <div class="day_title">
-                	<h1>嘉实多磁护合成机油 5W-30 SN (4L)</h1>
-                    <h2><span>用量：1</span><span>189.00</span></h2>
-                </div>
-                <div class="day_more">
-                <dl>
-                	<dd>
-                        <div class="day_pic"><img src="<%=path %>/styles/images/6.jpg" height="100%"></div>
-                        <div class="day_title">
-                            <h1>嘉实多磁护合成机油 5W-30 SN (4L)</h1>
-                            <h2><span>用量：1</span><span>181.00</span></h2>
-                        </div>
-                    </dd>
-                    <dd>
-                        <div class="day_pic"><img src="<%=path %>/styles/images/7.jpg" height="100%"></div>
-                        <div class="day_title">
-                            <h1>嘉实多磁护合成机油 5W-30 SN (4L)</h1>
-                            <h2><span>用量：1</span><span>182.00</span></h2>
-                        </div>
-                    </dd>
-                    <dd>
-                        <div class="day_pic"><img src="<%=path %>/styles/images/8.jpg" height="100%"></div>
-                        <div class="day_title">
-                            <h1>嘉实多磁护合成机油 5W-30 SN (4L)</h1>
-                            <h2><span>用量：1</span><span>183.00</span></h2>
-                        </div>
-                    </dd>
-                </dl>
-                </div>               
-          	</li> --%>
-        </ul>
+    	<ul></ul>
         <a href="<%=path %>/<%=Constants.ROOT %>/car/selItem" class="addpro"><img src="<%=path %>/styles/images/2.png">添加新项</a>
     </div>
 </div>
 <div class="checkbox">
     <div class="check">
-        <input name="" type="checkbox" value="">自带配件
+        <input name="isSelfService" type="checkbox" value="" id="isSelfServiceid"><label for="isSelfServiceid">自带配件</label>
     </div>
     <a href="<%=path %>/<%=Constants.ROOT %>/order/to" class="res_ser">预约服务</a>
 </div>

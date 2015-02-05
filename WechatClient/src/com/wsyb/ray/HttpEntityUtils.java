@@ -19,6 +19,7 @@ public class HttpEntityUtils {
 			try {
 				String method = "get" + name.substring(0, 1).toUpperCase()+name.substring(1);
 				String value = t.getClass().getMethod(method).invoke(t)+"";
+				if(value == null || "null".equals(value)) value="";
 				param.append("&"+name+"="+value);
 			} catch (IllegalAccessException e) {
 				Logger.getLogger(HttpEntityUtils.class).error("无权限访问该类的方法或属性.", e);
