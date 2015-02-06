@@ -18,26 +18,36 @@
 <script type="text/javascript">
 $(document).ready(function () {
 	try{
-		eval('var result = {"data":{"brands":[{"label":"奥迪","first_letter":"A","logo_url":"http://meicheng.com/brand/logo1.jpg","series":[{"label":"A4","cars":[{"id":"34d822d000ds2331a33333se3","label":"1.8T (2002.3-2009)"},{"id":"33d822d000ds2331a33333se3","label":"2.0 (2002.3-2009)"}]}]}]},"baseBean":{"openid":"","unionid":"","version":"1.0","encrypt_type":"0","timestamp":"20150201083432329","mobile":"","vin17":"","type":"","car_id":"","orderid":"","jsonStr":"","app":"","app_type":"","recordid":"","captcha":""}}');
-		if(result.data && result.data.brands && result.data.brands.length > 0){
-			for(var i=0; i<result.data.brands.length; i++){
-				var brand = result.data.brands[i];
-				var container = $("#cartypelistdivid > ul > li > dl");
-				var groupdt = $("#groupdt_"+brand["first_letter"]);
-				if(!groupdt[0] || !groupdt.is("dt")){
-					groupdt = $(document.createElement("dt"));
-					groupdt.attr("id", "groupdt_"+brand["first_letter"]);
-					container.append(groupdt);
-					groupdt.html(brand["first_letter"]);
+		$.ajax({
+			url:"<%=path %>/<%=Constants.ROOT %>/car/sel.json",
+			dataType:"json",
+			type:"get",
+			success:function(result){
+				alert(result);
+				if(result && result.brands && result.brands.length > 0){
+					for(var i=0; i<result.brands.length; i++){
+						var brand = result.brands[i];
+						var container = $("#cartypelistdivid > ul > li > dl");
+						var groupdt = $("#groupdt_"+brand["first_letter"]);
+						if(!groupdt[0] || !groupdt.is("dt")){
+							groupdt = $(document.createElement("dt"));
+							groupdt.attr("id", "groupdt_"+brand["first_letter"]);
+							container.append(groupdt);
+							groupdt.html(brand["first_letter"]);
+						}
+						var dd = $(document.createElement("dd"));
+						dd.html("<a href=\"<%=path %>/<%=Constants.ROOT %>/car/subsel\" rel=\"firstselect\" target=\"cartypelistdivid\">"+
+		                		"<img src=\""+brand["logo_url"]+"\">"+brand["label"]+"</a>");
+						dd.data("series", brand.series);
+						groupdt.after(dd);
+					}
+					initHref();
 				}
-				var dd = $(document.createElement("dd"));
-				dd.html("<a href=\"<%=path %>/<%=Constants.ROOT %>/car/subsel\" rel=\"firstselect\" target=\"cartypelistdivid\">"+
-                		"<img src=\""+brand["logo_url"]+"\">"+brand["label"]+"</a>");
-				dd.data("series", brand.series);
-				groupdt.after(dd);
+			},
+			error:function(r){
+				alert("error:"+r.responseText);
 			}
-			initHref();
-		}
+		});
 	}catch(e){
 		alert("JSON数据格式不正确,详细请参考:"+e.message);
 	}

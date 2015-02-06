@@ -26,6 +26,9 @@ public class JsonHttpRequestUtil {
 			connect = (HttpURLConnection)url.openConnection();
 			connect.setConnectTimeout(10000);
 			connect.setRequestMethod("GET");
+			connect.setRequestProperty("Content-type", "text/html");
+			connect.setRequestProperty("Accept-Charset", "utf-8");
+			connect.setRequestProperty("contentType", "utf-8");
 			connect.connect();
 			if(connect.getResponseCode() == 200){
 				String json = readContent(connect.getInputStream());
@@ -55,7 +58,7 @@ public class JsonHttpRequestUtil {
 		StringBuffer content = new StringBuffer();
 		try {
 			while((line = br.readLine()) != null){
-				line = new String(line.getBytes("GBK"), "UTF-8");
+				//line = new String(line.getBytes("GBK"), "UTF-8");
 				content.append(line);
 			}
 		} catch (IOException e) {

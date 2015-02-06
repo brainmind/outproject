@@ -34,8 +34,10 @@ public class OrderController extends BaseController{
 	@RequestMapping("/service.json")
 	public void getServiceJson(HttpServletRequest request, HttpServletResponse response){
 		LoginUser user = getLoginUser(request, response);
+		String carId = "2722B345E6BB7E18E266E542468D4427";
+		String type = "1,4";
 		String accessUrl = GetServiceAndGoods;
-		String param = HttpEntityUtils.toParameterString(user).substring(1);
+		String param = HttpEntityUtils.toParameterString(user).substring(1)+"&carId="+carId+"&type="+type;
 		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
 		String json = jr.doGet(accessUrl+"?"+param);
 		try {
