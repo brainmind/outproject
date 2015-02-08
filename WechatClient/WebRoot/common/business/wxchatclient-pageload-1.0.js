@@ -30,48 +30,51 @@ $(document).ready(function () {
 function initHref(){
 	$("a[target]").each(function(){
 		var $this = $(this);
+		var url = $this.attr("href");
 		$this.removeAttr("href");
 		var targetId = $this.attr("target");
 		var rel = $this.attr("rel");
 		var container = $("#"+targetId);
 		if(rel && rel != null && rel == "firstselect"){
 			$this.unbind("click");
-			$this.on("click", function(){
-				var series = $this.parent().data("series");
+			$this.parent().on("click", function(){
 				var label = $this.text();
 				var logo_url = $this.children("img").attr("src");
-				container.data("brand", {label:label, logourl:logo_url});
-				if(series && $.type(series) == "array"){
+				var id = $(this).attr("dataid");
+				container.data("brand", {id:id, label:label, logourl:logo_url});
+				WxchatClient.loadJson(url, "brandId="+id, function(series){
 					var dl = $("dl.che_c");
 					dl.removeClass();
 					dl.addClass("che_cx");
 					dl.empty();
 					for(var i=0; i<series.length; i++){
 						var dd = $(document.createElement("dd"));
-						dd.html("<a rel=\"secondselect\" target=\""+targetId+"\">"+series[i].label+"</a>");
+						dd.html("<a href=\""+ contextPath + projectRoot +"/car/car.json\" rel=\"secondselect\" target=\""+targetId+"\">"+series[i].label+"</a>");
+						dd.attr("id", series[i].id);
 						dl.append(dd);
-						dd.data("cars", series[i].cars);
 					}
 					initHref();
-				}
+				});
 			});
 		}else if(rel == "secondselect"){
-			$this.on("click", function(){
-				var cars = $this.parent().data("cars");
-				if(cars && $.type(cars) == "array"){
-					container.data("serie", {label:$this.text()});
-					var dl = $("dl.che_cx");
-					dl.empty();
-					for(var i=0; i<cars.length; i++){
-						var dd = $(document.createElement("dd"));
-						dd.html("<a dataid=\""+cars[i].id+"\" rel=\"thirdselect\" target=\""+targetId+"\">"+cars[i].label+"</a>");
-						dl.append(dd);
+			$this.parent().on("click", function(){
+				var serieId = $this.parent().attr("id");
+				WxchatClient.loadJson(url, "serieId="+serieId, function(cars){
+					if(cars && $.type(cars) == "array"){
+						container.data("serie", {id:serieId, label:$this.text()});
+						var dl = $("dl.che_cx");
+						dl.empty();
+						for(var i=0; i<cars.length; i++){
+							var dd = $(document.createElement("dd"));
+							dd.html("<a dataid=\""+cars[i].id+"\" rel=\"thirdselect\" target=\""+targetId+"\">"+cars[i].label+"</a>");
+							dl.append(dd);
+						}
+						initHref();
 					}
-					initHref();
-				}
+				});
 			});
 		}else if(rel == "thirdselect"){
-			$this.on("click",function(){
+			$this.parent().on("click",function(){
 				var id = $this.attr("dataid");
 				var car = $this.text();
 				var brand = container.data("brand");

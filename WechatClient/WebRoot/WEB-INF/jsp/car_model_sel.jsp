@@ -19,26 +19,25 @@
 $(document).ready(function () {
 	try{
 		$.ajax({
-			url:"<%=path %>/<%=Constants.ROOT %>/car/sel.json",
+			url:"<%=path %>/<%=Constants.ROOT %>/car/brand.json",
 			dataType:"json",
 			type:"get",
 			success:function(result){
-				alert(result);
-				if(result && result.brands && result.brands.length > 0){
-					for(var i=0; i<result.brands.length; i++){
-						var brand = result.brands[i];
+				if(result && result.length > 0){
+					for(var i=0; i<result.length; i++){
+						var brand = result[i];
 						var container = $("#cartypelistdivid > ul > li > dl");
 						var groupdt = $("#groupdt_"+brand["first_letter"]);
 						if(!groupdt[0] || !groupdt.is("dt")){
 							groupdt = $(document.createElement("dt"));
 							groupdt.attr("id", "groupdt_"+brand["first_letter"]);
-							container.append(groupdt);
 							groupdt.html(brand["first_letter"]);
+							container.append(groupdt);
 						}
 						var dd = $(document.createElement("dd"));
-						dd.html("<a href=\"<%=path %>/<%=Constants.ROOT %>/car/subsel\" rel=\"firstselect\" target=\"cartypelistdivid\">"+
+						dd.html("<a href=\"<%=path + Constants.ROOT %>/car/serie.json\" rel=\"firstselect\" target=\"cartypelistdivid\">"+
 		                		"<img src=\""+brand["logo_url"]+"\">"+brand["label"]+"</a>");
-						dd.data("series", brand.series);
+						dd.attr("dataid", brand.id);
 						groupdt.after(dd);
 					}
 					initHref();
@@ -64,15 +63,6 @@ $(document).ready(function () {
     	<ul>
         	<li>
             	<dl class="che_c">
-                	<dt id="groupdt_A">A</dt>
-                	<dd>
-                		<a href="<%=path %>/<%=Constants.ROOT %>/car/subsel" rel="firstselect" target="cartypelistdivid">
-                		<img src="<%=path %>/styles/images/9.jpg">阿尔法罗密欧</a>
-                	</dd>
-                    <dd><a href="<%=path %>/<%=Constants.ROOT %>/car/subsel" target="cartypelistdivid"><img src="<%=path %>/styles/images/9.jpg">阿尔法罗密欧</a></dd>
-                    <dd><a href="<%=path %>/<%=Constants.ROOT %>/car/subsel" target="cartypelistdivid"><img src="<%=path %>/styles/images/9.jpg">阿尔法罗密欧</a></dd>
-                    <dt>B</dt>
-                	<dd><a href="7.htm"><img src="<%=path %>/styles/images/9.jpg">阿尔法罗密欧</a></dd>
                 </dl>
             </li>
         </ul>

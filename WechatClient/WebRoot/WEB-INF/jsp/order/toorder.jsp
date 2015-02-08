@@ -50,6 +50,9 @@ $(function(){
 		});
 		
 	});
+	
+	var weekdays = WxchatClient.DateUtil.getEveryDayOfLastWeek();
+	WxchatClient.Select.bulid("orderdateselectid","orderdate", weekdays);
 });
 </script>
 </head>
@@ -72,7 +75,7 @@ $(function(){
 	<div class="neir ser_nr"> 
     	<ul>
         	<li class="bor">
-            	<select name="orderdate">
+            	<select name="orderdate" id="orderdateselectid">
                     <option selected>2月&nbsp;5日&nbsp;星期四</option>
                     <option>2月&nbsp;6日&nbsp;星期五</option>
                     <option>2月&nbsp;7日&nbsp;星期六</option>

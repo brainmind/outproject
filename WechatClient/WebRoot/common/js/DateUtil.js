@@ -46,8 +46,10 @@ DateUtil.prototype.getLastDayOfMonth=function(d){
 //(new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423 
 //(new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18 
 DateUtil.prototype.format = function (d,fmt) { //author: meizz 
+	var du = this;
 	var o = {
-		"M+": d.getMonth() + 1, //月份 
+		"M+": d.getMonth() + 1, //月份
+		"w+": du.getWeek(d),//星期
 		"d+": d.getDate(), //日 
 		"h+": d.getHours(), //小时 
 		"m+": d.getMinutes(), //分 
@@ -129,20 +131,17 @@ DateUtil.prototype.getCurrentTimeString=function(){
 };
 
 DateUtil.prototype.getWeek=function(date){
-	var week = 0;
-	var df = "mmddyy";
-	if(date==null || date =="" || typeof(date) == "undefined"){
-		date = this.getToday(); 
-		df = "yyMMdd";
+	var day = date.getDay();
+	var week = "";
+	switch(day){
+		case 0: week="日";break;
+		case 1: week="一";break;
+		case 2: week="二";break;
+		case 3: week="三";break;
+		case 4: week="四";break;
+		case 5: week="五";break;
+		case 6: week="六";break;
 	}
-	date = date.replace(/\//g,"-");
-	week = $.ajax({
-		type:"get",
-		url:basePath+"/dateUtil/week/"+encodeURIComponent(date)+"/"+df,
-		cache:false,
-		async:false,
-		dataType:"text"
-	}).responseText;
 	return week;
 };
 

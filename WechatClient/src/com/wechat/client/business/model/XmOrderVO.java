@@ -31,7 +31,9 @@ public class XmOrderVO {
 	private long finish_time;//完成时间 unix时间戳 毫秒
 	private String reserve_time_string;//预约时间 字符串
 	private BigDecimal total_price;//总价
-	private List logs;//订单日志
+	private List<XmOrderLogVO> logs;//订单日志
+	private List<Commodity> commodities;
+	private List<Servicefee> service_fees;
 	/**
 	 * @return the orderid
 	 */
@@ -215,13 +217,37 @@ public class XmOrderVO {
 	/**
 	 * @return the logs
 	 */
-	public List getLogs() {
+	public List<XmOrderLogVO> getLogs() {
 		return logs;
 	}
 	/**
 	 * @param logs the logs to set
 	 */
-	public void setLogs(List logs) {
+	public void setLogs(List<XmOrderLogVO> logs) {
 		this.logs = logs;
+	}
+	/**
+	 * @return the commodities
+	 */
+	public List<Commodity> getCommodities() {
+		return commodities;
+	}
+	/**
+	 * @param commodities the commodities to set
+	 */
+	public void setCommodities(List<Commodity> commodities) {
+		this.commodities = commodities;
+	}
+	/**
+	 * @return the service_fees
+	 */
+	public List<Servicefee> getService_fees() {
+		return service_fees;
+	}
+	/**
+	 * @param service_fees the service_fees to set
+	 */
+	public void setService_fees(List<Servicefee> service_fees) {
+		this.service_fees = service_fees;
 	}
 }

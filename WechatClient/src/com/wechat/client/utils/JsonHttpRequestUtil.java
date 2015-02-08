@@ -4,11 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 public class JsonHttpRequestUtil {
@@ -25,16 +25,9 @@ public class JsonHttpRequestUtil {
 			URL url = new URL(basePath + accessUrl);
 			connect = (HttpURLConnection)url.openConnection();
 			connect.setConnectTimeout(10000);
-			connect.setRequestMethod("GET");
-			connect.setRequestProperty("Content-type", "text/html");
-			connect.setRequestProperty("Accept-Charset", "utf-8");
-			connect.setRequestProperty("contentType", "utf-8");
 			connect.connect();
 			if(connect.getResponseCode() == 200){
 				String json = readContent(connect.getInputStream());
-				if(StringUtils.isNotEmpty(json)){
-					json = json.replaceAll("\\\\", "").replaceAll("null", "\"\"").replaceAll("\"\"\"\"", "\"\"");
-				}
 				return json;
 			}
 			code = 500;
@@ -49,18 +42,21 @@ public class JsonHttpRequestUtil {
 				connect.disconnect();
 			}
 		}
-		return "{'code':"+code+",'msg':'"+msg+"'}";
+		return "{\"code\":"+code+",\"msg\":\""+msg+"\"}";
 	}
 	
 	public String readContent(InputStream is){
-		BufferedReader br = new BufferedReader(new InputStreamReader(is));
-		String line = "";
+		BufferedReader br;
 		StringBuffer content = new StringBuffer();
 		try {
-			while((line = br.readLine()) != null){
-				//line = new String(line.getBytes("GBK"), "UTF-8");
-				content.append(line);
+			br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+			char[] cbuf = new char[1024];
+			int size = 0;
+			while((size = br.read(cbuf)) != -1){
+				content.append(cbuf, 0, size);
 			}
+		} catch (UnsupportedEncodingException e1) {
+			log.error("不支付的编码格式", e1);
 		} catch (IOException e) {
 			log.error("在读取数据流时出错.", e);
 		}

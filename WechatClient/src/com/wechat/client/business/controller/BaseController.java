@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
@@ -36,5 +37,16 @@ public class BaseController extends AbstractController{
 			}
 		}
 		return user;
+	}
+	
+	public void writeJson(HttpServletResponse response, String json){
+		try {
+			response.setContentType("application/json;charset=UTF-8");
+			response.setHeader("Content-Language", "zh-CN");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().print(json);
+		} catch (IOException e) {
+			Logger.getLogger(BaseController.class).error("返回数据时出错.", e);
+		}
 	}
 }

@@ -41,7 +41,11 @@ $(document).ready(function () {
 						li.html("<div class=\"xz\" style=\"display:block;\"></div><div class=\"day_name\">"+servName+"</div>"+
 								"<div class=\"day_pic\"><img src=\""+commodity["pic_url"]+"\" height=\"100%\"></div>"+
 								"<div class=\"day_title\"><h1>"+commodity["label"]+" SN ("+commodity["number"]+")</h1><h2><span>用量：1</span><span>"+price+"</span></h2></div>"+
+								"<input type=\"hidden\" name=\"commodities.checked\" value=\"1\"/>"+
 								"<input type=\"hidden\" name=\"commodities.id\" value=\""+commodity["id"]+"\"/>"+
+								"<input type=\"hidden\" name=\"commodities.label\" value=\""+commodity["label"]+"\"/>"+
+								"<input type=\"hidden\" name=\"commodities.number\" value=\""+commodity["number"]+"\"/>"+
+								"<input type=\"hidden\" name=\"commodities.price\" value=\""+price+"\"/>"+
 								"<input type=\"hidden\" name=\"commodities.category_id\" value=\""+commodity["category_id"]+"\"/>");
 						li.attr("dataid", commodity["id"]);
 						li.attr("typeid", commodity["type"]);
@@ -62,7 +66,10 @@ $(document).ready(function () {
 						li.html("<div class=\"xz\" style=\"display:block;\"></div><div class=\"day_name\" title=\""+serviceFee["title"]+"\">工时费</div>"+
 								"<div class=\"day_pic\"><img src=\"<%=path %>/styles/images/7.jpg\" height=\"100%\"></div>"+
 								"<div class=\"day_title\"><h1>小马上门服务</h1><h2><span></span>&nbsp;<span>"+price+"</span></h2></div>"+
+								"<input type=\"hidden\" name=\"service_fees.checked\" value=\"1\"/>"+
 								"<input type=\"hidden\" name=\"service_fees.type\" value=\""+serviceFee["type"]+"\"/>"+
+								"<input type=\"hidden\" name=\"service_fees.title\" value=\""+serviceFee["title"]+"\"/>"+
+								"<input type=\"hidden\" name=\"service_fees.price\" value=\""+price+"\"/>"+
 								"<input type=\"hidden\" name=\"service_fees.category_id\" value=\""+serviceFee["category_id"]+"\"/>");
 						li.attr("typeid", serviceFee["type"]);
 						li.attr("categoryid", serviceFee["category_id"]);

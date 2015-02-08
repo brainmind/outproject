@@ -5,8 +5,6 @@
  */
 package com.wechat.client.business.controller;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,7 +22,7 @@ import com.wsyb.ray.HttpEntityUtils;
 @RequestMapping(Constants.ROOT+"/order")
 public class OrderController extends BaseController{
 	private Logger log = Logger.getLogger(OrderController.class);
-	private String GetServiceAndGoods = "/careProdOfferList.json";
+	private String GetService = "/careProdOfferList.json";
 	
 	@RequestMapping("/service")
 	public String service(HttpServletRequest request, HttpServletResponse response){
@@ -34,27 +32,46 @@ public class OrderController extends BaseController{
 	@RequestMapping("/service.json")
 	public void getServiceJson(HttpServletRequest request, HttpServletResponse response){
 		LoginUser user = getLoginUser(request, response);
-		String carId = "2722B345E6BB7E18E266E542468D4427";
-		String type = "1,4";
-		String accessUrl = GetServiceAndGoods;
-		String param = HttpEntityUtils.toParameterString(user).substring(1)+"&carId="+carId+"&type="+type;
+		String carId = "2722B345E6BB7E18E266E542468D4427";//request.getParameter("carId");
+		String type = "1,4";//request.getParameter("type");
+		String accessUrl = GetService;
+		String param = HttpEntityUtils.toParameterString(user).substring(1)+"&car_id="+carId+"&type="+type;
 		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
 		String json = jr.doGet(accessUrl+"?"+param);
-		try {
-			response.getWriter().print(json);
-		} catch (IOException e) {
-			log.error("返回数据时出错.", e);
-		}
+		writeJson(response, json);
+		log.info("获取服务项目接口数据成功！");
 	}
 	
 	@RequestMapping("/to")
-	public String toOrder(){
-		
+	public String toOrder(HttpServletRequest request){
+		String[] commoditys_checked = request.getParameterValues("commodities.checked");
+		String[] commoditys_id = request.getParameterValues("commodities.id");
+		String[] commoditys_label = request.getParameterValues("commodities.label");
+		String[] commoditys_number = request.getParameterValues("commodities.number");
+		String[] commoditys_price = request.getParameterValues("commodities.price");
+		String[] commoditys_cId = request.getParameterValues("commodities.category_id");
+		String[] service_fees_checked = request.getParameterValues("service_fees.checked");
+		String[] service_fees_type = request.getParameterValues("service_fees.type");
+		String[] service_fees_title = request.getParameterValues("service_fees.title");
+		String[] service_fees_price = request.getParameterValues("service_fees.price");
+		String[] service_fees_cId = request.getParameterValues("service_fees.category_id");
+		request.setAttribute("commodities.checked", commoditys_checked);
+		request.setAttribute("commodities.id", commoditys_id);
+		request.setAttribute("commodities.label", commoditys_label);
+		request.setAttribute("commodities.number", commoditys_number);
+		request.setAttribute("commodities.price", commoditys_price);
+		request.setAttribute("commodities.category_id", commoditys_cId);
+		request.setAttribute("service_fees.checked", service_fees_checked);
+		request.setAttribute("service_fees.type", service_fees_type);
+		request.setAttribute("service_fees.title", service_fees_title);
+		request.setAttribute("service_fees.price", service_fees_price);
+		request.setAttribute("service_fees.category_id", service_fees_cId);
 		return "order/toorder";
 	}
 	
 	@RequestMapping("/ready")
 	public String readyOrder(){
+		
 		return "order/submitorder";
 	}
 	

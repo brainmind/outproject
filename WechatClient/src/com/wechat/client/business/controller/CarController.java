@@ -8,17 +8,19 @@ package com.wechat.client.business.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wechat.client.business.model.Car;
 import com.wechat.client.business.model.LoginUser;
+import com.wechat.client.business.model.Series;
+import com.wechat.client.business.model.XmCarsVO;
+import com.wechat.client.business.service.CarCache;
 import com.wechat.client.utils.Constants;
 import com.wechat.client.utils.JsonHttpRequestUtil;
 import com.wsyb.ray.HttpEntityUtils;
@@ -41,20 +43,27 @@ public class CarController extends BaseController {
 		return "car_model_sel";
 	}
 	
-	@RequestMapping("/sel.json")
-	public void selectCars(HttpServletRequest request, HttpServletResponse response){
-		LoginUser user = getLoginUser(request, response);
-		String accessUrl = getCarTypeList;
-		String param = HttpEntityUtils.toParameterString(user).substring(1);
-		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
-		String json = jr.doGet(accessUrl+"?"+param);
-		try {
-			ObjectMapper om = new ObjectMapper();
-			List<Map<String, Object>> result = om.readValue(json, new TypeReference<List<Map<String, Object>>>(){});
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	@RequestMapping("/brand.json")
+	@ResponseBody
+	public List<XmCarsVO> selectBrand(HttpServletRequest request, HttpServletResponse response){
+		CarCache cc = CarCache.getInstance();
+		return cc.getBrandList();
+	}
+	
+	@RequestMapping("/serie.json")
+	@ResponseBody
+	public List<Series> selectSerie(HttpServletRequest request, HttpServletResponse response){
+		String brandId = request.getParameter("brandId");
+		CarCache cc = CarCache.getInstance();
+		return cc.getSerieList(brandId);
+	}
+	
+	@RequestMapping("/car.json")
+	@ResponseBody
+	public List<Car> selectCars(HttpServletRequest request, HttpServletResponse response){
+		String serieId = request.getParameter("serieId");
+		CarCache cc = CarCache.getInstance();
+		return cc.getCarList(serieId);
 	}
 	
 	@RequestMapping("/subsel")

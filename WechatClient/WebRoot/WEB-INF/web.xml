@@ -15,6 +15,12 @@
 			org.springframework.web.context.ContextLoaderListener
 		</listener-class>
 	</listener>
+	
+	<listener>
+		<listener-class>
+			com.wechat.client.framework.listener.CarLoadListener
+		</listener-class>
+	</listener>
 
 	<filter>
 		<filter-name>encodingFilter</filter-name>

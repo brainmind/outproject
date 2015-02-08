@@ -1,6 +1,16 @@
 package com.wechat.client.business.model;
 
-public class Car {
+import java.io.Serializable;
+
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+public class Car  implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5462456932146952555L;
 	private String id;
 	private String label;
 	private String remark;

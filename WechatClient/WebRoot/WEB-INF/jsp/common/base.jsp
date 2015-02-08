@@ -14,7 +14,9 @@ var projectRoot = "<%=Constants.ROOT %>";
 </script>
 <script type="text/javascript" src="<%=path %>/common/js/zepto.min.js"></script>
 <script type="text/javascript" src="<%=path %>/common/js/show.js"></script>
+<script type="text/javascript" src="<%=path %>/common/js/DateUtil.js"></script>
 <script type="text/javascript" src="<%=path %>/common/cookie/wxchatclient-cookie-1.0.js"></script>
-<script type="text/javascript" src="<%=path %>/common/business/wxchatclient-dialog-1.0.js"></script>
 <script type="text/javascript" src="<%=path %>/common/business/wxchatclient-region-1.0.js"></script>
+<script type="text/javascript" src="<%=path %>/common/business/wxchatclient-dialog-1.0.js"></script>
 <script type="text/javascript" src="<%=path %>/common/business/wxchatclient-pageload-1.0.js"></script>
+<script type="text/javascript" src="<%=path %>/common/business/wxchatclient-json-1.0.js"></script>

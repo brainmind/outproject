@@ -30,10 +30,7 @@ window.onload = function() {
 	});
 
 	/* 日常保养 添加新项 */
-	$(".add_an li").click(function() {
-		$(".add_an li").removeClass("pro_click");
-		$(this).addClass("pro_click");
-	});
+	renderServices();
 
 	/* 日常保养 */
 	initRenderingCommandotyService();
@@ -198,5 +195,11 @@ function renderSelectByVIN(){
 	$(".che_vin dd").click(function() {
 		$(".che_vin dd").removeClass("che_click");
 		$(this).addClass("che_click");
+	});
+}
+
+function renderServices(){
+	$(".add_an li").click(function() {
+		$(this).toggleClass("pro_click");
 	});
 }
