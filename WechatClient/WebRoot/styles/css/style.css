@@ -191,6 +191,7 @@ box-sizing:border-box; display:-webkit-box;-webkit-box-orient: vertical;-webkit-
 .day_more dd.dd_cur .day_pic,.day_more dd.dd_cur .day_title{background:#f1f0f0;}
 
 .xz{width:22%; height:85px; border:1px solid #ff4c00; background:url(../images/xz.png) right bottom no-repeat; box-sizing:border-box; position:absolute; top:0; left:0; background-size:27px auto; display:none;}
+.xd{width:22%; height:85px; border:1px solid #ff4c00; background:url(../images/xz.png) right bottom no-repeat; box-sizing:border-box; position:absolute; top:0; left:0; background-size:27px auto; display:none;}
 
 
 /**手机绑定**/

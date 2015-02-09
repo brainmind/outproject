@@ -174,21 +174,37 @@ function initRenderingCommandotyService(){
 	
 	$(".day_name").click(function() {
 		$(this).prev().show();
+		var categoryid = $(this).parent().attr("categoryid");
+		var li = $("li[type=fees][categoryid="+categoryid+"]");
+		var serviceFee = 0;
+		if(li[0]){
+			li.children("input[name=service_fees.checked]").val(0);
+			serviceFee = parseFloat(li.children("input[name=service_fees.price]").val());
+			li.show();
+		}
 		var span = $("span:last" , $(this).next());
 		var fee = span.text();
 		if(fee != null && fee != ""){
 			var totalFee = parseFloat($("#totalprice").text());
-			totalFee+=parseFloat(fee);
+			totalFee += parseFloat(fee)+serviceFee;
 			$("#totalprice").html(totalFee.toFixed(2));
 		}
 	});
 	$(".xz").click(function() {
 		$(this).hide();
+		var categoryid = $(this).parent().attr("categoryid");
+		var li = $("li[type=fees][categoryid="+categoryid+"]");
+		var serviceFee = 0;
+		if(li[0]){
+			li.children("input[name=service_fees.checked]").val(0);
+			serviceFee = parseFloat(li.children("input[name=service_fees.price]").val());
+			li.hide();
+		}
 		var span = $("span:last" , $(this).next().next());
 		var fee = span.text();
 		if(fee != null && fee != ""){
 			var totalFee = parseFloat($("#totalprice").text());
-			totalFee-=parseFloat(fee);
+			totalFee -= (parseFloat(fee)+serviceFee);
 			$("#totalprice").html(totalFee.toFixed(2));
 		}
 	});

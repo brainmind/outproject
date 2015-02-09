@@ -18,8 +18,7 @@ import java.util.List;
 public class XmOrderVO {
 	private String orderid;//订单id
 	private String order_number;//订单编号
-	private String car_label;//车型文本
-	private String brand_logo;//车品牌url
+	private String car_id;//车型文本
 	private String contact;//联系人
 	private String mobile;//联系电话
 	private String regine_code;//区域编码
@@ -57,30 +56,6 @@ public class XmOrderVO {
 	 */
 	public void setOrder_number(String order_number) {
 		this.order_number = order_number;
-	}
-	/**
-	 * @return the car_label
-	 */
-	public String getCar_label() {
-		return car_label;
-	}
-	/**
-	 * @param car_label the car_label to set
-	 */
-	public void setCar_label(String car_label) {
-		this.car_label = car_label;
-	}
-	/**
-	 * @return the brand_logo
-	 */
-	public String getBrand_logo() {
-		return brand_logo;
-	}
-	/**
-	 * @param brand_logo the brand_logo to set
-	 */
-	public void setBrand_logo(String brand_logo) {
-		this.brand_logo = brand_logo;
 	}
 	/**
 	 * @return the contact
@@ -249,5 +224,17 @@ public class XmOrderVO {
 	 */
 	public void setService_fees(List<Servicefee> service_fees) {
 		this.service_fees = service_fees;
+	}
+	/**
+	 * @return the car_id
+	 */
+	public String getCar_id() {
+		return car_id;
+	}
+	/**
+	 * @param car_id the car_id to set
+	 */
+	public void setCar_id(String car_id) {
+		this.car_id = car_id;
 	}
 }

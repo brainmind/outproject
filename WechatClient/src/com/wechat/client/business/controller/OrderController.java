@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wechat.client.business.model.LoginUser;
+import com.wechat.client.business.model.XmOrderVO;
 import com.wechat.client.utils.Constants;
 import com.wechat.client.utils.JsonHttpRequestUtil;
 import com.wsyb.ray.HttpEntityUtils;
@@ -23,6 +24,7 @@ import com.wsyb.ray.HttpEntityUtils;
 public class OrderController extends BaseController{
 	private Logger log = Logger.getLogger(OrderController.class);
 	private String GetService = "/careProdOfferList.json";
+	private String GetCode = "/phoneCAPTCH.json";
 	
 	@RequestMapping("/service")
 	public String service(HttpServletRequest request, HttpServletResponse response){
@@ -73,8 +75,20 @@ public class OrderController extends BaseController{
 		return "order/toorder";
 	}
 	
+	@RequestMapping("/getCode")
+	public void getValidCode(HttpServletRequest request, HttpServletResponse response){
+		String mobile = request.getParameter("mobile");
+		String accessUrl = GetCode;
+		LoginUser user = getLoginUser(request, response);
+		String param = HttpEntityUtils.toParameterString(user).substring(1)+"&mobile="+mobile;
+		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
+		String json = jr.doGet(accessUrl+"?"+param);
+		writeJson(response, json);
+		log.info("获取难码成功");
+	}
+	
 	@RequestMapping("/ready")
-	public String readyOrder(){
+	public String readyOrder(XmOrderVO order){
 		
 		return "order/submitorder";
 	}

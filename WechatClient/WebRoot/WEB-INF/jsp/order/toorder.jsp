@@ -56,17 +56,81 @@ $(function(){
 	WxchatClient.Select.bulid("orderdateselectid","orderdate", weekdays);
 });
 
+function getCode(){
+	var mobile = $("input[type=text][name=mobile]").val();
+	if(mobile == ""){
+		WxchatClient.Dialog.show("手机号不能为空", function(){
+			$("input[type=text][name=mobile]").focus();
+		});
+		return;
+	}
+	$.ajax({
+		url:"<%=path + Constants.ROOT %>/order/ready",
+		data:"mobile=",
+		dataType:"json",
+		type:"post",
+		success:function(r){
+			
+		}
+	});
+}
 
 function submitOrder(){
+	var contact = $("input[type=text][name=contact]");
+	if(contact.val() == ""){
+		WxchatClient.Dialog.show("姓名不能为空", function(){
+			contact.focus();
+		});
+		return;
+	}
+	var mobile = $("input[type=text][name=mobile]").val();
+	if(mobile == ""){
+		WxchatClient.Dialog.show("手机号不能为空", function(){
+			$("input[type=text][name=mobile]").focus();
+		});
+		return;
+	}
+	var validcode = $("input[type=text][name=CAPTCHA]").val();
+	if(validcode == ""){
+		WxchatClient.Dialog.show("验证码不能为空", function(){
+			$("input[type=text][name=CAPTCHA]").focus();
+		});
+		return;
+	}
+	var reservDate = $("#orderdateselectid").val();
+	var reservTime = $("#ordertimeselectid").val().split("-");
+	$("input[type=hidden][name=reserve_time_string]").val(reservDate+" "+reservTime[0]+"~"+reservDate+" "+reservTime[1]);
 	
+	var regine_code = $("#district_selectId").val();
+	if(regine_code==null || regine_code==""){
+		regine_code = $("#citye_selectId").val();
+	}
+	$("input[type=hidden][name=regine_code]").val(regine_code);
+	
+	var carId = WxchatClient.currentCarType().id;
+	$("input[type=hidden][name=car_id]").val(carId);
+	document.orderready.submit();
 }
 </script>
 </head>
 <body>
 <div class="wapper">
 	<form action="<%=path + Constants.ROOT %>/order/ready" name="orderready" method="post">
-	<c:forEach items="${commodities_checked }" var="com" varStatus="cStatus">
-		<input type="hidden" name="commodities.id" value="${commodities_id[cStatus.index] }"/>
+	<input type="hidden" name="reserve_time_string" value=""/>
+	<input type="hidden" name="regine_code" value=""/>
+	<input type="hidden" name="car_id" value=""/>
+	<c:forEach items="${service_fees_checked }" var="com" varStatus="cStatus">
+		<c:if test="${com == '1' }">
+			<input type="hidden" name="commodities.id" value="${commodities_id[cStatus.index] }"/>
+			<input type="hidden" name="commodities.label" value="${commodities_label[cStatus.index] }"/>
+			<input type="hidden" name="commodities.number" value="${commodities_number[cStatus.index] }"/>
+			<input type="hidden" name="commodities.price" value="${commodities_price[cStatus.index] }"/>
+			<input type="hidden" name="commodities.category_id" value="${commoditys_cId[cStatus.index] }"/>
+			<input type="hidden" name="service_fees.type" value="${service_fees_type[cStatus.index] }"/>
+			<input type="hidden" name="service_fees.title" value="${service_fees_title[cStatus.index] }"/>
+			<input type="hidden" name="service_fees.price" value="${service_fees_price[cStatus.index] }"/>
+			<input type="hidden" name="service_fees.category_id" value="${service_fees_cId[cStatus.index] }"/>
+		</c:if>
 	</c:forEach>
 	<div class="neir r_dz">
     	<p><strong>请选择地区</strong></p>
@@ -78,7 +142,7 @@ function submitOrder(){
 	        <select name="district" id="district_selectId">
 	        </select>
         </div>
-        <div class="add_text"><input name="" type="text" value="" tiptxt="详细地址"></div>
+        <div class="add_text"><input name="address" type="text" value="" tiptxt="详细地址"></div>
         <p>目前仅提供北京地区五环内及回龙观天通苑地区上门服务</p>
         <p><strong>预约服务时间</strong></p>
     </div>
@@ -95,7 +159,7 @@ function submitOrder(){
                     <option>2月&nbsp;11日&nbsp;星期三</option>
                     <option>2月&nbsp;12日&nbsp;星期四</option>
                 </select>
-                <select name="ordertime">
+                <select name="ordertime" id="ordertimeselectid">
                 	<option value="08:00-09:00" selected>上午08:00－09:00</option>
                 	<option value="09:00-10:00">上午09:00－10:00</option>
                     <option value="10:00-11:00">上午10:00－11:00</option>
@@ -112,21 +176,21 @@ function submitOrder(){
             </li>
         	<li class="bor">
             	<p class="name">姓名</p>
-                <p class="text"><input name="" type="text"></p>
+                <p class="text"><input name="contact" type="text"></p>
             </li>
             <li class="bor">
             	<p class="name">手机号</p>
-                <p class="text"><input name="" type="text"></p>
+                <p class="text"><input name="mobile" type="text"></p>
             </li>
             <li>
             	<p class="time"><span>29</span>秒后再次获取</p>
-                <a href="javascript:;" class="yzm">获取验证码</a>
+                <a href="javascript:getCode();" class="yzm">获取验证码</a>
             </li>
             <li>
             	<p class="ball"></p>
                 <p class="entry">验证码</p>
             </li>
-            <li class="bor"><input name="validateCode" type="text"></li>
+            <li class="bor"><input name="CAPTCHA" type="text"></li>
         </ul>    	
     </div>
     <a href="javascript:submitOrder();" class="ensure">提交预约</a>
