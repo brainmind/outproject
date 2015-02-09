@@ -1,3 +1,5 @@
 eclipse.preferences.version=1
 encoding//WebRoot/WEB-INF/jsp/car_model_sub_sel.jsp=UTF-8
+encoding//WebRoot/WEB-INF/jsp/common/taglib.jsp=UTF-8
+encoding//src/resources/application.properties=UTF-8
 encoding/<project>=UTF-8

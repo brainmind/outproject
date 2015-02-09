@@ -16,7 +16,7 @@
 <script type="text/javascript">
 $(document).ready(function () {
 	$.ajax({
-		url:"<%=path %>/<%=Constants.ROOT %>/order/service.json",
+		url:"<%=path %>/<%=Constants.ROOT %>/order/service.json?type=${type}&carId=${carId}",
 		dataType:"json",
 		type:"get",
 		success:function(r){
@@ -26,21 +26,34 @@ $(document).ready(function () {
 				if(r.commodities && r.commodities.length > 0){
 					for(var i=0; i<r.commodities.length; i++){
 						var commodity = r.commodities[i];
-						var li = $(document.createElement("li"));
-						li.appendTo(container);
+						var categoryid = commodity["category_id"];
 						var price = 0.00;
 						if(!isNaN(commodity["total_price"])){
 							price = parseFloat(commodity["total_price"]).toFixed(2);
 							totalPrice += parseFloat(commodity["total_price"]);
 						}
+						var li = null;
+						var commodityInfo = "<div class=\"day_pic\"><img src=\""+commodity["pic_url"]+"\" height=\"100%\"></div>"+
+						"<div class=\"day_title\"><h1>"+commodity["label"]+" SN ("+commodity["number"]+")</h1><h2><span>用量：1</span><span>"+price+"</span></h2></div>";
+						if(commodity.recommand != 1){
+							li = $("li[categoryid="+categoryid+"]");
+							if(li[0] && li.is("li")){
+								var commodityDL = $("li[categoryid="+categoryid+"] > div.day_more > dl");
+								var dd = $(document.createElement("dd"));
+								dd.html(commodityInfo);
+								commodityDL.append(dd);
+								continue;
+							}
+						}
+						li = $(document.createElement("li"));
+						li.appendTo(container);
 						var servName = commodity["category_label"];
 						if(servName != "" && servName.length > 2){
 							servName = servName.substring(0,2)+"<br/>"+servName.substring(2, servName.length);
 						}
 						li.attr("type", "services");
 						li.html("<div class=\"xz\" style=\"display:block;\"></div><div class=\"day_name\">"+servName+"</div>"+
-								"<div class=\"day_pic\"><img src=\""+commodity["pic_url"]+"\" height=\"100%\"></div>"+
-								"<div class=\"day_title\"><h1>"+commodity["label"]+" SN ("+commodity["number"]+")</h1><h2><span>用量：1</span><span>"+price+"</span></h2></div>"+
+								"<div id=\"commodity_cur"+categoryid+"\">"+commodityInfo+"</div><div class=\"day_more\"><dl></dl></div>"+
 								"<input type=\"hidden\" name=\"commodities.checked\" value=\"1\"/>"+
 								"<input type=\"hidden\" name=\"commodities.id\" value=\""+commodity["id"]+"\"/>"+
 								"<input type=\"hidden\" name=\"commodities.label\" value=\""+commodity["label"]+"\"/>"+
@@ -63,9 +76,9 @@ $(document).ready(function () {
 							totalPrice += parseFloat(serviceFee["price"]);
 						}
 						li.attr("type", "fees");
-						li.html("<div class=\"xz\" style=\"display:block;\"></div><div class=\"day_name\" title=\""+serviceFee["title"]+"\">工时费</div>"+
+						li.html("<div class=\"xz\" style=\"display:block;\"></div><div class=\"day_name\" title=\""+serviceFee["title"]+"\">"+serviceFee["title"]+"</div>"+
 								"<div class=\"day_pic\"><img src=\"<%=path %>/styles/images/7.jpg\" height=\"100%\"></div>"+
-								"<div class=\"day_title\"><h1>小马上门服务</h1><h2><span></span>&nbsp;<span>"+price+"</span></h2></div>"+
+								"<div class=\"day_title\"><h1>"+serviceFee["title"]+"工时费</h1><h2><span></span>&nbsp;<span>"+price+"</span></h2></div>"+
 								"<input type=\"hidden\" name=\"service_fees.checked\" value=\"1\"/>"+
 								"<input type=\"hidden\" name=\"service_fees.type\" value=\""+serviceFee["type"]+"\"/>"+
 								"<input type=\"hidden\" name=\"service_fees.title\" value=\""+serviceFee["title"]+"\"/>"+
@@ -101,7 +114,7 @@ function applyService(){
 </script>
 </head>
 <body>
-<form action="<%=path %>/<%=Constants.ROOT %>/order/to" method="post" name="serviceForm">
+<form action="<%=path + Constants.ROOT %>/order/to" method="post" name="serviceForm">
 
 <div class="wapper">
 	<div class="add_top">
@@ -113,7 +126,44 @@ function applyService(){
 	</div>
 	<div class="day_t"><span>保养项目</span>&nbsp;&nbsp;总价：<span id="totalprice">0.00</span>元 (含工时费）</div>
     <div class="day_list">
-    	<ul></ul>
+    	<ul>
+    		<li>
+    			<div class="xz"></div>
+            	<div class="day_name">更换<br/>机油</div>
+            	<div id="commodity_cur">
+	                <div class="day_pic"><img src="<%=path %>/styles/images/5.jpg" height="100%"></div>
+	                <div class="day_title">
+	                	<h1>嘉实多磁护合成机油 5W-30 SN (4L)</h1>
+	                    <h2><span>用量：1</span><span>189.00</span></h2>
+	                </div>
+                </div>
+                <div class="day_more">
+                <dl>
+                	<dd>
+                        <div class="day_pic"><img src="<%=path %>/styles/images/6.jpg" height="100%"></div>
+                        <div class="day_title">
+                            <h1>嘉实多磁护合成机油 5W-30 SN (4L)</h1>
+                            <h2><span>用量：1</span><span>181.00</span></h2>
+                        </div>
+                    </dd>
+                    <dd>
+                        <div class="day_pic"><img src="<%=path %>/styles/images/7.jpg" height="100%"></div>
+                        <div class="day_title">
+                            <h1>嘉实多磁护合成机油 5W-30 SN (4L)</h1>
+                            <h2><span>用量：1</span><span>182.00</span></h2>
+                        </div>
+                    </dd>
+                    <dd>
+                        <div class="day_pic"><img src="<%=path %>/styles/images/8.jpg" height="100%"></div>
+                        <div class="day_title">
+                            <h1>嘉实多磁护合成机油 5W-30 SN (4L)</h1>
+                            <h2><span>用量：1</span><span>183.00</span></h2>
+                        </div>
+                    </dd>
+                </dl>
+                </div>
+    		</li>
+    	</ul>
         <a href="<%=path %>/<%=Constants.ROOT %>/car/selItem" class="addpro"><img src="<%=path %>/styles/images/2.png">添加新项</a>
     </div>
 </div>

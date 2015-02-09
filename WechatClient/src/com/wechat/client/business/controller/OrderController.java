@@ -26,14 +26,18 @@ public class OrderController extends BaseController{
 	
 	@RequestMapping("/service")
 	public String service(HttpServletRequest request, HttpServletResponse response){
+		String carId = "2722B345E6BB7E18E266E542468D4427";//request.getParameter("carId");
+		String type = request.getParameter("type");
+		request.setAttribute("carId", carId);
+		request.setAttribute("type", type);
 		return "order/order_services";
 	}
 	
 	@RequestMapping("/service.json")
 	public void getServiceJson(HttpServletRequest request, HttpServletResponse response){
 		LoginUser user = getLoginUser(request, response);
-		String carId = "2722B345E6BB7E18E266E542468D4427";//request.getParameter("carId");
-		String type = "1,4";//request.getParameter("type");
+		String carId = request.getParameter("carId");
+		String type = request.getParameter("type");
 		String accessUrl = GetService;
 		String param = HttpEntityUtils.toParameterString(user).substring(1)+"&car_id="+carId+"&type="+type;
 		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
@@ -55,17 +59,17 @@ public class OrderController extends BaseController{
 		String[] service_fees_title = request.getParameterValues("service_fees.title");
 		String[] service_fees_price = request.getParameterValues("service_fees.price");
 		String[] service_fees_cId = request.getParameterValues("service_fees.category_id");
-		request.setAttribute("commodities.checked", commoditys_checked);
-		request.setAttribute("commodities.id", commoditys_id);
-		request.setAttribute("commodities.label", commoditys_label);
-		request.setAttribute("commodities.number", commoditys_number);
-		request.setAttribute("commodities.price", commoditys_price);
-		request.setAttribute("commodities.category_id", commoditys_cId);
-		request.setAttribute("service_fees.checked", service_fees_checked);
-		request.setAttribute("service_fees.type", service_fees_type);
-		request.setAttribute("service_fees.title", service_fees_title);
-		request.setAttribute("service_fees.price", service_fees_price);
-		request.setAttribute("service_fees.category_id", service_fees_cId);
+		request.setAttribute("commodities_checked", commoditys_checked);
+		request.setAttribute("commodities_id", commoditys_id);
+		request.setAttribute("commodities_label", commoditys_label);
+		request.setAttribute("commodities_number", commoditys_number);
+		request.setAttribute("commodities_price", commoditys_price);
+		request.setAttribute("commoditys_cId", commoditys_cId);
+		request.setAttribute("service_fees_checked", service_fees_checked);
+		request.setAttribute("service_fees_type", service_fees_type);
+		request.setAttribute("service_fees_title", service_fees_title);
+		request.setAttribute("service_fees_price", service_fees_price);
+		request.setAttribute("service_fees_cId", service_fees_cId);
 		return "order/toorder";
 	}
 	

@@ -154,23 +154,27 @@ window.onload = function() {
 };
 
 function initRenderingCommandotyService(){
-	$(".day_list li .day_title").click(function() {
+	$("div.day_list > ul > li > div > div.day_title").click(function() {
 		$(this).toggleClass("day_cur");
-		$(this).next(".day_more").toggle();
+		$(this).parent().next(".day_more").toggle();
 	});
+	
+	$(".day_more dd").unbind("click");
 	$(".day_more dd").click(function() {
+		var dd = $(this);
 		$(".day_more dd").removeClass("dd_cur");
-		$(this).addClass("dd_cur");
+		dd.addClass("dd_cur");
 		$(".day_more").hide();
-		$(this).parents(".day_more").prev(".day_title").prev(
-				".day_pic").html(
-				$(this).find(".day_pic").html());
-		$(this).parents(".day_more").prev(".day_title").html(
-				$(this).find(".day_title").html());
+		var curDiv = dd.parent().parent().prev();
+		var curCommodify = curDiv.html();
+		curDiv.html(dd.html());
+		dd.html(curCommodify);
+		initRenderingCommandotyService();
 	});
+	
 	$(".day_name").click(function() {
-		$(this).prev(".xz").show();
-		var span = $("span:last" ,$(this).next().next());
+		$(this).prev().show();
+		var span = $("span:last" , $(this).next());
 		var fee = span.text();
 		if(fee != null && fee != ""){
 			var totalFee = parseFloat($("#totalprice").text());
@@ -180,7 +184,7 @@ function initRenderingCommandotyService(){
 	});
 	$(".xz").click(function() {
 		$(this).hide();
-		var span = $("span:last" ,$(this).next().next().next());
+		var span = $("span:last" , $(this).next().next());
 		var fee = span.text();
 		if(fee != null && fee != ""){
 			var totalFee = parseFloat($("#totalprice").text());

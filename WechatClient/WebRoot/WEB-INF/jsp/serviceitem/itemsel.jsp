@@ -25,6 +25,7 @@ $(function(){
 		$("div.add_car > h1").first().html(carName+" "+serName+"<br/>"+car);
 	}
 	
+	/*
 	$.ajax({
 		url:"<%=path %>/<%=Constants.ROOT %>/order/service.json",
 		dataType:"json",
@@ -54,6 +55,7 @@ $(function(){
 			}
 		}
 	});
+	*/
 });
 
 function addService(){
@@ -63,7 +65,7 @@ function addService(){
 		type += (type == ""?"":",") + $li.attr("category_id");
 	});
 	var carId = WxchatClient.currentCarType().id;
-	window.location.href = "<%=path + Constants.ROOT %>/order/service?type="+type+"&carId"+carId;
+	window.location.href = "<%=path + Constants.ROOT %>/order/service?type="+type+"&carId="+carId;
 }
 </script>
 </head>
@@ -77,6 +79,11 @@ function addService(){
 	</div>
 	<div class="add_tj">保养项目－添加新项</div>
     <ul class="add_an">
+    	<li category_id="1"><a href="<%=path + Constants.ROOT %>/order/service?type=1" rel="services"><img src="<%=path %>/styles/images/idx_nav1.png">日常保养</a></li>
+        <li category_id="2"><a href="<%=path + Constants.ROOT %>/order/service?type=2" rel="services"><img src="<%=path %>/styles/images/idx_nav2.png">更换电瓶</a></li>
+        <li category_id="3"><a href="<%=path + Constants.ROOT %>/order/service?type=3" rel="services"><img src="<%=path %>/styles/images/idx_nav3.png">更换刹车片</a></li>
+        <li category_id="4"><a href="<%=path + Constants.ROOT %>/order/service?type=4" rel="services"><img src="<%=path %>/styles/images/idx_nav4.png">加装PM2.5空调滤膜</a></li>
+        <li category_id="5"><a href="<%=path + Constants.ROOT %>/order/service?type=5" rel="services"><img src="<%=path %>/styles/images/idx_nav5.png">更换轮胎</a></li>
     </ul>
     <div class="add_btn">
     	<a href="javascript:addService();">确定</a>

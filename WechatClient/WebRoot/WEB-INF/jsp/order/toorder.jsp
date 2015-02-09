@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ page import="com.wechat.client.utils.*" %>
 <%
 	String path = request.getContextPath();
@@ -54,10 +55,19 @@ $(function(){
 	var weekdays = WxchatClient.DateUtil.getEveryDayOfLastWeek();
 	WxchatClient.Select.bulid("orderdateselectid","orderdate", weekdays);
 });
+
+
+function submitOrder(){
+	
+}
 </script>
 </head>
 <body>
 <div class="wapper">
+	<form action="<%=path + Constants.ROOT %>/order/ready" name="orderready" method="post">
+	<c:forEach items="${commodities_checked }" var="com" varStatus="cStatus">
+		<input type="hidden" name="commodities.id" value="${commodities_id[cStatus.index] }"/>
+	</c:forEach>
 	<div class="neir r_dz">
     	<p><strong>请选择地区</strong></p>
         <div class="add_sel">
@@ -116,10 +126,11 @@ $(function(){
             	<p class="ball"></p>
                 <p class="entry">验证码</p>
             </li>
-            <li class="bor"><input name="" type="text"></li>
+            <li class="bor"><input name="validateCode" type="text"></li>
         </ul>    	
     </div>
-    <a href="<%=path %>/<%=Constants.ROOT %>/order/ready" class="ensure">提交预约</a>
+    <a href="javascript:submitOrder();" class="ensure">提交预约</a>
+    </form>
 </div>
 </body>
 </html>

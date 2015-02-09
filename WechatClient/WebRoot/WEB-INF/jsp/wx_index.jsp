@@ -57,45 +57,56 @@ $(document).ready(function () {
 
 	var carType = WxchatClient.currentCarType();
 	if(carType && carType != null && carType != ""){
+		//显示当前车型
 		$(".idx_car_o").hide();
 		$(".idx_car").show();
 		var carName = carType.brand;
 		var serName = carType.sername;
 		var car = carType.car;
 		$("div.idx_car > h1").first().html(carName+" "+serName+"<br/>"+car);
-	}
-	
-	$.ajax({
-		url:"<%=path %>/<%=Constants.ROOT %>/order/service.json",
-		dataType:"json",
-		type:"get",
-		success:function(r){
-			var serviceul = $("div.idx_nav > ul");
-			if($.type(r) == "object"){
-				if(r["service_fees"] && r["service_fees"].length > 0){
-					var serviceNum = r["service_fees"].length;
-					var fixNum = 0;
-					if(serviceNum > 6){
-						fixNum = 5;
-					}else{
-						fixNum = serviceNum;
-					}
-					for(var i=0; i<fixNum; i++){
-						var serviceFee = r["service_fees"][i];
-						var li = $(document.createElement("li"));
-						li.html("<a href=\"<%=path + Constants.ROOT %>/order/service?carId="+carType.id+"&type="+serviceFee.category_id+"\"><img src=\"<%=path %>/styles/images/idx_nav"+(i+1)+".png\">"+
-								serviceFee.title+"</a>");
-						li.appendTo(serviceul);
-					}
-					if(fixNum == 5){
-						var li = $(document.createElement("li"));
-						li.html("<a href=\"<%=path + Constants.ROOT %>/car/selItem\"><img src=\"<%=path %>/styles/images/idx_nav6.png\">更多分项</a>");
-						serviceul.append(li);
+		
+		//加载服务项目
+		/* $.ajax({
+			url:"<%=path %>/<%=Constants.ROOT %>/order/service.json",
+			dataType:"json",
+			type:"get",
+			success:function(r){
+				var serviceul = $("div.idx_nav > ul");
+				if($.type(r) == "object"){
+					if(r["service_fees"] && r["service_fees"].length > 0){
+						var serviceNum = r["service_fees"].length;
+						var fixNum = 0;
+						if(serviceNum > 6){
+							fixNum = 5;
+						}else{
+							fixNum = serviceNum;
+						}
+						for(var i=0; i<fixNum; i++){
+							var serviceFee = r["service_fees"][i];
+							var li = $(document.createElement("li"));
+							li.html("<a href=\"<%=path + Constants.ROOT %>/order/service?carId="+carType.id+"&type="+serviceFee.category_id+"\"><img src=\"<%=path %>/styles/images/idx_nav"+(i+1)+".png\">"+
+									serviceFee.title+"</a>");
+							li.appendTo(serviceul);
+						}
+						if(fixNum == 5){
+							var li = $(document.createElement("li"));
+							li.html("<a href=\"<%=path + Constants.ROOT %>/car/selItem\"><img src=\"<%=path %>/styles/images/idx_nav6.png\">更多分项</a>");
+							serviceul.append(li);
+						}
 					}
 				}
 			}
-		}
-	});
+		}); */
+		
+		$("a[rel=services]").each(function(){
+			var $this = $(this);
+			var url = $this.attr("href");
+			$this.removeAttr("href");
+			$this.parent().on("click", function(){
+				window.location.href=url+"&car_id="+carType.id;
+			});
+		});
+	}
 });
 </script>
 </head>
@@ -134,7 +145,11 @@ $(document).ready(function () {
     </div>
     <div class="idx_nav">
         <ul>
-            
+            <li><a href="<%=path %>/<%=Constants.ROOT %>/order/service?type=1" rel="services"><img src="<%=path %>/styles/images/idx_nav1.png">日常保养</a></li>
+            <li><a href="<%=path %>/<%=Constants.ROOT %>/order/service?type=2" rel="services"><img src="<%=path %>/styles/images/idx_nav2.png">更换电瓶</a></li>
+            <li><a href="<%=path %>/<%=Constants.ROOT %>/order/service?type=3" rel="services"><img src="<%=path %>/styles/images/idx_nav3.png">更换刹车片</a></li>
+            <li><a href="<%=path %>/<%=Constants.ROOT %>/order/service?type=4" rel="services"><img src="<%=path %>/styles/images/idx_nav4.png">加装PM2.5空调滤膜</a></li>
+            <li><a href="<%=path %>/<%=Constants.ROOT %>/order/service?type=5" rel="services"><img src="<%=path %>/styles/images/idx_nav5.png">更换轮胎</a></li>
         </ul>
     </div>
     <div class="idx_tel">客服热线：400-898-9988</div>
