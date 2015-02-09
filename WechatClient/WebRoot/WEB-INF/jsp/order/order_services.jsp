@@ -105,7 +105,8 @@ $(document).ready(function () {
 
 function applyService(){
 	var selnum = $("div.xz:visible");
-	if(selnum == false || selnum.length == 0){
+	var feenum = $("div.xd:visible");
+	if((selnum == false || selnum.length == 0) && (feenum == false || feenum.length == 0)){
 		WxchatClient.Dialog.show("请选择至少一项服务项目.");
 		return;
 	}

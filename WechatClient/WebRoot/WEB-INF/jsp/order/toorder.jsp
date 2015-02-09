@@ -76,6 +76,13 @@ function getCode(){
 }
 
 function submitOrder(){
+	var address = $("input[type=text][name=address]");
+	if(address.val() == "" || address.val() == "详细地址"){
+		WxchatClient.Dialog.show("详细地址不能为空", function(){
+			address.focus();
+		});
+		return;
+	}
 	var contact = $("input[type=text][name=contact]");
 	if(contact.val() == ""){
 		WxchatClient.Dialog.show("姓名不能为空", function(){
