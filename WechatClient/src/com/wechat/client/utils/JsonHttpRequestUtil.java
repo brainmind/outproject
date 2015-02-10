@@ -60,13 +60,12 @@ public class JsonHttpRequestUtil {
 			connect.setRequestMethod("POST");
 			connect.setDoOutput(true);
 			writeContent(connect.getOutputStream(), param);
-			System.out.println(param);
 			connect.connect();
-			if(connect.getResponseCode() == 200){
+			code = connect.getResponseCode();
+			if(code == 200){
 				String json = readContent(connect.getInputStream());
 				return json;
 			}
-			code = 500;
 		} catch (MalformedURLException e) {
 			msg = "不是正确的URL";
 			log.error(msg, e);
@@ -104,6 +103,8 @@ public class JsonHttpRequestUtil {
 		try {
 			bw = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
 			bw.write(content);
+			bw.flush();
+			bw.close();
 		} catch (UnsupportedEncodingException e1) {
 			log.error("不支付的编码格式", e1);
 		} catch (IOException e) {

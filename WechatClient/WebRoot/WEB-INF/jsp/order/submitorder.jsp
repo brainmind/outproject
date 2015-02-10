@@ -17,6 +17,8 @@
 $(function(){
 	var carType = WxchatClient.currentCarType();
 	$("td.car_name").html(carType.brand+" "+carType.sername+" "+carType.car);
+	var logo = carType.logourl == "" ? "<%=path %>/styles/images/idx_logo.png" : carType.logourl;
+	$("div.add_logo > img").attr("src", logo);
 });
 </script>
 </head>
@@ -59,7 +61,7 @@ $(function(){
         </div>      
 	</div>
     <p class="my_order_num my_order_address"><strong>地址：</strong>${order.address }</p>
-        <div class="day_t">保养配件&nbsp;&nbsp;总价：<span>328.00</span>元 (含工时费）</div>
+        <div class="day_t">保养配件&nbsp;&nbsp;总价：<span>0.00</span>元 (含工时费）</div>
         <div class="day_list order_list">
     	<ul>
         	<li>

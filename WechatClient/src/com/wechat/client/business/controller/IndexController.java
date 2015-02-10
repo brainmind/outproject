@@ -5,15 +5,18 @@
  */
 package com.wechat.client.business.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wechat.client.business.model.LoginUser;
@@ -39,5 +42,16 @@ public class IndexController extends BaseController {
 			return null;
 		}
 		return TxtFileUtil.getDataList(id, type);
+	}
+	
+	@RequestMapping(value="/test", method=RequestMethod.POST)
+	public void test(HttpServletRequest request, HttpServletResponse response){
+		String json = request.getParameter("str");
+		try {
+			System.out.println(json);
+			response.getWriter().write("{\"orderid\":\"123123123JIDJ\"}");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

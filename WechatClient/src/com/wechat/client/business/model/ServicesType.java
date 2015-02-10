@@ -1,7 +1,5 @@
 package com.wechat.client.business.model;
 
-import org.springframework.util.StringUtils;
-
 /**
  * 1-日常保养；2-更换电瓶；3-更换刹车片；4-加装PM2.5空调滤膜 
  * @author yangzhou
@@ -47,7 +45,7 @@ public enum ServicesType {
 	}
 	
 	public static String getNameByType(String type){
-		if(StringUtils.isEmpty(type)){
+		if(type==null || "".equals(type)){
 			return "";
 		}
 		return getNameByType(Integer.parseInt(type));

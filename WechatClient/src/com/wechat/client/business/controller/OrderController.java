@@ -214,6 +214,7 @@ public class OrderController extends BaseController{
 		try {
 			param = new ObjectMapper().writeValueAsString(order);
 			JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
+			param = param.replaceAll("captcha", "CAPTCHA");
 			String json = jr.doPost(accessUrl, "str="+param);
 			writeJson(response, json);
 		} catch (IOException e) {
