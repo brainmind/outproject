@@ -178,8 +178,8 @@ function initRenderingCommandotyService(){
 		var li = $("li[type=fees][categoryid="+categoryid+"]");
 		var serviceFee = 0;
 		if(li[0]){
-			li.children("input[name=service_fees.checked]").val(0);
-			serviceFee = parseFloat(li.children("input[name=service_fees.price]").val());
+			li.children("input[name='service_fees.checked']").val(0);
+			serviceFee = parseFloat($("input[name='service_fees.price']", li).val());
 			li.show();
 		}
 		var span = $("span:last" , $(this).next());
@@ -196,8 +196,9 @@ function initRenderingCommandotyService(){
 		var li = $("li[type=fees][categoryid="+categoryid+"]");
 		var serviceFee = 0;
 		if(li[0]){
-			li.children("input[name=service_fees.checked]").val(0);
-			serviceFee = parseFloat(li.children("input[name=service_fees.price]").val());
+			li.children("input[name='service_fees.checked']").val(0);
+			var feePrice = $("input[name='service_fees.price']", li).val();
+			serviceFee = parseFloat(feePrice);
 			li.hide();
 		}
 		var span = $("span:last" , $(this).next().next());

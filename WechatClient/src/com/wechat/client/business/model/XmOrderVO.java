@@ -18,7 +18,7 @@ import java.util.List;
 public class XmOrderVO {
 	private String orderid;//订单id
 	private String order_number;//订单编号
-	private String car_id;//车型文本
+	private String car_id;//车ID
 	private String contact;//联系人
 	private String mobile;//联系电话
 	private String regine_code;//区域编码
@@ -33,6 +33,7 @@ public class XmOrderVO {
 	private List<XmOrderLogVO> logs;//订单日志
 	private List<Commodity> commodities;
 	private List<Servicefee> service_fees;
+	private String CAPTCHA;//验证码
 	/**
 	 * @return the orderid
 	 */
@@ -236,5 +237,11 @@ public class XmOrderVO {
 	 */
 	public void setCar_id(String car_id) {
 		this.car_id = car_id;
+	}
+	public String getCAPTCHA() {
+		return CAPTCHA;
+	}
+	public void setCAPTCHA(String cAPTCHA) {
+		CAPTCHA = cAPTCHA;
 	}
 }

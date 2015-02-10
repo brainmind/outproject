@@ -64,15 +64,37 @@ function getCode(){
 		});
 		return;
 	}
+	var href = $("#getcodeahref").attr("href");
+	$("#getcodeahref").attr("rel", href);
+	$("#getcodeahref").removeAttr("href");
 	$.ajax({
-		url:"<%=path + Constants.ROOT %>/order/ready",
-		data:"mobile=",
+		url:"<%=path + Constants.ROOT %>/order/getCode",
+		data:"mobile="+mobile,
 		dataType:"json",
 		type:"post",
 		success:function(r){
-			
+			if(typeof(r.retry_seconds) == "undifined" || r == null || isNaN(r.retry_seconds)){
+				WxchatClient.Dialog.show("获取验证码出错,检查手机号是否正确.");
+				$("#getcodeahref").attr("href", href);
+				return;
+			}
+			var delay = parseInt(r.retry_seconds);
+			setTimeout(function(){
+				$("#getcodeahref").attr("href", href);
+			}, delay*1000);
+			countdown(delay);
 		}
 	});
+}
+
+function countdown(seconds){
+	if(seconds < 0){
+		return false;
+	}
+	$("#timeoutseconds").html(seconds);
+	setTimeout(function(){
+		countdown(seconds-1);
+	}, 1000);
 }
 
 function submitOrder(){
@@ -97,6 +119,12 @@ function submitOrder(){
 		});
 		return;
 	}
+	if(!/^(13[0-9]|15[0-9]|18[0-9]|14[0-9])\d{8}$/.test(mobile)){
+		WxchatClient.Dialog.show("手机号输入不正确", function(){
+			$("input[type=text][name=mobile]").focus();
+		});
+		return;
+	}
 	var validcode = $("input[type=text][name=CAPTCHA]").val();
 	if(validcode == ""){
 		WxchatClient.Dialog.show("验证码不能为空", function(){
@@ -116,13 +144,29 @@ function submitOrder(){
 	
 	var carId = WxchatClient.currentCarType().id;
 	$("input[type=hidden][name=car_id]").val(carId);
-	document.orderready.submit();
+	var form = document.orderready;
+	$.ajax({
+		url:"<%=path + Constants.ROOT %>/order/save",
+		type:"post",
+		data:$(form).serialize(),
+		dataType:"json",
+		success:function(r){
+			if(r && r.orderid){
+				WxchatClient.Dialog.show("订单提交成功！", function(){
+					window.location.href="<%=path + Constants.ROOT %>/order/ready?orderId="+r.orderid;
+				});
+			}else{
+				WxchatClient.Dialog.show("订单提交失败！");
+			}
+		}
+	});
 }
 </script>
 </head>
 <body>
 <div class="wapper">
 	<form action="<%=path + Constants.ROOT %>/order/ready" name="orderready" method="post">
+	<input type="hidden" name="type" value="${type }" />
 	<input type="hidden" name="reserve_time_string" value=""/>
 	<input type="hidden" name="regine_code" value=""/>
 	<input type="hidden" name="car_id" value=""/>
@@ -190,8 +234,8 @@ function submitOrder(){
                 <p class="text"><input name="mobile" type="text"></p>
             </li>
             <li>
-            	<p class="time"><span>29</span>秒后再次获取</p>
-                <a href="javascript:getCode();" class="yzm">获取验证码</a>
+            	<p class="time"><span id="timeoutseconds">60</span>秒后再次获取</p>
+                <a id="getcodeahref" href="javascript:getCode();" class="yzm">获取验证码</a>
             </li>
             <li>
             	<p class="ball"></p>

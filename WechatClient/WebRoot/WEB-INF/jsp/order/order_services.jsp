@@ -30,12 +30,14 @@ $(document).ready(function () {
 						var price = 0.00;
 						if(!isNaN(commodity["total_price"])){
 							price = parseFloat(commodity["total_price"]).toFixed(2);
-							totalPrice += parseFloat(commodity["total_price"]);
+							if(commodity.recommand == "1"){
+								totalPrice += parseFloat(commodity["total_price"]);
+							}
 						}
 						var li = null;
 						var commodityInfo = "<div class=\"day_pic\"><img src=\""+commodity["pic_url"]+"\" height=\"100%\"></div>"+
 						"<div class=\"day_title\"><h1>"+commodity["label"]+" SN ("+commodity["number"]+")</h1><h2><span>用量：1</span><span>"+price+"</span></h2></div>";
-						if(commodity.recommand != 1){
+						if(commodity.recommand != "1"){
 							li = $("li[categoryid="+categoryid+"]");
 							if(li[0] && li.is("li")){
 								var commodityDL = $("li[categoryid="+categoryid+"] > div.day_more > dl");
@@ -100,6 +102,8 @@ $(document).ready(function () {
 		var serName = carType.sername;
 		var car = carType.car;
 		$("div.add_cars > h1").first().html(carName+" "+serName+"<br/>"+car);
+		var logo = carType.logourl == "" ? "<%=path %>/styles/images/idx_logo.png" : carType.logourl;
+		$("div.add_logo > img").attr("src", logo);
 	}
 });
 
@@ -116,7 +120,7 @@ function applyService(){
 </head>
 <body>
 <form action="<%=path + Constants.ROOT %>/order/to" method="post" name="serviceForm">
-
+<input type="hidden" name="type" value="${type }" />
 <div class="wapper">
 	<div class="add_top">
     	<div class="add_logo"><img src="<%=path %>/styles/images/4.png"></div>

@@ -67,7 +67,7 @@ $(document).ready(function () {
 		
 		//加载服务项目
 		/* $.ajax({
-			url:"<%=path %>/<%=Constants.ROOT %>/order/service.json",
+			url:"<%=path + Constants.ROOT %>/order/service.json",
 			dataType:"json",
 			type:"get",
 			success:function(r){
