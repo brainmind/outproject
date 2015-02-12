@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="yz" uri="/WEB-INF/tld/yz.tld" %>
 <%@ page import="com.wechat.client.utils.*" %>
 <%
 	String path = request.getContextPath();
@@ -68,7 +69,7 @@ $(function(){
     		<c:forEach items="${commdoties }" var="comm">
 	    		<li>
 	            	<div class="xd"></div>
-	            	<div class="day_name">更换<br/>机油</div>
+	            	<div class="day_name"><yz:splitor value="${comm.label }" split="-" index="2"/></div>
 	                <div class="day_pic"><img src="<%=path %>/styles/images/5.jpg" height="100%"></div>
 	                <div class="no_arrow">
 	                	<div class="h_border">
