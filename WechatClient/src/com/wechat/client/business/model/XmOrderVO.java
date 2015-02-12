@@ -21,7 +21,7 @@ public class XmOrderVO {
 	private String car_id;//车ID
 	private String contact;//联系人
 	private String mobile;//联系电话
-	private String regine_code;//区域编码
+	private String region_code;//区域编码
 	private String address;//服务地址
 	private int state;//订单状态。-1：已取消；1-已提交；100-配货中；300-已完成
 	private String commented;//评价状态。1:已评价；0:未评价
@@ -34,6 +34,7 @@ public class XmOrderVO {
 	private List<Commodity> commodities;
 	private List<Servicefee> service_fees;
 	private String CAPTCHA;//验证码
+	private String license;
 	/**
 	 * @return the orderid
 	 */
@@ -81,18 +82,6 @@ public class XmOrderVO {
 	 */
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
-	}
-	/**
-	 * @return the regine_code
-	 */
-	public String getRegine_code() {
-		return regine_code;
-	}
-	/**
-	 * @param regine_code the regine_code to set
-	 */
-	public void setRegine_code(String regine_code) {
-		this.regine_code = regine_code;
 	}
 	/**
 	 * @return the address
@@ -243,5 +232,17 @@ public class XmOrderVO {
 	}
 	public void setCAPTCHA(String cAPTCHA) {
 		CAPTCHA = cAPTCHA;
+	}
+	public String getRegion_code() {
+		return region_code;
+	}
+	public void setRegion_code(String region_code) {
+		this.region_code = region_code;
+	}
+	public String getLicense() {
+		return license;
+	}
+	public void setLicense(String license) {
+		this.license = license;
 	}
 }

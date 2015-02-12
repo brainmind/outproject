@@ -34,12 +34,6 @@ public class CarController extends BaseController {
 
 	@RequestMapping("/sel")
 	public String select(HttpServletRequest request, HttpServletResponse response){
-		LoginUser user = getLoginUser(request, response);
-		String accessUrl = getCarTypeList;
-		String param = HttpEntityUtils.toParameterString(user).substring(1);
-		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
-		String json = jr.doGet(accessUrl+"?"+param);
-		request.setAttribute("json", json);
 		return "car_model_sel";
 	}
 	

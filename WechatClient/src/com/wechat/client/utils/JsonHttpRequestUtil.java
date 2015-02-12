@@ -55,11 +55,14 @@ public class JsonHttpRequestUtil {
 		String msg = "";
 		try {
 			URL url = new URL(basePath + accessUrl);
+			//URL url = new URL("http://192.168.1.182:8080/WechatClient/dtds/test");
 			connect = (HttpURLConnection)url.openConnection();
 			connect.setConnectTimeout(10000);
 			connect.setRequestMethod("POST");
+			connect.addRequestProperty("Content-Type", "application/json;charset=utf-8");
 			connect.setDoOutput(true);
 			writeContent(connect.getOutputStream(), param);
+			System.out.println(param);
 			connect.connect();
 			code = connect.getResponseCode();
 			if(code == 200){

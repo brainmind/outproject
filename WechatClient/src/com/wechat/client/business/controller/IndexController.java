@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,10 +46,11 @@ public class IndexController extends BaseController {
 	}
 	
 	@RequestMapping(value="/test", method=RequestMethod.POST)
-	public void test(HttpServletRequest request, HttpServletResponse response){
+	public void test(String s, HttpServletRequest request, HttpServletResponse response, @RequestBody String str){
 		String json = request.getParameter("str");
 		try {
 			System.out.println(json);
+			System.out.println(str);
 			response.getWriter().write("{\"orderid\":\"123123123JIDJ\"}");
 		} catch (IOException e) {
 			e.printStackTrace();

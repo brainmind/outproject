@@ -1,5 +1,8 @@
 package com.wechat.client.business.model;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class Servicefee {
 	private String type;
 	private String category_id;

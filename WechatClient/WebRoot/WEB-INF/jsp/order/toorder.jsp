@@ -140,7 +140,7 @@ function submitOrder(){
 	if(regine_code==null || regine_code==""){
 		regine_code = $("#citye_selectId").val();
 	}
-	$("input[type=hidden][name=regine_code]").val(regine_code);
+	$("input[type=hidden][name=region_code]").val(regine_code);
 	
 	var carId = WxchatClient.currentCarType().id;
 	$("input[type=hidden][name=car_id]").val(carId);
@@ -168,10 +168,10 @@ function submitOrder(){
 	<form action="<%=path + Constants.ROOT %>/order/ready" name="orderready" method="post">
 	<input type="hidden" name="type" value="${type }" />
 	<input type="hidden" name="reserve_time_string" value=""/>
-	<input type="hidden" name="regine_code" value=""/>
+	<input type="hidden" name="region_code" value=""/>
 	<input type="hidden" name="car_id" value=""/>
 	<c:forEach items="${service_fees_checked }" var="com" varStatus="cStatus">
-		<c:if test="${com == '1' }">
+		<c:if test="${com == '1' && not empty commodities_id[cStatus.index]}">
 			<input type="hidden" name="commodities.id" value="${commodities_id[cStatus.index] }"/>
 			<input type="hidden" name="commodities.label" value="${commodities_label[cStatus.index] }"/>
 			<input type="hidden" name="commodities.number" value="${commodities_number[cStatus.index] }"/>

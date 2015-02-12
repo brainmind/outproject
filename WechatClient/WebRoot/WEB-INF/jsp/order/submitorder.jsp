@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ page import="com.wechat.client.utils.*" %>
 <%
 	String path = request.getContextPath();
@@ -64,17 +65,19 @@ $(function(){
         <div class="day_t">保养配件&nbsp;&nbsp;总价：<span>0.00</span>元 (含工时费）</div>
         <div class="day_list order_list">
     	<ul>
-        	<li>
-            	<div class="xd"></div>
-            	<div class="day_name">更换<br/>机油</div>
-                <div class="day_pic"><img src="<%=path %>/styles/images/5.jpg" height="100%"></div>
-                <div class="no_arrow">
-                	<div class="h_border">
-                		<h1>嘉实多磁护合成机油 5W-30 SN (4L)</h1>
-                    </div>
-                    <h2><span class="border_left">用量：1</span><span>180.00</span></h2>
-                </div>           
-          	</li>
+    		<c:forEach items="${commdoties }" var="comm">
+	    		<li>
+	            	<div class="xd"></div>
+	            	<div class="day_name">更换<br/>机油</div>
+	                <div class="day_pic"><img src="<%=path %>/styles/images/5.jpg" height="100%"></div>
+	                <div class="no_arrow">
+	                	<div class="h_border">
+	                		<h1>嘉实多磁护合成机油 5W-30 SN (4L)</h1>
+	                    </div>
+	                    <h2><span class="border_left">用量：1</span><span>180.00</span></h2>
+	                </div>           
+	          	</li>
+    		</c:forEach>
             <li>
             	<div class="xd"></div>
             	<div class="day_name">更换<br/>机油</div>

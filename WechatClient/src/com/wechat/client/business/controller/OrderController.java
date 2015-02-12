@@ -13,6 +13,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
@@ -190,18 +191,18 @@ public class OrderController extends BaseController{
 				fee.setCategory_id(feeCategory_id);
 				fee.setType(feeType);
 				fee.setPrice(Double.parseDouble(feePrice));
-				String commId = commoditys_id[i];
-				String commPrice = commoditys_price[i];
-				String commCid = commoditys_cId[i];
-				Commodity comm = new Commodity();
-				comm.setCategory_id(commCid);
-				comm.setId(commId);
-				comm.setTotal_price(Double.parseDouble(commPrice));
-				comm.setCategory_id(commCid);
-				comm.setType(type);
 				//添加订单明细
 				service_fees.add(fee);
-				commodities.add(comm);
+				if(StringUtils.isNotEmpty(commoditys_id[i])){
+					String commPrice = commoditys_price[i];
+					String commCid = commoditys_cId[i];
+					Commodity comm = new Commodity();
+					comm.setCategory_id(commCid);
+					comm.setTotal_price(Double.parseDouble(commPrice));
+					comm.setCategory_id(commCid);
+					comm.setType(type);
+					commodities.add(comm);
+				}
 			}
 			order.setCommodities(commodities);
 			order.setService_fees(service_fees);
@@ -212,10 +213,12 @@ public class OrderController extends BaseController{
 		String accessUrl = SubmitOrder;
 		String param;
 		try {
+			LoginUser user = getLoginUser(request, response);
+			String getParam = HttpEntityUtils.toParameterString(user).substring(1);
 			param = new ObjectMapper().writeValueAsString(order);
 			JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
 			param = param.replaceAll("captcha", "CAPTCHA");
-			String json = jr.doPost(accessUrl, "str="+param);
+			String json = jr.doPost(accessUrl+"?"+getParam, param);
 			writeJson(response, json);
 		} catch (IOException e) {
 			e.printStackTrace();
