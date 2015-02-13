@@ -144,6 +144,11 @@ function submitOrder(){
 	
 	var carId = WxchatClient.currentCarType().id;
 	$("input[type=hidden][name=car_id]").val(carId);
+	
+	var submitbut = $("a.ensure");
+	var href = submitbut.attr("href");
+	submitbut.attr("rel", href);
+	submitbut.removeAttr("href");
 	var form = document.orderready;
 	$.ajax({
 		url:"<%=path + Constants.ROOT %>/order/save",
@@ -157,6 +162,7 @@ function submitOrder(){
 				});
 			}else{
 				WxchatClient.Dialog.show("订单提交失败！");
+				submitbut.attr("href", href);
 			}
 		}
 	});

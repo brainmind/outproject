@@ -35,6 +35,7 @@ public class XmOrderVO {
 	private List<Servicefee> service_fees;
 	private String CAPTCHA;//验证码
 	private String license;
+	private BaseBean bean;
 	/**
 	 * @return the orderid
 	 */
@@ -244,5 +245,11 @@ public class XmOrderVO {
 	}
 	public void setLicense(String license) {
 		this.license = license;
+	}
+	public BaseBean getBean() {
+		return bean;
+	}
+	public void setBean(BaseBean bean) {
+		this.bean = bean;
 	}
 }

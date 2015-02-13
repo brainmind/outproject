@@ -165,6 +165,8 @@ public class OrderController extends BaseController{
 		}
 		request.setAttribute("order", order);
 		request.setAttribute("serviceName", ServicesType.getNameByType(type));*/
+		String orderId = request.getParameter("orderId");
+		request.setAttribute("orderId", orderId);
 		return "order/submitorder";
 	}
 	
@@ -197,7 +199,7 @@ public class OrderController extends BaseController{
 					String commPrice = commoditys_price[i];
 					String commCid = commoditys_cId[i];
 					Commodity comm = new Commodity();
-					comm.setCategory_id(commCid);
+					comm.setId(commoditys_id[i]);
 					comm.setTotal_price(Double.parseDouble(commPrice));
 					comm.setCategory_id(commCid);
 					comm.setType(type);

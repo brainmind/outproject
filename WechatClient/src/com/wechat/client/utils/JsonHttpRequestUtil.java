@@ -62,9 +62,10 @@ public class JsonHttpRequestUtil {
 			connect.addRequestProperty("Content-Type", "application/json;charset=utf-8");
 			connect.setDoOutput(true);
 			writeContent(connect.getOutputStream(), param);
-			System.out.println(param);
+			log.info("提交内容："+param);
 			connect.connect();
 			code = connect.getResponseCode();
+			log.info("返回代码："+code);
 			if(code == 200){
 				String json = readContent(connect.getInputStream());
 				return json;

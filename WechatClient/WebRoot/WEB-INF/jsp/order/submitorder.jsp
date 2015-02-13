@@ -21,25 +21,53 @@ $(function(){
 	$("td.car_name").html(carType.brand+" "+carType.sername+" "+carType.car);
 	var logo = carType.logourl == "" ? "<%=path %>/styles/images/idx_logo.png" : carType.logourl;
 	$("div.add_logo > img").attr("src", logo);
+	
+	$.ajax({
+		url:"<%=path + Constants.ROOT %>/order/getOrder.json?orderId=${orderId }",
+		type:"get",
+		dataType:"json",
+		success:function(r){
+			if(r && $.type(r) == "object"){
+				var order = r.baseBean;
+				$("#contact").html(order.contact);
+				$("#mobile").html(order.mobile);
+				$("#address").html("<strong>地址：</strong>" + order.address);
+				$("input[type=hidden][name='order_number']").val(order.order_number);
+				$("#order_number").html("<strong>订单编号：</strong>" + order.order_number);
+				var commdoties = r.commodities;
+				var container = $("div.day_list > ul");
+				if(commdoties && $.type(commdoties) == "array"){
+					for(var i=0; i<commdoties.length; i++){
+						var commdoty = commdoties[i];
+						var li = $(document.createElement("li"));
+						container.append(li);
+						li.html("<div class=\"xd\"></div>"+
+				            	"<div class=\"day_name\">"+commdoty.category_label+"</div>"+
+				                "<div class=\"day_pic\"><img src=\"<%=path %>/styles/images/5.jpg\" height=\"100%\"></div>"+
+				                "<div class=\"no_arrow\">"+
+				                "	<div class=\"h_border\">"+
+				                "		<h1>"+commdoty.label+" SN (4L)</h1>"+
+				                "    </div>"+
+				                "    <h2><span class=\"border_left\">用量："+commdoty.number+"</span><span>180.00</span></h2>"+
+				                "</div>");
+					}
+				}
+				var serviceFees = r.service_fees;
+			}
+		}
+	});
 });
 </script>
 </head>
 <body>
 <div class="wapper">
 	<form name="">
-		<input type="hidden" name="orderid" value="${order.orderid }"/>
-		<input type="hidden" name="order_number" value="${order.order_number }"/>
-		<input type="hidden" name="car_id" value="${order.car_id }"/>
-		<input type="hidden" name="contact" value="${order.contact }"/>
-		<input type="hidden" name="mobile" value="${order.mobile }"/>
-		<input type="hidden" name="regine_code" value="${order.regine_code }"/>
-		<input type="hidden" name="regine_code" value="${order.regine_code }"/>
-		<input type="hidden" name="address" value="${order.address }"/>
-		<input type="hidden" name="reserve_time_string" value="${order.reserve_time_string }"/>
+		<input type="hidden" name="orderid" value="${orderId }"/>
+		<input type="hidden" name="order_number" value=""/>
 	</form>
 	<div class="submit_order">
     	<h1 class="my_order">我的订单</h1>
-        <p class="my_order_num"><strong>订单编号：</strong>${order.order_number }</p>
+        <p class="my_order_num" id="order_number"><strong>订单编号：</strong></p>
         <div class="add_top">
     	<div class="add_logo order_img"><img src="<%=path %>/styles/images/10.jpg"></div>
         <div class="order_font">
@@ -55,43 +83,19 @@ $(function(){
               </tr>
               <tr>
                 <td>联系人：</td>
-                <td class="nametel">${order.contact }</td>
+                <td class="nametel" id="contact"></td>
                 <td>手机号：</td>
-                <td class="nametel">${order.mobile }</td>
+                <td class="nametel" id="mobile"></td>
               </tr>
             </table>
         </div>      
 	</div>
-    <p class="my_order_num my_order_address"><strong>地址：</strong>${order.address }</p>
-        <div class="day_t">保养配件&nbsp;&nbsp;总价：<span>0.00</span>元 (含工时费）</div>
+    <p class="my_order_num my_order_address" id="address"><strong>地址：</strong></p>
+    <div class="day_t">保养配件&nbsp;&nbsp;总价：<span id="total_price">0.00</span>元 (含工时费）</div>
         <div class="day_list order_list">
-    	<ul>
-    		<c:forEach items="${commdoties }" var="comm">
-	    		<li>
-	            	<div class="xd"></div>
-	            	<div class="day_name"><yz:splitor value="${comm.label }" split="-" index="2"/></div>
-	                <div class="day_pic"><img src="<%=path %>/styles/images/5.jpg" height="100%"></div>
-	                <div class="no_arrow">
-	                	<div class="h_border">
-	                		<h1>嘉实多磁护合成机油 5W-30 SN (4L)</h1>
-	                    </div>
-	                    <h2><span class="border_left">用量：1</span><span>180.00</span></h2>
-	                </div>           
-	          	</li>
-    		</c:forEach>
-            <li>
-            	<div class="xd"></div>
-            	<div class="day_name">更换<br/>机油</div>
-                <div class="day_pic"><img src="<%=path %>/styles/images/6.jpg" height="100%"></div>
-                <div class="no_arrow">
-                	<div class="h_border">
-                		<h1>嘉实多磁护合成机油 5W-30 SN (4L)</h1>
-                    </div>
-                    <h2><span class="border_left">用量：1</span><span>180.00</span></h2>
-                </div>    
-          	</li>
-        </ul>
-    </div>
+	    	<ul>
+	        </ul>
+    	</div>
     <a href="<%=path %>/<%=Constants.ROOT %>/order/payonline" class="pay">在线支付（立减5元）</a>
     <a href="<%=path %>/<%=Constants.ROOT %>/order/payonface" class="pay pay_unlock">当面付款</a>
     </div>

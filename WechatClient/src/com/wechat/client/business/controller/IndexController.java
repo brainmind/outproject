@@ -31,7 +31,7 @@ public class IndexController extends BaseController {
 	public String index(HttpServletRequest request){
 		HttpSession session = request.getSession();
 		LoginUser user = new LoginUser();
-		user.setOpenId("12345688");
+		user.setOpenid("12345688");
 		session.setAttribute(Constants.USER_SESSION_KEY, user);
 		return "wx_index";
 	}

@@ -5,18 +5,13 @@ import java.util.Date;
 import org.apache.commons.httpclient.util.DateUtil;
 
 public class LoginUser {
-	private String openId;
+	private String openid;
 	private String mobile;
 	private String unionid;
 	private String version="1.0";
 	private String encrypt_type="0";
 	private String timestamp = DateUtil.formatDate(new Date(), "yyyyMMddHHmmssSSS");
-	public String getOpenId() {
-		return openId;
-	}
-	public void setOpenId(String openId) {
-		this.openId = openId;
-	}
+
 	public String getMobile() {
 		return mobile;
 	}
@@ -46,5 +41,11 @@ public class LoginUser {
 	}
 	public void setTimestamp(String timestamp) {
 		this.timestamp = timestamp;
+	}
+	public String getOpenid() {
+		return openid;
+	}
+	public void setOpenid(String openid) {
+		this.openid = openid;
 	}
 }
