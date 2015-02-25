@@ -137,8 +137,7 @@ box-sizing:border-box; font-family:\5FAE\8F6F\96C5\9ED1; line-height:39px; borde
 .add_sel select{float:left; height:39px; background:url(../images/3.png) no-repeat right center; background-size:auto 5px;
 box-sizing:border-box; font-family:\5FAE\8F6F\96C5\9ED1; line-height:39px; border:none; -webkit-appearance:none; -moz-appearance:none; font-size:12px;}
 .add_sel select:nth-child(1){float:left; background:url(../images/3.png) no-repeat 90% center; background-size:auto 5px; border-right:1px solid #b4b4b4; box-sizing:border-box; width:30%;}
-.add_sel select:nth-child(2){float:left; background:url(../images/3.png) no-repeat 90% center; background-size:auto 5px; border-right:1px solid #b4b4b4; box-sizing:border-box; width:30%;}
-.add_sel select:nth-child(3){float:right; width:40%;}
+.add_sel select:nth-child(2){float:right; width:70%;}
 
 /* 日常保养 添加新项*/
 .add_top{width:100%; height:84px; border-bottom:1px solid #ccc; border-top:1px solid #ccc;}
@@ -259,6 +258,7 @@ box-sizing:border-box; display:-webkit-box;-webkit-box-orient: vertical;-webkit-
 .status_processes li:nth-child(2){ position:absolute; left:50%; margin-left:-24px;}
 .status_processes li:nth-child(3){ margin-right:0px; float:right; text-align:right;}
 .status_processes li:nth-child(3) span{ width:72px; text-align:center; color:#ccc;}
+.changable span{text-align:center; color:#ccc;}
 .half{background:url(../images/yes.png) 24px 8px no-repeat; background-size:100% 2px; height:60px; width:50%;}
 .hundred_percent{background:url(../images/yes.png) 24px 8px no-repeat; background-size:100% 2px; height:60px; width:100%;}
 .assessment{ width:28%; float:right; margin-right:4%;}

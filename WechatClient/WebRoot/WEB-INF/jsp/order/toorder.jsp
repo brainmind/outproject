@@ -67,6 +67,7 @@ function getCode(){
 	var href = $("#getcodeahref").attr("href");
 	$("#getcodeahref").attr("rel", href);
 	$("#getcodeahref").removeAttr("href");
+	$("#getcodeahref").addClass("pay_unlock");
 	$.ajax({
 		url:"<%=path + Constants.ROOT %>/order/getCode",
 		data:"mobile="+mobile,
@@ -76,11 +77,13 @@ function getCode(){
 			if(typeof(r.retry_seconds) == "undifined" || r == null || isNaN(r.retry_seconds)){
 				WxchatClient.Dialog.show("获取验证码出错,检查手机号是否正确.");
 				$("#getcodeahref").attr("href", href);
+				$("#getcodeahref").removeClass("pay_unlock");
 				return;
 			}
 			var delay = parseInt(r.retry_seconds);
 			setTimeout(function(){
 				$("#getcodeahref").attr("href", href);
+				$("#getcodeahref").removeClass("pay_unlock");
 			}, delay*1000);
 			countdown(delay);
 		}
@@ -149,6 +152,7 @@ function submitOrder(){
 	var href = submitbut.attr("href");
 	submitbut.attr("rel", href);
 	submitbut.removeAttr("href");
+	submitbut.addClass("pay_unlock");
 	var form = document.orderready;
 	$.ajax({
 		url:"<%=path + Constants.ROOT %>/order/save",
@@ -163,6 +167,7 @@ function submitOrder(){
 			}else{
 				WxchatClient.Dialog.show("订单提交失败！");
 				submitbut.attr("href", href);
+				submitbut.removeClass("pay_unlock");
 			}
 		}
 	});

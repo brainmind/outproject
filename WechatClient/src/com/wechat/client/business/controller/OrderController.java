@@ -36,6 +36,7 @@ public class OrderController extends BaseController{
 	private String GetCode = "/phoneCAPTCHA.json";
 	private String SubmitOrder = "/order.json";
 	private String OrderDetail = "/orderDetail.json";
+	private String OrderList = "/userOrderList.json";
 	
 	@RequestMapping("/service")
 	public String service(HttpServletRequest request, HttpServletResponse response){
@@ -103,68 +104,6 @@ public class OrderController extends BaseController{
 	
 	@RequestMapping("/ready")
 	public String readyOrder(XmOrderVO order, HttpServletRequest request, HttpServletResponse response){
-		/*String type = request.getParameter("type");
-		String[] commoditys_id = request.getParameterValues("commodities.id");
-		String[] commoditys_label = request.getParameterValues("commodities.label");
-		String[] commoditys_number = request.getParameterValues("commodities.number");
-		String[] commoditys_price = request.getParameterValues("commodities.price");
-		String[] commoditys_cId = request.getParameterValues("commodities.category_id");
-		String[] service_fees_type = request.getParameterValues("service_fees.type");
-		String[] service_fees_title = request.getParameterValues("service_fees.title");
-		String[] service_fees_price = request.getParameterValues("service_fees.price");
-		String[] service_fees_cId = request.getParameterValues("service_fees.category_id");
-		if(service_fees_type != null && service_fees_type.length > 0){
-			List<Commodity> commodities = new ArrayList<Commodity>();
-			List<Servicefee> service_fees = new ArrayList<Servicefee>();
-			for(int i=0; i<service_fees_type.length; i++){
-				String feeType = service_fees_type[i];
-				String feeCategory_id = service_fees_cId[i];
-				String feePrice = service_fees_price[i];
-				Servicefee fee = new Servicefee();
-				fee.setCategory_id(feeCategory_id);
-				fee.setType(feeType);
-				fee.setPrice(Double.parseDouble(feePrice));
-				String commId = commoditys_id[i];
-				String commPrice = commoditys_price[i];
-				String commCid = commoditys_cId[i];
-				Commodity comm = new Commodity();
-				comm.setCategory_id(commCid);
-				comm.setId(commId);
-				comm.setTotal_price(Double.parseDouble(commPrice));
-				comm.setCategory_id(commCid);
-				comm.setType(type);
-				
-				service_fees.add(fee);
-				commodities.add(comm);
-			}
-			order.setCommodities(commodities);
-			order.setService_fees(service_fees);
-		}
-		request.setAttribute("commodities_id", commoditys_id);
-		request.setAttribute("commodities_label", commoditys_label);
-		request.setAttribute("commodities_number", commoditys_number);
-		request.setAttribute("commodities_price", commoditys_price);
-		request.setAttribute("commoditys_cId", commoditys_cId);
-		request.setAttribute("service_fees_type", service_fees_type);
-		request.setAttribute("service_fees_title", service_fees_title);
-		request.setAttribute("service_fees_price", service_fees_price);
-		request.setAttribute("service_fees_cId", service_fees_cId);
-		order.setOrder_number(OrderNoGenerator.getSN());
-		order.setCreate_time(new Date().getTime());
-		order.setState(Constants.ORDER_SUBMIT);
-		//LoginUser user = getLoginUser(request, response);
-		String accessUrl = SubmitOrder;
-		String param;
-		try {
-			param = new ObjectMapper().writeValueAsString(order);
-			JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
-			String json = jr.doPost(accessUrl, param);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		request.setAttribute("order", order);
-		request.setAttribute("serviceName", ServicesType.getNameByType(type));*/
 		String orderId = request.getParameter("orderId");
 		request.setAttribute("orderId", orderId);
 		return "order/submitorder";
@@ -237,18 +176,35 @@ public class OrderController extends BaseController{
 		writeJson(response, json);
 	}
 	
+	@RequestMapping("/myOrders.json")
+	public void getOrderList(HttpServletRequest request, HttpServletResponse response){
+		LoginUser user = getLoginUser(request, response);
+		String param = HttpEntityUtils.toParameterString(user).substring(1);
+		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
+		String json = jr.doGet(OrderList+"?"+param);
+		writeJson(response, json);
+	}
+	
 	@RequestMapping("/payonface")
-	public String payOnFace(){
+	public String payOnFace(HttpServletRequest request){
+		String orderId = request.getParameter("orderid");
+		String orderSn = request.getParameter("order_number");
+		request.setAttribute("orderid", orderId);
+		request.setAttribute("order_number", orderSn);
 		return "order/payonface";
 	}
 
 	@RequestMapping("/payonline")
-	public String payOnLine(){
+	public String payOnLine(HttpServletRequest request){
+		String orderId = request.getParameter("orderid");
+		String orderSn = request.getParameter("order_number");
+		request.setAttribute("orderid", orderId);
+		request.setAttribute("order_number", orderSn);
 		return "order/payonline";
 	}
 	
-	@RequestMapping("/finishorder")
-	public String finishOrder(){
+	@RequestMapping("/history")
+	public String history(){
 		return "order/finishorder";
 	}
 	

@@ -18,7 +18,7 @@
 <script type="text/javascript">
 $(function(){
 	var carType = WxchatClient.currentCarType();
-	$("td.car_name").html(carType.brand+" "+carType.sername+" "+carType.car);
+	$("td.car_name").html(carType.brand+" "+carType.sername+"<br/>"+carType.car);
 	var logo = carType.logourl == "" ? "<%=path %>/styles/images/idx_logo.png" : carType.logourl;
 	$("div.add_logo > img").attr("src", logo);
 	
@@ -29,39 +29,62 @@ $(function(){
 		success:function(r){
 			if(r && $.type(r) == "object"){
 				var order = r.baseBean;
-				$("#contact").html(order.contact);
-				$("#mobile").html(order.mobile);
-				$("#address").html("<strong>地址：</strong>" + order.address);
-				$("input[type=hidden][name='order_number']").val(order.order_number);
-				$("#order_number").html("<strong>订单编号：</strong>" + order.order_number);
+				$("#contact").html(r.contact);
+				$("#mobile").html(r.mobile);
+				$("#address").html("<strong>地址：</strong>" + r.address);
+				$("input[type=hidden][name='order_number']").val(r.orderNumber);
+				$("#order_number").html("<strong>订单编号：</strong>" + r.orderNumber);
 				var commdoties = r.commodities;
 				var container = $("div.day_list > ul");
+				var totalPrice = 0;
 				if(commdoties && $.type(commdoties) == "array"){
 					for(var i=0; i<commdoties.length; i++){
 						var commdoty = commdoties[i];
 						var li = $(document.createElement("li"));
 						container.append(li);
+						var commPrice = parseFloat(isNaN(commdoty.total_price)?"0":commdoty.total_price);
+						totalPrice += commPrice;
 						li.html("<div class=\"xd\"></div>"+
 				            	"<div class=\"day_name\">"+commdoty.category_label+"</div>"+
-				                "<div class=\"day_pic\"><img src=\"<%=path %>/styles/images/5.jpg\" height=\"100%\"></div>"+
+				                "<div class=\"day_pic\"><img src=\""+commdoty.pic_url+"\" height=\"100%\"></div>"+
 				                "<div class=\"no_arrow\">"+
 				                "	<div class=\"h_border\">"+
 				                "		<h1>"+commdoty.label+" SN (4L)</h1>"+
 				                "    </div>"+
-				                "    <h2><span class=\"border_left\">用量："+commdoty.number+"</span><span>180.00</span></h2>"+
+				                "    <h2><span class=\"border_left\">用量："+commdoty.number+"</span><span>"+commPrice.toFixed(2)+"</span></h2>"+
 				                "</div>");
 					}
 				}
 				var serviceFees = r.service_fees;
+				if(serviceFees && $.type(serviceFees) == "array"){
+					for(var i=0; i<serviceFees.length; i++){
+						var fee = serviceFees[i];
+						var feePrice = parseFloat(isNaN(fee.price)?"0":fee.price);
+						totalPrice += feePrice;
+					}
+				}
+				$("#total_price").html(totalPrice.toFixed(2));
 			}
 		}
 	});
 });
+
+function payonline(){
+	var form = document.payForm;
+	$(form).attr("action", "<%=path + Constants.ROOT %>/order/payonline");
+	form.submit();
+}
+
+function payonface(){
+	var form = document.payForm;
+	$(form).attr("action", "<%=path + Constants.ROOT %>/order/payonface");
+	form.submit();
+}
 </script>
 </head>
 <body>
 <div class="wapper">
-	<form name="">
+	<form name="payForm" method="get">
 		<input type="hidden" name="orderid" value="${orderId }"/>
 		<input type="hidden" name="order_number" value=""/>
 	</form>
@@ -96,8 +119,8 @@ $(function(){
 	    	<ul>
 	        </ul>
     	</div>
-    <a href="<%=path %>/<%=Constants.ROOT %>/order/payonline" class="pay">在线支付（立减5元）</a>
-    <a href="<%=path %>/<%=Constants.ROOT %>/order/payonface" class="pay pay_unlock">当面付款</a>
+    <a href="javascript:payonline();" class="pay">在线支付（立减5元）</a>
+    <a href="javascript:payonface()" class="pay pay_unlock">当面付款</a>
     </div>
 </div>
 </body>
