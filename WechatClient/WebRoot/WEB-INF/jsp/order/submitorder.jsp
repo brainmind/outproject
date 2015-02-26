@@ -17,18 +17,17 @@
 <jsp:include page="../common/base.jsp" />
 <script type="text/javascript">
 $(function(){
-	var carType = WxchatClient.currentCarType();
-	$("td.car_name").html(carType.brand+" "+carType.sername+"<br/>"+carType.car);
-	var logo = carType.logourl == "" ? "<%=path %>/styles/images/idx_logo.png" : carType.logourl;
-	$("div.add_logo > img").attr("src", logo);
-	
 	$.ajax({
 		url:"<%=path + Constants.ROOT %>/order/getOrder.json?orderId=${orderId }",
 		type:"get",
 		dataType:"json",
 		success:function(r){
 			if(r && $.type(r) == "object"){
-				var order = r.baseBean;
+				
+				$("td.car_name").html(r.brand+" "+r.series+"<br/>"+r.productYear);
+				var logo = r.logourl == null || r.logourl == "" ? "<%=path %>/styles/images/idx_logo.png" : r.logourl;
+				$("div.add_logo > img").attr("src", logo);
+				
 				$("#contact").html(r.contact);
 				$("#mobile").html(r.mobile);
 				$("#address").html("<strong>地址：</strong>" + r.address);
@@ -44,12 +43,12 @@ $(function(){
 						container.append(li);
 						var commPrice = parseFloat(isNaN(commdoty.total_price)?"0":commdoty.total_price);
 						totalPrice += commPrice;
-						li.html("<div class=\"xd\"></div>"+
+						li.html("<div class=\"xd\" style=\"display:block;\"></div>"+
 				            	"<div class=\"day_name\">"+commdoty.category_label+"</div>"+
 				                "<div class=\"day_pic\"><img src=\""+commdoty.pic_url+"\" height=\"100%\"></div>"+
 				                "<div class=\"no_arrow\">"+
 				                "	<div class=\"h_border\">"+
-				                "		<h1>"+commdoty.label+" SN (4L)</h1>"+
+				                "		<h1>"+commdoty.label+" SN ("+commdoty.number+")</h1>"+
 				                "    </div>"+
 				                "    <h2><span class=\"border_left\">用量："+commdoty.number+"</span><span>"+commPrice.toFixed(2)+"</span></h2>"+
 				                "</div>");
@@ -61,6 +60,11 @@ $(function(){
 						var fee = serviceFees[i];
 						var feePrice = parseFloat(isNaN(fee.price)?"0":fee.price);
 						totalPrice += feePrice;
+						var li = $(document.createElement("li"));
+						container.append(li);
+						li.html("<div class=\"xd\" style=\"display:block;\"></div><div class=\"day_name\" title=\""+fee["title"]+"\">"+fee["title"]+"</div>"+
+								"<div class=\"day_pic\"><img src=\"<%=path %>/styles/images/7.jpg\" height=\"100%\"></div>"+
+								"<div class=\"day_title\"><h1>"+fee["title"]+"工时费</h1><h2><span></span>&nbsp;<span>"+feePrice+"</span></h2></div>");
 					}
 				}
 				$("#total_price").html(totalPrice.toFixed(2));
@@ -96,7 +100,7 @@ function payonface(){
         <div class="order_font">
         	<table width="100%" border="0">
               <tr>
-                <td colspan="4" class="car_name">广汽本田 传祺 1.8L旗舰版</td>
+                <td colspan="4" class="car_name"></td>
               </tr>
               <tr>
                 <td colspan="4" class="full_care">${serviceName }</td>

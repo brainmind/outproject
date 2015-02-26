@@ -128,6 +128,7 @@ box-sizing:border-box; font-family:\5FAE\8F6F\96C5\9ED1; line-height:39px; borde
 .ser_nr li p.ball{width:13px; height:13px; border-radius:50%; background:#ff4c00; float:left; margin-right:5px;}
 .ser_nr li p.entry{float:left; line-height:13px;}
 .ser_nr li .yzm{width:50%; float:right; height:40px; font-size:16px; text-align:center; line-height:40px; border-radius:2px; background:#ff4c00; display:block; color:#fff}
+.ser_nr li .yzm_disabled{width:50%; float:right; height:40px; font-size:16px; text-align:center; line-height:40px; border-radius:2px; background:#939393; display:block; color:#fff}
 .ser_nr li input{width:100%; height:39px; background:none; border:none; font-family:Arial, Microsoft YaHei; color:#666;}
 
 .r_dz p{font-size:14px; line-height:16px; padding:5px 0;}

@@ -25,7 +25,7 @@ $(function(){
 				for(var i=0; i<r.orders.length; i++){
 					var order = r.orders[i];
 					if(i==0){
-						viewOrderDetail(order.orderid);
+						viewOrderDetail(order.orderid, order);
 					}
 					var orderNumber = $(document.createElement("p"));
 					orderNumber.addClass("my_order_num");
@@ -34,7 +34,18 @@ $(function(){
 					var contentDiv = $(document.createElement("div"));
 					contentDiv.addClass("add_top more");
 					var contentLink = $(document.createElement("a"));
-					contentLink.attr("href", "javascript:viewOrderDetail('"+order.orderid+"');");
+					contentLink.attr("id", order.orderid);
+					contentLink.data("order", order);
+					contentLink.on("click", function(){
+						var order_id = $(this).attr("id");
+						var pre_order_id = $("input[type=hidden][name=orderId]").val();
+						if(pre_order_id != order_id){
+							var order = $(this).data("order");
+							viewOrderDetail(order_id, order);
+							$("html,body").animate({scrollTop: $("#myorderdetail").offset().top}, 500);
+						}
+						return false;
+					});
 					contentDiv.append(contentLink);
 					moreDiv.append(contentDiv);
 					contentLink.html("<div class=\"add_logo order_img\"><img src=\""+order.brand_logo+"\"></div>");
@@ -48,7 +59,7 @@ $(function(){
 					content.html("<table width=\"100%\" border=\"0\"><tr>"+
                     "<td colspan=\"4\" class=\"car_name\">"+carlabel+"</td></tr>"+
                   	"<tr><td colspan=\"4\" class=\"full_care\">大保养服务</td></tr>"+
-                  	"<tr><td colspan=\"4\" height=\"10\"></td></tr>"+
+                  	"<tr><td colspan=\"4\" height=\"8\"></td></tr>"+
                   	"<tr><td>联系人：</td><td class=\"nametel\">"+order.contact+"</td><td>手机号：</td>"+
                   	"<td class=\"nametel\">"+order.mobile+"</td></tr></table>");
 				}
@@ -57,47 +68,57 @@ $(function(){
 	});
 });
 
-function viewOrderDetail(id){
-	$.ajax({
-		url:"<%=path + Constants.ROOT %>/order/getOrder.json?orderId="+id,
-		type:"get",
-		dataType:"json",
-		success:function(r){
-			if(r && $.type(r) == "object"){
-				var order = r.baseBean;
-				$("#contact").html(r.contact);
-				$("#mobile").html(r.mobile);
-				$("#address").html("<strong>地址：</strong>" + r.address);
-				$("input[type=hidden][name='order_number']").val(r.orderNumber);
-				$("#order_number").html("<strong>订单编号：</strong>" + r.orderNumber);
-				var stat = order.stat?0:parseInt(order.stat);
-				$("div.status_processes > ul > li").each(function(i){
-					if(stat >= i){
-						$(this).addClass("changable");
-					}
-				});
-				$("div.status_processes > div").removeClass(function(){
-					if(isNaN(stat) || stat == 0){
-						$(this).removeClass("half");
-					}else if(stat == 1){
-						$(this).toggleClass("half");
-					}else if(stat == 2){
-						$(this).toggleClass("hundred_percent");
-					}
-				});
-			}
+function viewOrderDetail(id, order){
+	var carlabel = order.car_label;
+	if(carlabel.length > 14){
+		carlabel = carlabel.substring(0, 14)+"...";
+	}
+	$("td.car_name").first().html(carlabel);
+	$("#contact").html(order.contact);
+	$("#mobile").html(order.mobile);
+	$("#address").html("<strong>地址：</strong>" + order.address);
+	$("input[type=hidden][name='order_number']").val(order.order_number);
+	$("#order_number").html("<strong>订单编号：</strong>" + order.order_number);
+	$("div.order_img > img").attr("src", order.brand_logo);
+	var stat = order.state?0:parseInt(order.state);
+	$("div.status_processes > ul > li").each(function(i){
+		if(stat >= i){
+			$(this).addClass("changable");
 		}
 	});
+	$("div.status_processes > div").removeClass(function(){
+		if(isNaN(stat) || stat == 0){
+			$(this).removeClass("half");
+		}else if(stat == 1){
+			$(this).toggleClass("half");
+		}else if(stat == 2){
+			$(this).toggleClass("hundred_percent");
+		}
+	});
+	var logs = order.logs;
+	var logUl = $("div.content > ul");
+	logUl.html("<li>订单日志</li>");
+	if(logs && logs.length > 0){
+		for(var i=0; i<logs.length; i++){
+			var log = logs[i];
+			var li = $(document.createElement("li"));
+			logUl.append(li);
+			var oDate = DUtil.format(new Date(log.create_time), "yyyy-MM-dd");
+			var oTime = DUtil.format(new Date(log.create_time), "hh:mm");
+			li.html("<dl><dd>"+oDate+"</dd><dd>"+oTime+"</dd><dd>"+log.operate_detail+"</dd></dl>");
+		}
+	}
 }
 </script>
 </head>
 <body class="bg01">
 <div class="wapper">
-	<div class="submit_order">
+	<div class="submit_order" id="myorderdetail">
     	<h1 class="my_order">我的订单</h1>
+    	<input type="hidden" name="orderId" value=""/>
         <p class="my_order_num" id="order_number"><strong>订单编号：</strong></p>
        <div class="add_top more">
-      	 <a href="javascript:;">
+      	 <a href="javascript:void(0);">
             <div class="add_logo order_img"><img src="<%=path %>/styles/images/10.jpg"></div>
             <div class="order_font">
                 <table width="100%" border="0">
@@ -141,31 +162,10 @@ function viewOrderDetail(id){
         	<div class="up"><img src="<%=path %>/styles/images/up.png"></div>
             <ul>
             	<li>订单日志</li>
-                <li>
-                      <dl>
-                       	 <dd>2014.12.16 </dd>
-                        <dd>13:55 </dd>
-                        <dd>已完成此订单</dd>
-                      </dl>
-                </li>
-                <li>
-          			<dl>
-                        <dd>2014.12.16 </dd>
-                        <dd>13:55 </dd>
-                        <dd>技师已确认此订单</dd>
-                      </dl>
-                </li>
-                <li>
-          			<dl>
-                        <dd>2014.12.16 </dd>
-                        <dd>13:55 </dd>
-                        <dd>提交订单</dd>
-                      </dl>
-                </li>
             </ul>
         </div>
      </div>
-     <a href="javascript:;" class="address click_more">更多历史订单<img src="<%=path %>/styles/images/click_more.png"></a>
+     <a href="javascript:void(0);" class="address click_more">更多历史订单<img src="<%=path %>/styles/images/click_more.png"></a>
         <div class="bg01 more_content">
     	</div>
     </div>
