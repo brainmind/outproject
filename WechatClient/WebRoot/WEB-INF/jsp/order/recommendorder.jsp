@@ -27,17 +27,13 @@
                	 <li>
                		<div class="margin"><span><strong>服务态度：</strong></span><span class="fr"><strong><!--5分--></strong></span></div>
                     <div  class="margin">
-                    	<form>
-                            <input type="range" name="slider-2" id="slider-2" data-highlight="true" min="0" max="10" value="5">
-                    	</form>
+                       <input type="range" name="slider-2" id="slider-2" data-highlight="true" min="0" max="10" value="5">
                     </div>
                  </li>
                  <li>
                		<div class="margin"><span><strong>服务水平：</strong></span><span class="fr"><strong><!--9分--></strong></span></div>
                     <div  class="margin">
-                    	<form>
-                            <input type="range" name="slider-2" id="slider-2" data-highlight="true" min="0" max="10" value="8">
-                    	</form>
+                       <input type="range" name="slider-2" id="slider-2" data-highlight="true" min="0" max="10" value="5">
                     </div>
                  </li>
                  <li class="margin">
@@ -59,7 +55,7 @@
                		<div class="margin"><span><strong>综合评价：</strong></span><span class="fr no_assessment"><strong>未评分</strong></span></div>
                     <div  class="margin">
                     	<form>
-                            <input type="range" name="slider-2" id="slider-2" data-highlight="true" min="0" max="10" value="0">
+                            <input type="range" name="slider-2" id="slider-2" data-highlight="true" min="0" max="10" value="5">
                     	</form>
                     </div>
                  </li>
