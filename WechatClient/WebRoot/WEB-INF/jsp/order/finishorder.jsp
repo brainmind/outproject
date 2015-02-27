@@ -56,11 +56,15 @@ $(function(){
 					if(order.car_label.length > 14){
 						carlabel = order.car_label.substring(0, 14)+"...";
 					}
+					var orderContact = order.contact;
+					if(order.contact.length > 4){
+						orderContact = order.contact.substring(0, 4)+"...";
+					}
 					content.html("<table width=\"100%\" border=\"0\"><tr>"+
                     "<td colspan=\"4\" class=\"car_name\">"+carlabel+"</td></tr>"+
                   	"<tr><td colspan=\"4\" class=\"full_care\">大保养服务</td></tr>"+
                   	"<tr><td colspan=\"4\" height=\"8\"></td></tr>"+
-                  	"<tr><td>联系人：</td><td class=\"nametel\">"+order.contact+"</td><td>手机号：</td>"+
+                  	"<tr><td>联系人：</td><td class=\"nametel\">"+orderContact+"</td><td>手机号：</td>"+
                   	"<td class=\"nametel\">"+order.mobile+"</td></tr></table>");
 				}
 			}
@@ -73,25 +77,33 @@ function viewOrderDetail(id, order){
 	if(carlabel.length > 14){
 		carlabel = carlabel.substring(0, 14)+"...";
 	}
+	var orderContact = order.contact;
+	if(order.contact.length > 4){
+		orderContact = order.contact.substring(0, 4)+"...";
+	}
 	$("td.car_name").first().html(carlabel);
-	$("#contact").html(order.contact);
+	$("#contact").html(orderContact);
 	$("#mobile").html(order.mobile);
+	$("input[type=hidden][name=orderId]").val(id);
 	$("#address").html("<strong>地址：</strong>" + order.address);
 	$("input[type=hidden][name='order_number']").val(order.order_number);
 	$("#order_number").html("<strong>订单编号：</strong>" + order.order_number);
 	$("div.order_img > img").attr("src", order.brand_logo);
-	var stat = order.state?0:parseInt(order.state);
+	var stat = order.state?parseInt(order.state):1;
 	$("div.status_processes > ul > li").each(function(i){
-		if(stat >= i){
+		if(stat==100 && i==1){
+			$(this).addClass("changable");
+		}
+		if(stat==300 && i==2){
 			$(this).addClass("changable");
 		}
 	});
 	$("div.status_processes > div").removeClass(function(){
-		if(isNaN(stat) || stat == 0){
+		if(isNaN(stat) || stat == 1){
 			$(this).removeClass("half");
-		}else if(stat == 1){
+		}else if(stat == 100){
 			$(this).toggleClass("half");
-		}else if(stat == 2){
+		}else if(stat == 300){
 			$(this).toggleClass("hundred_percent");
 		}
 	});
@@ -109,6 +121,11 @@ function viewOrderDetail(id, order){
 		}
 	}
 }
+
+function getOrderDetail(){
+	var order_id = $("input[type=hidden][name=orderId]").val();
+	window.location.href="<%=path + Constants.ROOT%>/order/ready?orderId="+order_id;
+}
 </script>
 </head>
 <body class="bg01">
@@ -118,7 +135,7 @@ function viewOrderDetail(id, order){
     	<input type="hidden" name="orderId" value=""/>
         <p class="my_order_num" id="order_number"><strong>订单编号：</strong></p>
        <div class="add_top more">
-      	 <a href="javascript:void(0);">
+      	 <a href="javascript:getOrderDetail();">
             <div class="add_logo order_img"><img src="<%=path %>/styles/images/10.jpg"></div>
             <div class="order_font">
                 <table width="100%" border="0">
@@ -153,7 +170,7 @@ function viewOrderDetail(id, order){
                 </ul>
                 <div class="clearfix half"></div> <!--class为half的时候表示正在配货，class为hundred_percent时，表示服务已完成！-->
             </div>
-            <div class="assessment"><a href="<%=path %>/<%=Constants.ROOT %>/order/recommend" class="ensure">立即评价</a></div>
+            <div class="assessment"><a href="<%=path + Constants.ROOT %>/order/recommend" class="ensure">立即评价</a></div>
         </div>
      </div>
        <div class="clear"></div>

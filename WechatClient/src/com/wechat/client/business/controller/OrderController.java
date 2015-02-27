@@ -209,7 +209,9 @@ public class OrderController extends BaseController{
 	}
 	
 	@RequestMapping("/recommend")
-	public String recommendOrder(){
+	public String recommendOrder(HttpServletRequest request){
+		String orderId = request.getParameter("orderId");
+		request.setAttribute("orderId", orderId);
 		return "order/recommendorder";
 	}
 }

@@ -17,23 +17,30 @@
 <link rel="stylesheet" href="<%=path %>/styles/css/jqm-demos.css">
 <script src="<%=path %>/common/js/index.js"></script>
 <script src="<%=path %>/common/js/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript">
+	function recommendOrder(){
+		
+	}
+</script>
 </head>
 <body>
 <div class="wapper">
 	<div class="submit_order">
     	<h1 class="my_order">评价</h1>
+    	<form name="orderForm" action="" method="post">
+    	<input type="hidden" name="orderId" value="${orderId }"/>
         <div class="process_bar">
         	<ul>
                	 <li>
                		<div class="margin"><span><strong>服务态度：</strong></span><span class="fr"><strong><!--5分--></strong></span></div>
                     <div  class="margin">
-                       <input type="range" name="slider-2" id="slider-2" data-highlight="true" min="0" max="10" value="5">
+                       <input type="range" name="servicemanner" id="slider-2" data-highlight="true" min="0" max="10" value="5">
                     </div>
                  </li>
                  <li>
                		<div class="margin"><span><strong>服务水平：</strong></span><span class="fr"><strong><!--9分--></strong></span></div>
                     <div  class="margin">
-                       <input type="range" name="slider-2" id="slider-2" data-highlight="true" min="0" max="10" value="5">
+                       <input type="range" name="servicelevel" id="slider-2" data-highlight="true" min="0" max="10" value="5">
                     </div>
                  </li>
                  <li class="margin">
@@ -68,7 +75,8 @@
                  </li>
               </ul>
         </div>
-        <a href="javascript:;" class="ensure" style="color:#fff; font-weight:normal;">提交评价</a>
+        <a href="javascript:recommendOrder();" class="ensure" style="color:#fff; font-weight:normal;">提交评价</a>
+        </form>
     </div>
 </div>
 </body>
