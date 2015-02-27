@@ -37,6 +37,7 @@ public class OrderController extends BaseController{
 	private String SubmitOrder = "/order.json";
 	private String OrderDetail = "/orderDetail.json";
 	private String OrderList = "/userOrderList.json";
+	private String Recommend = "/orderCommentInfo.json";
 	
 	@RequestMapping("/service")
 	public String service(HttpServletRequest request, HttpServletResponse response){
@@ -213,5 +214,13 @@ public class OrderController extends BaseController{
 		String orderId = request.getParameter("orderId");
 		request.setAttribute("orderId", orderId);
 		return "order/recommendorder";
+	}
+	
+	@RequestMapping("/comment")
+	public void recommend(HttpServletRequest request, HttpServletResponse response){
+		String param = "";
+		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
+		String json = jr.doPost(Recommend, param);
+		writeJson(response, json);
 	}
 }
