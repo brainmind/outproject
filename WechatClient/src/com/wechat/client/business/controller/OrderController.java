@@ -15,10 +15,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.wechat.client.business.model.AppraiseJsonObject;
 import com.wechat.client.business.model.Commodity;
 import com.wechat.client.business.model.LoginUser;
 import com.wechat.client.business.model.Servicefee;
@@ -210,10 +214,34 @@ public class OrderController extends BaseController{
 	}
 	
 	@RequestMapping("/recommend")
-	public String recommendOrder(HttpServletRequest request){
+	public String recommendOrder(HttpServletRequest request, HttpServletResponse response){
 		String orderId = request.getParameter("orderId");
+		LoginUser user = getLoginUser(request, response);
+		String param = HttpEntityUtils.toParameterString(user).substring(1);
+		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
+		String json = jr.doGet(Recommend+"?"+param+"&orderid="+orderId);
+		try {
+			AppraiseJsonObject appr = new ObjectMapper().readValue(json, new TypeReference<AppraiseJsonObject>(){});
+			request.setAttribute("appr", appr);
+		} catch (JsonParseException e) {
+			log.error("JSON转换失败", e);
+		} catch (JsonMappingException e) {
+			log.error("JSON转换失败", e);
+		} catch (IOException e) {
+			log.error("JSON转换失败", e);
+		}
 		request.setAttribute("orderId", orderId);
 		return "order/recommendorder";
+	}
+	
+	@RequestMapping("/commend.json")
+	public void getCommentInfo(HttpServletRequest request, HttpServletResponse response){
+		String orderId = request.getParameter("orderId");
+		LoginUser user = getLoginUser(request, response);
+		String param = HttpEntityUtils.toParameterString(user).substring(1);
+		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
+		String json = jr.doGet(Recommend+"?"+param+"&orderid="+orderId);
+		writeJson(response, json);
 	}
 	
 	@RequestMapping("/comment")
