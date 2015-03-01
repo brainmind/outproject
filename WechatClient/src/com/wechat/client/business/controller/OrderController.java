@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -22,6 +23,7 @@ import org.codehaus.jackson.type.TypeReference;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.wechat.client.business.model.AppraiseItem;
 import com.wechat.client.business.model.AppraiseJsonObject;
 import com.wechat.client.business.model.Commodity;
 import com.wechat.client.business.model.LoginUser;
@@ -215,7 +217,7 @@ public class OrderController extends BaseController{
 	
 	@RequestMapping("/recommend")
 	public String recommendOrder(HttpServletRequest request, HttpServletResponse response){
-		String orderId = request.getParameter("orderId");
+		String orderId = "01F8874F685D4A8DB1A2EFBC1BAF6E03";//request.getParameter("orderId");
 		LoginUser user = getLoginUser(request, response);
 		String param = HttpEntityUtils.toParameterString(user).substring(1);
 		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
@@ -246,9 +248,38 @@ public class OrderController extends BaseController{
 	
 	@RequestMapping("/comment")
 	public void recommend(HttpServletRequest request, HttpServletResponse response){
-		String param = "";
-		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
-		String json = jr.doPost(Recommend, param);
-		writeJson(response, json);
+		String orderId = request.getParameter("orderId");
+		String commentid = request.getParameter("commentid");
+		String comment_time = request.getParameter("comment_time");
+		String field_id[] = request.getParameterValues("field_id");
+		String type[] = request.getParameterValues("type");
+		String value[] = request.getParameterValues("value");
+		AppraiseJsonObject appr = new AppraiseJsonObject();
+		appr.setOrderid("4ACEC6ABE9A74CCE8F4BE1EEB8FD8004");
+		appr.setCommentid(commentid);
+		appr.setComment_time(comment_time);
+		try {
+			if(value != null && value.length > 0){
+				List<AppraiseItem> fields = new ArrayList<AppraiseItem>();
+				for(int i=0; i<value.length; i++){
+					AppraiseItem item = new AppraiseItem();
+					item.setField_id(field_id[i]);
+					item.setType(type[i]);
+					item.setValue(value[i]);
+					fields.add(item);
+				}
+				appr.setFields(fields);
+			}
+			String param = new ObjectMapper().writeValueAsString(appr);
+			JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
+			String json = jr.doPost(Recommend, param);
+			writeJson(response, json);
+		} catch (JsonGenerationException e) {
+			log.error("JSON转换失败", e);
+		} catch (JsonMappingException e) {
+			log.error("JSON转换失败", e);
+		} catch (IOException e) {
+			log.error("JSON转换失败", e);
+		}
 	}
 }

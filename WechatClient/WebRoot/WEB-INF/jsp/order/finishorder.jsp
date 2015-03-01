@@ -126,6 +126,11 @@ function getOrderDetail(){
 	var order_id = $("input[type=hidden][name=orderId]").val();
 	window.location.href="<%=path + Constants.ROOT%>/order/ready?orderId="+order_id;
 }
+
+function recommend(){
+	var order_id = $("input[type=hidden][name=orderId]").val();
+	window.location.href="<%=path + Constants.ROOT %>/order/recommend?orderId="+order_id;
+}
 </script>
 </head>
 <body class="bg01">
@@ -170,7 +175,7 @@ function getOrderDetail(){
                 </ul>
                 <div class="clearfix half"></div> <!--class为half的时候表示正在配货，class为hundred_percent时，表示服务已完成！-->
             </div>
-            <div class="assessment"><a href="<%=path + Constants.ROOT %>/order/recommend" class="ensure">立即评价</a></div>
+            <div class="assessment"><a href="javascript:recommend();" class="ensure">立即评价</a></div>
         </div>
      </div>
        <div class="clear"></div>

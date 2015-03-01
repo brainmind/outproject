@@ -3,6 +3,7 @@ package com.wechat.client.business.model;
 import java.util.List;
 
 public class AppraiseJsonObject {
+	private String orderid;
 	private String commentid;
 	private String comment_time;
 	private List<AppraiseItem> fields;
@@ -23,5 +24,17 @@ public class AppraiseJsonObject {
 	}
 	public void setFields(List<AppraiseItem> fields) {
 		this.fields = fields;
+	}
+	/**
+	 * @return the orderid
+	 */
+	public String getOrderid() {
+		return orderid;
+	}
+	/**
+	 * @param orderid the orderid to set
+	 */
+	public void setOrderid(String orderid) {
+		this.orderid = orderid;
 	}
 }

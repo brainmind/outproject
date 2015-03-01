@@ -39,10 +39,20 @@ window.onload = function() {
 	renderSelectByVIN();
 	
 	/* 评价 */
-	$(".assessment_choice a").eq(0).addClass("cur");
-	$(".assessment_choice a").click(function() {
-		$(".assessment_choice a").removeClass("cur");
-		$(this).addClass("cur");
+	$(".assessment_choice a").each(function(i){
+		if(i == 0){
+			$(this).addClass("cur");
+			var opId = $(this).attr("id");
+			var fieldId = $(this).attr("field-id");
+			$("#value"+fieldId).val(opId);
+		}
+		$(this).click(function() {
+			$(".assessment_choice a").removeClass("cur");
+			$(this).addClass("cur");
+			var opId = $(this).attr("id");
+			var fieldId = $(this).attr("field-id");
+			$("#value"+fieldId).val(opId);
+		});
 	});
 	/* 支付成功 */
 	$(".payment li a").eq(0).addClass("cur");
@@ -153,8 +163,31 @@ window.onload = function() {
 	// 获取表格的第一列
 };
 
+function updateTotalPrice(){
+	var totalPrice = 0;
+	$("div.day_list > ul > li > div > div.day_title").each(function(){
+		var $this = $(this);
+		var strPrice = $("h2 > span:last", $this).text();
+		if(strPrice && strPrice != ""){
+			totalPrice += parseFloat(strPrice);
+		}
+	});
+	$("div.day_list > ul > li > div.day_title").each(function(){
+		var $this = $(this);
+		var strPrice = $("h2 > span:last", $this).text();
+		if(strPrice && strPrice != ""){
+			totalPrice += parseFloat(strPrice);
+		}
+	});
+	$("#totalprice").html(totalPrice.toFixed(2));
+}
+
 function initRenderingCommandotyService(){
 	$("div.day_list > ul > li > div > div.day_title").click(function() {
+		if(!$(this).hasClass("day_cur")){
+			$("div.day_more").hide();
+			$("div.day_title").removeClass("day_cur");
+		}
 		$(this).toggleClass("day_cur");
 		$(this).parent().next(".day_more").toggle();
 	});
@@ -169,7 +202,15 @@ function initRenderingCommandotyService(){
 		var curCommodify = curDiv.html();
 		curDiv.html(dd.html());
 		dd.html(curCommodify);
-		initRenderingCommandotyService();
+		$("div.day_title", curDiv).on("click", function(){
+			if(!$(this).hasClass("day_cur")){
+				$("div.day_more").hide();
+				$("div.day_title").removeClass("day_cur");
+			}
+			$(this).toggleClass("day_cur");
+			$(this).parent().next(".day_more").toggle();
+		});
+		updateTotalPrice();
 	});
 	
 	$(".day_name").click(function() {
