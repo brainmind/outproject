@@ -35,8 +35,8 @@ a,button,input{-webkit-tap-highlight-color:rgba(255,0,0,0); outline:none; color:
 .main_image li img{ width:100%;}
 .flicking_con{position:absolute; bottom:2%;left:50%; margin-left:-35.5px;}
 .flicking_inner {height:10px;} 
-.flicking_inner a{float:left; width:10px; height:10px; margin:0; padding:0; background:url(../images/btn_main_img.png) 0 0 no-repeat; display:block; text-indent:-1000px; margin-left:5px;}
-.flicking_inner a.on{background-position:0 -10px;}
+.flicking_inner a{float:left; width:10px; height:10px; margin:0; padding:0; border-radius:10px; background-color:#fff; display:block; text-indent:-1000px; margin-left:5px;}
+.flicking_inner a.on{background-color:red;}
 .flicking_inner01 a{width:12px; height:12px;background:url(../images/btn_main_img01.png) 0 0 no-repeat;}
 .flicking_inner01 a.on{background-position:0 -12px;}
 #btn_prev,#btn_next{z-index:11111;position:absolute;display:block;width:50px!important;height:50px!important;top:50%;margin-top:-25px;}
@@ -54,10 +54,10 @@ a,button,input{-webkit-tap-highlight-color:rgba(255,0,0,0); outline:none; color:
 .idx_car h1{font-size:16px; text-align:center; padding-top:30px; line-height:20px; color:#151515;}
 .idx_car a{display:block; text-align:right; font-size:16px; width:100%; box-sizing:border-box; padding-right:10%; color:#333; text-decoration:underline;}
 .idx_nav{width:100%; height:220px; border-top:1px solid #ccc;}
-.idx_nav li{width:33%; height:110px; padding-top:18px; box-sizing:border-box; border-bottom:1px solid #f0f0f0; border-right:1px solid #f0f0f0; overflow:hidden; text-align:center; font-size:14px; color:#333; float:left;}
+.idx_nav li{width:33%; height:110px; padding-top:15px; box-sizing:border-box; border-bottom:1px solid #f0f0f0; border-right:1px solid #f0f0f0; overflow:hidden; text-align:center; font-size:14px; color:#333; float:left;}
 .idx_nav li a{display:block; font-size:14px; color:#333}
 .idx_nav li img{display:block; width:55px; height:55px; margin:0 auto;}
-.idx_tel{width:100%; font-size:14px; text-align:center; color:#6a6a6a; line-height:40px; font-weight:bold;}
+.idx_tel{width:100%; font-size:14px; text-align:center; color:#6a6a6a; line-height:60px; font-weight:bold;}
 
 .tc_bg{width:100%; height:100%; max-width:640px; background:#000; opacity:0.7; position:fixed; top:0; left:0; display:none;}
 .tcmain{width:90%; height:auto; max-width:576px; background:#fff; position:fixed; top:0; left:-100%; border-radius:2px;}
@@ -143,7 +143,7 @@ box-sizing:border-box; font-family:\5FAE\8F6F\96C5\9ED1; line-height:39px; borde
 /* 日常保养 添加新项*/
 .add_top{width:100%; height:84px; border-bottom:1px solid #ccc; border-top:1px solid #ccc;}
 .add_logo{width:40%; height:100%; box-sizing:border-box; border-right:1px solid #ccc; float:left; overflow:hidden; text-align:center;display: -webkit-box;-webkit-box-orient: vertical;-webkit-box-pack: center;-webkit-box-align: center;}
-.add_logo img{height:44px;}
+.add_logo img{height:44px; max-width:100%;}
 .add_car{width:60%; height:100%; overflow:hidden;}
 .add_car h1{font-size:16px; text-align:center; padding-top:25px; line-height:20px;}
 .add_cars a{display:block; text-align:right; font-size:16px; width:100%; box-sizing:border-box; padding-right:10%; color:#333; text-decoration:underline;}
@@ -176,7 +176,8 @@ box-sizing:border-box; font-family:\5FAE\8F6F\96C5\9ED1; line-height:39px; borde
 box-sizing:border-box; display: -webkit-box;-webkit-box-orient: vertical;-webkit-box-pack: center;-webkit-box-align: center;}
 .day_pic{width:22%; height:85px; float:left; border-left:1px solid #cbcbcb; border-top:1px solid #cbcbcb; border-bottom:1px solid #cbcbcb; background:#fff; box-sizing:border-box; text-align:center; overflow:hidden;
 box-sizing:border-box; display:-webkit-box;-webkit-box-orient: vertical;-webkit-box-pack: center;-webkit-box-align: center;}
-.day_title{width:56%; height:85px; float:left; border-left:1px solid #cbcbcb; border-top:1px solid #cbcbcb; border-bottom:1px solid #cbcbcb; box-sizing:border-box; padding:3% 0 0 3%; font-size:14px; position:relative; background:#fff url(../images/day_bg1.png) no-repeat 97% center; background-size:auto 10px; cursor:pointer; font-weight:100; color:#666;}
+.day_pic img {max-width:100%;}
+.day_title{width:56%; min-height:85px; float:left; border-left:1px solid #cbcbcb; border-top:1px solid #cbcbcb; border-bottom:1px solid #cbcbcb; box-sizing:border-box; padding:3% 0 0 3%; font-size:14px; position:relative; background:#fff url(../images/day_bg1.png) no-repeat 97% center; background-size:auto 10px; cursor:pointer; font-weight:100; color:#666;}
 .day_title.day_cur{background:#fff url(../images/day_bg2.png) no-repeat 97% center; background-size:auto 10px;}
 .day_title h1{line-height:16px; margin-bottom:5px; box-sizing:border-box; padding:0 13% 0 0;}
 .day_title h2 span{color:#666; width:50%; float:left; display:block;}

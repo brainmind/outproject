@@ -16,11 +16,18 @@
 <jsp:include page="common/base.jsp" />
 <script type="text/javascript">
 $(document).ready(function () {
-	$(".main_visual").hover(function(){
+		$("#btn_prev,#btn_next").fadeOut();
+		var idx = $(".idx_nav li").length;
+		for(var nav=0;nav<idx;nav++){
+			if(nav%3==0){
+				$(".idx_nav li").eq(nav-1).css({"border-right":"none"});
+			}
+		}
+	/* $(".main_visual").hover(function(){
 			$("#btn_prev,#btn_next").fadeIn();
 		},function(){
 			$("#btn_prev,#btn_next").fadeOut();
-		});
+		}); */
 	$dragBln = false;
 	$(".main_image").touchSlider({
 		flexible : true,
@@ -122,8 +129,8 @@ $(document).ready(function () {
             <li class="img_2"><img src="<%=path %>/styles/images/banner01.jpg"></li>
             <li class="img_5"><img src="<%=path %>/styles/images/banner01.jpg"></li>
         </ul>
-        <!--<a href="javascript:;" id="btn_prev"></a>
-        <a href="javascript:;" id="btn_next"></a>-->
+        <a href="javascript:;" id="btn_prev"></a>
+        <a href="javascript:;" id="btn_next"></a>
     </div>
     <div class="flicking_con">
             <div class="flicking_inner">
@@ -150,6 +157,7 @@ $(document).ready(function () {
             <li><a href="<%=path + Constants.ROOT %>/order/service?type=3" rel="services"><img src="<%=path %>/styles/images/idx_nav3.png">更换刹车片</a></li>
             <li><a href="<%=path + Constants.ROOT %>/order/service?type=4" rel="services"><img src="<%=path %>/styles/images/idx_nav4.png">加装PM2.5空调滤膜</a></li>
             <li><a href="<%=path + Constants.ROOT %>/order/service?type=5" rel="services"><img src="<%=path %>/styles/images/idx_nav5.png">更换轮胎</a></li>
+            <li></li>
         </ul>
     </div>
     <div class="idx_tel">客服热线：400-898-9988</div>
