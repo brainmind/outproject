@@ -16,11 +16,12 @@
 <jsp:include page="common/base.jsp" />
 <script type="text/javascript">
 $(document).ready(function () {
-	$(".main_visual").hover(function(){
+		$("#btn_prev,#btn_next").fadeOut();
+	/* $(".main_visual").hover(function(){
 			$("#btn_prev,#btn_next").fadeIn();
 		},function(){
 			$("#btn_prev,#btn_next").fadeOut();
-		});
+		}); */
 	$dragBln = false;
 	$(".main_image").touchSlider({
 		flexible : true,
@@ -122,8 +123,8 @@ $(document).ready(function () {
             <li class="img_2"><img src="<%=path %>/styles/images/banner01.jpg"></li>
             <li class="img_5"><img src="<%=path %>/styles/images/banner01.jpg"></li>
         </ul>
-        <!--<a href="javascript:;" id="btn_prev"></a>
-        <a href="javascript:;" id="btn_next"></a>-->
+        <a href="javascript:;" id="btn_prev"></a>
+        <a href="javascript:;" id="btn_next"></a>
     </div>
     <div class="flicking_con">
             <div class="flicking_inner">
