@@ -6,6 +6,7 @@ public class AppraiseItem {
 	private String field_id;
 	private String label;
 	private String type;
+	private List<AppraiseFile> files;
 	private List<AppraiseItemOption> options;
 	private String value;
 	private String requeired;
@@ -44,5 +45,11 @@ public class AppraiseItem {
 	}
 	public void setRequeired(String requeired) {
 		this.requeired = requeired;
+	}
+	public List<AppraiseFile> getFiles() {
+		return files;
+	}
+	public void setFiles(List<AppraiseFile> files) {
+		this.files = files;
 	}
 }
