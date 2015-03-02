@@ -21,6 +21,11 @@
 <script type="text/javascript">
 	function recommendOrder(){
 		var form = $(document.orderForm);
+		var submitBut = $("#submitcomment");
+		var href = submitBut.attr("href");
+		submitBut.attr("rel", href);
+		submitBut.removeAttr("href");
+		submitBut.addClass("pay_unlock");
 		$.ajax({
 			url:form.attr("action"),
 			type:"post",
@@ -35,7 +40,10 @@
 						window.location.href="<%=path + Constants.ROOT %>/order/ready?orderId="+r.orderid;
 					}, 2000);
 				}else{
-					WxchatClient.Dialog.show("评价提交失败！");
+					WxchatClient.Dialog.show("评价提交失败！", function(){
+						submitBut.attr("href", href);
+						submitBut.removeClass("pay_unlock");
+					});
 				}
 			}
 		});
@@ -93,7 +101,7 @@
         	</c:forEach>
             </ul>
         </div>
-        <a href="javascript:recommendOrder();" class="ensure" style="color:#fff; font-weight:normal;">提交评价</a>
+        <a id="submitcomment" href="javascript:recommendOrder();" class="ensure" style="color:#fff; font-weight:normal;">提交评价</a>
         </form>
     </div>
 </div>
