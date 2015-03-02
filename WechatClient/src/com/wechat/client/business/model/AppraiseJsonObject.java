@@ -2,6 +2,9 @@ package com.wechat.client.business.model;
 
 import java.util.List;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class AppraiseJsonObject {
 	private String orderid;
 	private String commentid;

@@ -1,5 +1,8 @@
 package com.wechat.client.business.model;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class AppraiseFile {
 	private String file_id;
 	private String thumb_uri;

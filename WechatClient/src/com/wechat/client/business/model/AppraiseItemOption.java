@@ -1,5 +1,8 @@
 package com.wechat.client.business.model;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class AppraiseItemOption {
 	private String option_id;
 	private String label;
