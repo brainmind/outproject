@@ -163,7 +163,7 @@ window.onload = function() {
 	// 获取表格的第一列
 };
 
-function updateTotalPrice(){
+function updateTotalPrice(li){
 	var totalPrice = 0;
 	$("div.day_list > ul > li > div > div.day_title").each(function(){
 		var $this = $(this);
@@ -180,6 +180,18 @@ function updateTotalPrice(){
 		}
 	});
 	$("#totalprice").html(totalPrice.toFixed(2));
+	//更新隐藏域
+	var commdoty = $("div.day_title", li);
+	var id = commdoty.attr("data-id");
+	var price = $("h2 > span:last", commdoty).text();
+	var label = $("h1", commdoty).html();
+	var categoryid = commdoty.attr("category-id");
+	var number = commdoty.attr("data-number");
+	$("input[type=hidden][name='commodities.id']", li).val(id);
+	$("input[type=hidden][name='commodities.label']", li).val(label);
+	$("input[type=hidden][name='commodities.number']", li).val(number);
+	$("input[type=hidden][name='commodities.price']", li).val(price);
+	$("input[type=hidden][name='commodities.category_id']", li).val(categoryid);
 }
 
 function initRenderingCommandotyService(){
@@ -210,7 +222,7 @@ function initRenderingCommandotyService(){
 			$(this).toggleClass("day_cur");
 			$(this).parent().next(".day_more").toggle();
 		});
-		updateTotalPrice();
+		updateTotalPrice(dd.parent().parent().parent());
 	});
 	
 	$(".day_name").click(function() {

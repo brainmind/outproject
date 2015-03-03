@@ -173,6 +173,11 @@ function submitOrder(){
 				submitbut.attr("href", href);
 				submitbut.removeClass("pay_unlock");
 			}
+		},
+		error:function(){
+			WxchatClient.Dialog.show("订单提交失败！后台处理报错.");
+			submitbut.attr("href", href);
+			submitbut.removeClass("pay_unlock");
 		}
 	});
 }
@@ -192,11 +197,11 @@ function submitOrder(){
 			<input type="hidden" name="commodities.number" value="${commodities_number[cStatus.index] }"/>
 			<input type="hidden" name="commodities.price" value="${commodities_price[cStatus.index] }"/>
 			<input type="hidden" name="commodities.category_id" value="${commoditys_cId[cStatus.index] }"/>
-			<input type="hidden" name="service_fees.type" value="${service_fees_type[cStatus.index] }"/>
-			<input type="hidden" name="service_fees.title" value="${service_fees_title[cStatus.index] }"/>
-			<input type="hidden" name="service_fees.price" value="${service_fees_price[cStatus.index] }"/>
-			<input type="hidden" name="service_fees.category_id" value="${service_fees_cId[cStatus.index] }"/>
 		</c:if>
+		<input type="hidden" name="service_fees.type" value="${service_fees_type[cStatus.index] }"/>
+		<input type="hidden" name="service_fees.title" value="${service_fees_title[cStatus.index] }"/>
+		<input type="hidden" name="service_fees.price" value="${service_fees_price[cStatus.index] }"/>
+		<input type="hidden" name="service_fees.category_id" value="${service_fees_cId[cStatus.index] }"/>
 	</c:forEach>
 	<div class="neir r_dz">
     	<p><strong>请选择地区</strong></p>

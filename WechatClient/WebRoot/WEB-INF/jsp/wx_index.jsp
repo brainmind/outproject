@@ -121,13 +121,13 @@ $(document).ready(function () {
 <div class="wapper">
     <div class="main_visual">
     <div class="main_image">
-        <img src="<%=path %>/styles/images/banner01.jpg" class="xx">
+        <img src="<%=path %>/styles/images/banner/banner01.jpg" class="xx">
         <ul>					
-            <li class="img_3"><img src="<%=path %>/styles/images/banner01.jpg"></li>
-            <li class="img_4"><img src="<%=path %>/styles/images/banner01.jpg"></li>
-            <li class="img_1"><img src="<%=path %>/styles/images/banner01.jpg"></li>
-            <li class="img_2"><img src="<%=path %>/styles/images/banner01.jpg"></li>
-            <li class="img_5"><img src="<%=path %>/styles/images/banner01.jpg"></li>
+            <li class="img_3"><img src="<%=path %>/styles/images/banner/banner01.jpg"></li>
+            <li class="img_4"><img src="<%=path %>/styles/images/banner/banner02.jpg"></li>
+            <li class="img_1"><img src="<%=path %>/styles/images/banner/banner03.jpg"></li>
+            <li class="img_2"><img src="<%=path %>/styles/images/banner/banner04.jpg"></li>
+            <li class="img_5"><img src="<%=path %>/styles/images/banner/banner05.jpg"></li>
         </ul>
         <a href="javascript:;" id="btn_prev"></a>
         <a href="javascript:;" id="btn_next"></a>

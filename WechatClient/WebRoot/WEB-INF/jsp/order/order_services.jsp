@@ -36,7 +36,8 @@ $(document).ready(function () {
 						}
 						var li = null;
 						var commodityInfo = "<div class=\"day_pic\"><img src=\""+commodity["pic_url"]+"\" height=\"100%\"></div>"+
-						"<div class=\"day_title\"><h1>"+commodity["label"]+" SN ("+commodity["number"]+")</h1><h2><span>用量：1</span><span>"+price+"</span></h2></div>";
+						"<div class=\"day_title\" data-id=\""+commodity["id"]+"\" category-id=\""+categoryid+"\" data-number=\""+commodity["number"]+"\">"+
+						"<h1>"+commodity["label"]+" SN ("+commodity["number"]+")</h1><h2><span>用量：1</span><span>"+price+"</span></h2></div>";
 						if(commodity.recommand != "1"){
 							li = $("li[categoryid="+categoryid+"]");
 							if(li[0] && li.is("li")){

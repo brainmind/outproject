@@ -141,7 +141,7 @@ public class OrderController extends BaseController{
 				fee.setPrice(Double.parseDouble(feePrice));
 				//添加订单明细
 				service_fees.add(fee);
-				if(StringUtils.isNotEmpty(commoditys_id[i])){
+				if(commoditys_id != null && i < commoditys_id.length && StringUtils.isNotEmpty(commoditys_id[i])){
 					String commPrice = commoditys_price[i];
 					String commCid = commoditys_cId[i];
 					Commodity comm = new Commodity();
