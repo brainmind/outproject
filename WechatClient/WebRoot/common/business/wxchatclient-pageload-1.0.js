@@ -86,6 +86,8 @@ function initHref(){
 				var backurl = $("input[type=hidden][name=backurl]").val();
 				if(backurl == ""){
 					backurl = "/index";
+				}else{
+					backurl += "&car_id="+id;
 				}
 				window.location.href=contextPath+projectRoot+backurl;
 			});

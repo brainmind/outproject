@@ -24,8 +24,8 @@ $(function(){
 		success:function(r){
 			if(r && $.type(r) == "object"){
 				
-				$("td.car_name").html(r.brand+" "+r.series+"<br/>"+r.productYear);
-				var logo = r.logourl == null || r.logourl == "" ? "<%=path %>/styles/images/idx_logo.png" : r.logourl;
+				$("td.car_name").html(r.brand+" "+r.series+ " " + r.output +"<br/>"+r.productYear);
+				var logo = r.brandPicPath == null || r.brandPicPath == "" ? "<%=path %>/styles/images/idx_logo.png" : r.brandPicPath;
 				$("div.add_logo > img").attr("src", logo);
 				
 				$("#contact").html(r.contact);
@@ -41,7 +41,6 @@ $(function(){
 						var commdoty = commdoties[i];
 						var li = $(document.createElement("li"));
 						container.append(li);
-						//alert(commdoty.total_price);
 						var commPrice = parseFloat(isNaN(commdoty.total_price)?"0":commdoty.total_price);
 						totalPrice += commPrice;
 						li.html("<div class=\"xd\" style=\"display:block;\"></div>"+

@@ -146,9 +146,6 @@ function submitOrder(){
 	}
 	$("input[type=hidden][name=region_code]").val(regine_code);
 	
-	var carId = WxchatClient.currentCarType().id;
-	$("input[type=hidden][name=car_id]").val(carId);
-	
 	var submitbut = $("a.ensure");
 	var href = submitbut.attr("href");
 	submitbut.attr("rel", href);
@@ -189,7 +186,7 @@ function submitOrder(){
 	<input type="hidden" name="type" value="${type }" />
 	<input type="hidden" name="reserve_time_string" value=""/>
 	<input type="hidden" name="region_code" value=""/>
-	<input type="hidden" name="car_id" value=""/>
+	<input type="hidden" name="car_id" value="${carId }"/>
 	<c:forEach items="${service_fees_checked }" var="com" varStatus="cStatus">
 		<c:if test="${com == '1'}">
 			<input type="hidden" name="service_fees.type" value="${service_fees_type[cStatus.index] }"/>

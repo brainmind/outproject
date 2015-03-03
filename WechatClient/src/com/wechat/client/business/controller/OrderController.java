@@ -47,7 +47,7 @@ public class OrderController extends BaseController{
 	
 	@RequestMapping("/service")
 	public String service(HttpServletRequest request, HttpServletResponse response){
-		String carId = "2722B345E6BB7E18E266E542468D4427";//request.getParameter("carId");
+		String carId = request.getParameter("car_id");//"2722B345E6BB7E18E266E542468D4427"
 		String type = request.getParameter("type");
 		request.setAttribute("carId", carId);
 		request.setAttribute("type", type);
@@ -70,6 +70,7 @@ public class OrderController extends BaseController{
 	@RequestMapping("/to")
 	public String toOrder(HttpServletRequest request){
 		String type = request.getParameter("type");
+		String carId = request.getParameter("car_id");
 		String[] commoditys_checked = request.getParameterValues("commodities.checked");
 		String[] commoditys_id = request.getParameterValues("commodities.id");
 		String[] commoditys_label = request.getParameterValues("commodities.label");
@@ -93,6 +94,7 @@ public class OrderController extends BaseController{
 		request.setAttribute("service_fees_price", service_fees_price);
 		request.setAttribute("service_fees_cId", service_fees_cId);
 		request.setAttribute("type", type);
+		request.setAttribute("carId", carId);
 		return "order/toorder";
 	}
 	
