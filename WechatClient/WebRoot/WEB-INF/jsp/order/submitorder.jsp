@@ -41,6 +41,7 @@ $(function(){
 						var commdoty = commdoties[i];
 						var li = $(document.createElement("li"));
 						container.append(li);
+						//alert(commdoty.total_price);
 						var commPrice = parseFloat(isNaN(commdoty.total_price)?"0":commdoty.total_price);
 						totalPrice += commPrice;
 						li.html("<div class=\"xd\" style=\"display:block;\"></div>"+
