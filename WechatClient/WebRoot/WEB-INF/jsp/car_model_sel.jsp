@@ -44,7 +44,7 @@ $(document).ready(function () {
 				}
 			},
 			error:function(r){
-				alert("error:"+r.responseText);
+				WxchatClient.Dialog.show("加载车型库失败,请检查网络或后台服务.");
 			}
 		});
 	}catch(e){
@@ -54,6 +54,7 @@ $(document).ready(function () {
 </script>
 </head>
 <body>
+<input type="hidden" name="backurl" value="${backurl }" />
 <div class="wapper">
     <div class="che_btn">
     	<span class="click" rel="tab" name="carmodelvin" url="<%=path %>/<%=Constants.ROOT %>/car/sel">车型选择</span>

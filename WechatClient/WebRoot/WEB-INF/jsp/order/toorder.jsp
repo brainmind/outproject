@@ -191,17 +191,21 @@ function submitOrder(){
 	<input type="hidden" name="region_code" value=""/>
 	<input type="hidden" name="car_id" value=""/>
 	<c:forEach items="${service_fees_checked }" var="com" varStatus="cStatus">
-		<c:if test="${com == '1' && not empty commodities_id[cStatus.index]}">
+		<c:if test="${com == '1'}">
+			<input type="hidden" name="service_fees.type" value="${service_fees_type[cStatus.index] }"/>
+			<input type="hidden" name="service_fees.title" value="${service_fees_title[cStatus.index] }"/>
+			<input type="hidden" name="service_fees.price" value="${service_fees_price[cStatus.index] }"/>
+			<input type="hidden" name="service_fees.category_id" value="${service_fees_cId[cStatus.index] }"/>
+		</c:if>
+	</c:forEach>
+	<c:forEach items="${commodities_checked }" var="commodity" varStatus="cStatus">
+		<c:if test="${commodity == '1' }">
 			<input type="hidden" name="commodities.id" value="${commodities_id[cStatus.index] }"/>
 			<input type="hidden" name="commodities.label" value="${commodities_label[cStatus.index] }"/>
 			<input type="hidden" name="commodities.number" value="${commodities_number[cStatus.index] }"/>
 			<input type="hidden" name="commodities.price" value="${commodities_price[cStatus.index] }"/>
 			<input type="hidden" name="commodities.category_id" value="${commoditys_cId[cStatus.index] }"/>
 		</c:if>
-		<input type="hidden" name="service_fees.type" value="${service_fees_type[cStatus.index] }"/>
-		<input type="hidden" name="service_fees.title" value="${service_fees_title[cStatus.index] }"/>
-		<input type="hidden" name="service_fees.price" value="${service_fees_price[cStatus.index] }"/>
-		<input type="hidden" name="service_fees.category_id" value="${service_fees_cId[cStatus.index] }"/>
 	</c:forEach>
 	<div class="neir r_dz">
     	<p><strong>请选择地区</strong></p>

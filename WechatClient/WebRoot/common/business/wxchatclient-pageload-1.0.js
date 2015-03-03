@@ -82,7 +82,12 @@ function initHref(){
 				var cookiecartype = "{id:\""+id+"\",brand:\""+brand.label+"\",logourl:\""+brand.logourl+"\"," +
 				"car:\""+car+"\",sername:\""+serie.label+"\",isdefault:true}";
 				WxchatClient.setCurrentCarType(cookiecartype);
-				window.location.href=contextPath+projectRoot+"/index";
+				
+				var backurl = $("input[type=hidden][name=backurl]").val();
+				if(backurl == ""){
+					backurl = "/index";
+				}
+				window.location.href=contextPath+projectRoot+backurl;
 			});
 		}
 	});

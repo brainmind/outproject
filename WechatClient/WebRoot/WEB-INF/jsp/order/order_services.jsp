@@ -127,7 +127,7 @@ function applyService(){
     	<div class="add_logo"><img src="<%=path %>/styles/images/4.png"></div>
         <div class="add_car add_cars">
         	<h1>奥迪 A3 （进口）<br/>1.4TFSI 手动 </h1>
-            <a href="#">更改车型</a>
+            <a href="#" class="idx_car_a" backurl="/order/service_1q1_type=${type}_2q2_carId=${carId}">更改车型</a>
         </div>      
 	</div>
 	<div class="day_t"><span>保养项目</span>&nbsp;&nbsp;总价：<span id="totalprice">0.00</span>元 (含工时费）</div>
@@ -144,5 +144,16 @@ function applyService(){
     <a href="javascript:applyService();" class="res_ser">预约服务</a>
 </div>
 </form>
+<!-- 车库选择界面    #########  begin  ############-->
+<div class="tc_bg"></div>
+<div class="tcmain">
+    <div class="close"></div>
+    <h1>我的车型库</h1>
+    <ul>
+        <li >本田 歌诗图 2.4L 2013年产</li>
+    </ul>
+    <a href="<%=path %>/<%=Constants.ROOT %>/car/sel?backurl=/order/service_1q1_type=${type}_2q2_carId=${carId}" class="other">其它车型</a>
+</div>
+<!-- 车库选择界面   #########  end  ############ -->
 </body>
 </html>

@@ -12,6 +12,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,10 +31,14 @@ import com.wsyb.ray.HttpEntityUtils;
 public class CarController extends BaseController {
 	
 	private final String getByVINPath = "/carsByVIN.json";
-	private final String getCarTypeList = "/cars.json";
 
 	@RequestMapping("/sel")
 	public String select(HttpServletRequest request, HttpServletResponse response){
+		String backurl = request.getParameter("backurl");
+		if(StringUtils.isNotEmpty(backurl)){
+			backurl = backurl.replaceAll("_1q1_", "?").replaceAll("_2q2_", "&");
+		}
+		request.setAttribute("backurl", backurl);
 		return "car_model_sel";
 	}
 	
