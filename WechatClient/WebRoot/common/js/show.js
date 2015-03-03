@@ -167,16 +167,24 @@ function updateTotalPrice(){
 	var totalPrice = 0;
 	$("div.day_list > ul > li > div > div.day_title").each(function(){
 		var $this = $(this);
-		var strPrice = $("h2 > span:last", $this).text();
-		if(strPrice && strPrice != ""){
-			totalPrice += parseFloat(strPrice);
+		if($(this).parents("li").find(".xz").is(":hidden")){		
+		}else{
+			var strPrice = $("h2 > span:last", $this).text();
+			if(strPrice && strPrice != ""){
+				totalPrice += parseFloat(strPrice);
+			}
 		}
 	});
 	$("div.day_list > ul > li > div.day_title").each(function(){
 		var $this = $(this);
-		var strPrice = $("h2 > span:last", $this).text();
-		if(strPrice && strPrice != ""){
-			totalPrice += parseFloat(strPrice);
+		var cateId = $(this).parents("li").attr("categoryid");
+		var cobj = $("li[type=services][categoryid="+cateId+"]");
+		if(cobj.find(".xz").is(":hidden")){			
+		}else{
+			var strPrice = $("h2 > span:last", $this).text();
+			if(strPrice && strPrice != ""){
+				totalPrice += parseFloat(strPrice);
+			}
 		}
 	});
 	$("#totalprice").html(totalPrice.toFixed(2));
