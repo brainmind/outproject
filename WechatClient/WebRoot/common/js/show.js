@@ -179,30 +179,26 @@ function updateTotalPrice(li){
 			}
 		}
 	});
-	$("div.day_list > ul > li > div.day_title").each(function(){
-		var $this = $(this);
-		var cateId = $(this).parents("li").attr("categoryid");
-		var cobj = $("li[type=services][categoryid="+cateId+"]");
-		if(cobj.find(".xz").is(":hidden")){			
-		}else{
-			var strPrice = $("h2 > span:last", $this).text();
-			if(strPrice && strPrice != ""){
-				totalPrice += parseFloat(strPrice);
-			}
-		}
-	});
+	var strPrice = $("div.day_list > ul > li[categoryid=0] > div.day_title > h2 > span:last").text();
+	totalPrice += parseFloat(strPrice);
 	$("#totalprice").html(totalPrice.toFixed(2));
 	//更新隐藏域
-	var commdoty = $("div.day_title", li);
+	var commdoty = $("div.day_title", li).first();
 	var id = commdoty.attr("data-id");
 	var price = $("h2 > span:last", commdoty).text();
+	if(price == null){
+		price = "0";
+	}
+	var categroyid = commdoty.attr("category-id");
+	var fee = $("li[type=fees][categoryid="+categroyid+"] > input[type=hidden][name='service_fees.price']", li.parent()).val();
+	var serviceprice = parseFloat(price)-parseFloat(fee);
 	var label = $("h1", commdoty).html();
 	var categoryid = commdoty.attr("category-id");
 	var number = commdoty.attr("data-number");
 	$("input[type=hidden][name='commodities.id']", li).val(id);
 	$("input[type=hidden][name='commodities.label']", li).val(label);
 	$("input[type=hidden][name='commodities.number']", li).val(number);
-	$("input[type=hidden][name='commodities.price']", li).val(price);
+	$("input[type=hidden][name='commodities.price']", li).val(serviceprice);
 	$("input[type=hidden][name='commodities.category_id']", li).val(categoryid);
 }
 
@@ -247,10 +243,9 @@ function initRenderingCommandotyService(){
 		if(li[0]){
 			li.children("input[name='service_fees.checked']").val(1);
 			serviceFee = parseFloat($("input[name='service_fees.price']", li).val());
-			li.show();
 		}
-		var span = $("span:last" , $(this).next());
-		var fee = span.text();
+		var span = $("input[type=hidden][name='commodities.price']" , $(this).parent());
+		var fee = span.val();
 		if(fee != null && fee != ""){
 			var totalFee = parseFloat($("#totalprice").text());
 			totalFee += parseFloat(fee)+serviceFee;
@@ -268,10 +263,9 @@ function initRenderingCommandotyService(){
 			li.children("input[name='service_fees.checked']").val(0);
 			var feePrice = $("input[name='service_fees.price']", li).val();
 			serviceFee = parseFloat(feePrice);
-			li.hide();
 		}
-		var span = $("span:last" , $(this).next().next());
-		var fee = span.text();
+		var span = $("input[type=hidden][name='commodities.price']" , $(this).parent());
+		var fee = span.val();
 		if(fee != null && fee != ""){
 			var totalFee = parseFloat($("#totalprice").text());
 			totalFee -= (parseFloat(fee) + serviceFee);

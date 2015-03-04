@@ -24,18 +24,23 @@ $(document).ready(function () {
 				var container = $("div.day_list > ul");
 				var totalPrice = 0;
 				if(r.commodities && r.commodities.length > 0){
+					r.commodities.sort(function(a,b){
+						return a.category_id>b.category_id?1:-1;
+					});
 					for(var i=0; i<r.commodities.length; i++){
 						var commodity = r.commodities[i];
 						var categoryid = commodity["category_id"];
-						var commprice = 0.00;
+						var commprice = 0.00, sprice = 0.00;
 						if(!isNaN(commodity["total_price"])){
-							commprice = parseFloat(commodity["total_price"]);
-							var serviceFee = r["service_fees"][i];
-							if(serviceFee && serviceFee.price){
-								commprice += parseFloat(serviceFee.price);
+							sprice = parseFloat(commodity["total_price"]);
+							var serviceFee = null;
+							for(var k=0; k<r["service_fees"].length; k++){
+								if(r["service_fees"][k].category_id == categoryid){
+									serviceFee = r["service_fees"][k];
+								}
 							}
-							if(commodity.recommand == "1"){
-								totalPrice += commprice;
+							if(serviceFee && serviceFee.price){
+								commprice += sprice + parseFloat(serviceFee.price);
 							}
 						}
 						var li = null;
@@ -52,6 +57,7 @@ $(document).ready(function () {
 								continue;
 							}
 						}
+						totalPrice += sprice;
 						li = $(document.createElement("li"));
 						li.appendTo(container);
 						var servName = commodity["category_label"];
@@ -65,7 +71,7 @@ $(document).ready(function () {
 								"<input type=\"hidden\" name=\"commodities.id\" value=\""+commodity["id"]+"\"/>"+
 								"<input type=\"hidden\" name=\"commodities.label\" value=\""+commodity["label"]+"\"/>"+
 								"<input type=\"hidden\" name=\"commodities.number\" value=\""+commodity["number"]+"\"/>"+
-								"<input type=\"hidden\" name=\"commodities.price\" value=\""+commprice+"\"/>"+
+								"<input type=\"hidden\" name=\"commodities.price\" value=\""+sprice+"\"/>"+
 								"<input type=\"hidden\" name=\"commodities.category_id\" value=\""+commodity["category_id"]+"\"/>");
 						li.attr("dataid", commodity["id"]);
 						li.attr("typeid", commodity["type"]);
@@ -74,6 +80,10 @@ $(document).ready(function () {
 					}
 				}
 				if(r["service_fees"] && r["service_fees"].length > 0){
+					r["service_fees"].sort(function(a,b){
+						return a.category_id>b.category_id?1:-1;
+					});
+					var firstLi = null, lastLi = null;
 					for(var i=0; i<r["service_fees"].length; i++){
 						var serviceFee = r["service_fees"][i];
 						var li = $(document.createElement("li"));
@@ -84,9 +94,10 @@ $(document).ready(function () {
 							totalPrice += parseFloat(serviceFee["price"]);
 						}
 						li.attr("type", "fees");
-						li.html("<div class=\"xd\" style=\"display:block;\"></div><div class=\"day_name\" title=\""+serviceFee["title"]+"\">"+serviceFee["title"]+"</div>"+
+						var feeTitle = serviceFee["category_id"]=="0"?"工时费":serviceFee["title"];
+						li.html("<div class=\"xd\" style=\"display:block;\"></div><div class=\"day_name\" title=\""+feeTitle+"\">"+feeTitle+"</div>"+
 								"<div class=\"day_pic\"><img src=\"<%=path %>/styles/images/7.jpg\" height=\"100%\"></div>"+
-								"<div class=\"day_title\"><h1>"+serviceFee["title"]+"工时费</h1><h2><span></span>&nbsp;<span>"+price+"</span></h2></div>"+
+								"<div class=\"day_title\"><h1>"+serviceFee["title"]+"</h1><h2><span></span>&nbsp;<span>"+price+"</span></h2></div>"+
 								"<input type=\"hidden\" name=\"service_fees.checked\" value=\"1\"/>"+
 								"<input type=\"hidden\" name=\"service_fees.type\" value=\""+serviceFee["type"]+"\"/>"+
 								"<input type=\"hidden\" name=\"service_fees.title\" value=\""+serviceFee["title"]+"\"/>"+
@@ -97,6 +108,11 @@ $(document).ready(function () {
 						if(serviceFee["category_id"] != 0){
 							li.hide();
 						}
+						if(i == 0) firstLi = li;
+						if(i+1 == r["service_fees"].length) lastLi = li;
+					}
+					if(firstLi != lastLi){
+						lastLi.after(firstLi);
 					}
 				}
 				$("#totalprice").html(totalPrice.toFixed(2));
@@ -114,7 +130,41 @@ $(document).ready(function () {
 		var logo = carType.logourl == "" ? "<%=path %>/styles/images/idx_logo.png" : carType.logourl;
 		$("div.add_logo > img").attr("src", logo);
 	}
+	
+	var isSelf = $("input[type=checkbox][name=isSelfService]");
+	isSelf.on("click",function(){
+		var $this = $(this);
+		isSelfService($this);
+	});
+	isSelfService(isSelf);
 });
+
+function isSelfService(isSelf){
+	if(isSelf.attr("checked") == "checked"){
+		$("div.day_list > ul > li[type=services]").hide();
+		$("div.day_list > ul > li > input[type=hidden][name='commodities.checked']").val(0);
+		var price = 0.00, totalPrice = 0.00;
+		$("div.day_list > ul > li > input[type=hidden][name='service_fees.price']").each(function(){
+			price += parseFloat($(this).val());
+		});
+		var tp = $("#totalprice");
+		totalPrice = price;
+		tp.html(totalPrice.toFixed(2));
+		$("div.day_list > ul > li[type=fees]").show();
+		$("div.day_list > ul > li > input[type=hidden][name='service_fees.checked']").val(1);
+	}else{
+		$("div.day_list > ul > li[type=services]").show();
+		$("div.day_list > ul > li > input[type=hidden][name='commodities.checked']").val(1);
+		var price = 0.00, totalPrice = 0.00;
+		$("div.day_list > ul > li > input[type=hidden][name='commodities.price']").each(function(){
+			price += parseFloat($(this).val());
+		});
+		var tp = $("#totalprice");
+		totalPrice = parseFloat(tp.text()) + price;
+		tp.html(totalPrice.toFixed(2));
+		$("div.day_list > ul > li[type=fees][categoryid!=0]").hide();
+	}
+}
 
 function applyService(){
 	var selnum = $("div.xz:visible");
