@@ -27,17 +27,21 @@ $(document).ready(function () {
 					for(var i=0; i<r.commodities.length; i++){
 						var commodity = r.commodities[i];
 						var categoryid = commodity["category_id"];
-						var price = 0.00;
+						var commprice = 0.00;
 						if(!isNaN(commodity["total_price"])){
-							price = parseFloat(commodity["total_price"]).toFixed(2);
+							commprice = parseFloat(commodity["total_price"]);
+							var serviceFee = r["service_fees"][i];
+							if(serviceFee && serviceFee.price){
+								commprice += parseFloat(serviceFee.price);
+							}
 							if(commodity.recommand == "1"){
-								totalPrice += parseFloat(commodity["total_price"]);
+								totalPrice += commprice;
 							}
 						}
 						var li = null;
 						var commodityInfo = "<div class=\"day_pic\"><img src=\""+commodity["pic_url"]+"\" height=\"100%\"></div>"+
 						"<div class=\"day_title\" data-id=\""+commodity["id"]+"\" category-id=\""+categoryid+"\" data-number=\""+commodity["number"]+"\">"+
-						"<h1>"+commodity["label"]+" SN ("+commodity["number"]+")</h1><h2><span>用量：1</span><span>"+price+"</span></h2></div>";
+						"<h1>"+commodity["label"]+" SN ("+commodity["number"]+")</h1><h2><span>用量：1</span><span>"+commprice.toFixed(2)+"</span></h2></div>";
 						if(commodity.recommand != "1"){
 							li = $("li[categoryid="+categoryid+"]");
 							if(li[0] && li.is("li")){
@@ -61,10 +65,11 @@ $(document).ready(function () {
 								"<input type=\"hidden\" name=\"commodities.id\" value=\""+commodity["id"]+"\"/>"+
 								"<input type=\"hidden\" name=\"commodities.label\" value=\""+commodity["label"]+"\"/>"+
 								"<input type=\"hidden\" name=\"commodities.number\" value=\""+commodity["number"]+"\"/>"+
-								"<input type=\"hidden\" name=\"commodities.price\" value=\""+price+"\"/>"+
+								"<input type=\"hidden\" name=\"commodities.price\" value=\""+commprice+"\"/>"+
 								"<input type=\"hidden\" name=\"commodities.category_id\" value=\""+commodity["category_id"]+"\"/>");
 						li.attr("dataid", commodity["id"]);
 						li.attr("typeid", commodity["type"]);
+						li.attr("recommend", commodity.recommand);
 						li.attr("categoryid", commodity["category_id"]);
 					}
 				}
@@ -89,6 +94,9 @@ $(document).ready(function () {
 								"<input type=\"hidden\" name=\"service_fees.category_id\" value=\""+serviceFee["category_id"]+"\"/>");
 						li.attr("typeid", serviceFee["type"]);
 						li.attr("categoryid", serviceFee["category_id"]);
+						if(serviceFee["category_id"] != 0){
+							li.hide();
+						}
 					}
 				}
 				$("#totalprice").html(totalPrice.toFixed(2));

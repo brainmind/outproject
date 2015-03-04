@@ -257,7 +257,7 @@ public class OrderController extends BaseController{
 		String type[] = request.getParameterValues("type");
 		String value[] = request.getParameterValues("value");
 		AppraiseJsonObject appr = new AppraiseJsonObject();
-		appr.setOrderid("4ACEC6ABE9A74CCE8F4BE1EEB8FD8004");
+		appr.setOrderid(orderId);
 		appr.setCommentid(commentid);
 		appr.setComment_time(comment_time);
 		try {
