@@ -211,11 +211,12 @@ box-sizing:border-box; display:-webkit-box;-webkit-box-orient: vertical;-webkit-
 .bg01{ background:#e3e3e3;}
 .submit_order{ width:100%;}
 .submit_order .my_order{ color:#fe4d00;height:40px; line-height:40px; text-align:center;  background:#e3e3e3;font-size:18px;}
-.my_order_num{ line-height:35px; height:35px; text-align:left; padding-left:4%; font-size:13px; background:#fff;}
+.my_order_num{ line-height:35px; height:35px; text-align:left; padding-left:4%; font-size:13px; background:#fff;text-overflow:ellipsis;white-space: nowrap;
+overflow: hidden;}
 .order_img{ width:25%;}
 .order_font{ width:75%;overflow:hidden; height:auto; font-size:12px; padding:5px 0px; box-sizing:border-box;}
 .order_font table td{padding-left:10px;}
-.order_font table td.nametel{ padding-left:0px;}
+.order_font table td.nametel{ padding-left:0px;text-overflow:ellipsis;-o-text-overflow:ellipsis;white-space: nowrap;overflow: hidden;}
 .car_name{ font-size:16px;}
 .full_care{ font-size:14px; color:#fe4d00;}
 .my_order_address{border-bottom:1px solid #ccc;}

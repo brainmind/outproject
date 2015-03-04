@@ -27,8 +27,7 @@ $(function(){
 				$("td.car_name").html(r.brand+" "+r.series+ " " + r.output +"<br/>"+r.productYear);
 				var logo = r.brandPicPath == null || r.brandPicPath == "" ? "<%=path %>/styles/images/idx_logo.png" : r.brandPicPath;
 				$("div.add_logo > img").attr("src", logo);
-				
-				$("#contact").html(r.contact);
+				r.contact.length<5 ? $("#contact").html(r.contact) :$("#contact").html(r.contact.substring(0,3)+'...');
 				$("#mobile").html(r.mobile);
 				$("#address").html("<strong>地址：</strong>" + r.address);
 				$("input[type=hidden][name='order_number']").val(r.orderNumber);
