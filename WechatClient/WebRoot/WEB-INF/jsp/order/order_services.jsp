@@ -129,6 +129,10 @@ $(document).ready(function () {
 		$("div.add_cars > h1").first().html(carName+" "+serName+"<br/>"+car);
 		var logo = carType.logourl == "" ? "<%=path %>/styles/images/idx_logo.png" : carType.logourl;
 		$("div.add_logo > img").attr("src", logo);
+		$("input[type=hidden][name=brand]").val(carName);
+		$("input[type=hidden][name=sername]").val(serName);
+		$("input[type=hidden][name=car]").val(car);
+		$("input[type=hidden][name=logourl]").val(carType.logourl);
 	}
 	
 	var isSelf = $("input[type=checkbox][name=isSelfService]");
@@ -181,6 +185,10 @@ function applyService(){
 <form action="<%=path + Constants.ROOT %>/order/to" method="post" name="serviceForm">
 <input type="hidden" name="type" value="${type }" />
 <input type="hidden" name="car_id" value="${carId }" />
+<input type="hidden" name="brand" value="" />
+<input type="hidden" name="sername" value="" />
+<input type="hidden" name="car" value="" />
+<input type="hidden" name="logourl" value="" />
 <div class="wapper">
 	<div class="add_top">
     	<div class="add_logo"><img src="<%=path %>/styles/images/4.png"></div>
@@ -193,7 +201,7 @@ function applyService(){
     <div class="day_list">
     	<ul>
     	</ul>
-        <a href="<%=path %>/<%=Constants.ROOT %>/car/selItem" class="addpro"><img src="<%=path %>/styles/images/2.png">添加新项</a>
+        <a href="<%=path + Constants.ROOT %>/car/selItem?carId=${carId }" class="addpro"><img src="<%=path %>/styles/images/2.png">添加新项</a>
     </div>
 </div>
 <div class="checkbox">
@@ -208,9 +216,7 @@ function applyService(){
 <div class="tcmain">
     <div class="close"></div>
     <h1>我的车型库</h1>
-    <ul>
-        <li >本田 歌诗图 2.4L 2013年产</li>
-    </ul>
+    <ul></ul>
     <a href="<%=path %>/<%=Constants.ROOT %>/car/sel?backurl=/order/service_1q1_type=${type}" class="other">其它车型</a>
 </div>
 <!-- 车库选择界面   #########  end  ############ -->

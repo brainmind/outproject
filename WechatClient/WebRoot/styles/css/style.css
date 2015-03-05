@@ -153,10 +153,11 @@ box-sizing:border-box; font-family:\5FAE\8F6F\96C5\9ED1; line-height:39px; borde
 .add_btn a{width:43%; height:40px; font-size:16px; text-align:center; line-height:40px; border-radius:2px; background:#ff4c00; display:block; color:#fff; float:left;}
 .add_btn a:nth-child(2){float:right; background:#b3b3b3;}
 .add_an{width:100%; height:100%; overflow:hidden;}
-.add_an li{width:50%; height:65px; border-bottom:1px solid #e6e6e6; box-sizing:border-box; float:left; font-size:14px; padding-top:10px; padding-left:6%;}
-.add_an li.pro_click{background:#e6e6e6 url(../images/xz.png) right bottom no-repeat; background-size:8%;}
-.add_an li:nth-child(odd){border-right:1px solid #e6e6e6;}
+.add_an li{width:49%; height:65px; border-bottom:1px solid #e6e6e6; box-sizing:border-box; float:left; font-size:14px; padding-top:9px; padding-left:4%; margin-top:1px; margin-left:1px;}
+.add_an li.pro_click{border:1px solid #ff4c00; background:#e6e6e6 url(../images/xz.png) right bottom no-repeat; background-size:27px auto;}
+/*.add_an li:nth-child(odd){border-right:1px solid #e6e6e6;}*/
 .add_an li img{width:43px; vertical-align:middle; padding-right:10px;}
+
 
 /* 日常保养 */
 .day_t{width:100%; height:36px; text-align:center; line-height:36px; font-weight:bold; font-size:16px; background:#f1f1f1; color:#3d3d3d;}
@@ -316,3 +317,11 @@ overflow: hidden;}
 .table_list span{color:#ff7800;}
 .gray td{ background:#f9f9f9;}
 .table_list table tr td:first-child{padding:5px 3px;}
+
+/*弹出层样式*/
+.dialog_bg{width:100%; height:100%; max-width:640px; background:#000; opacity:0.7; position:fixed; top:0; left:0; z-index:10000; display:none;}
+.dialog_main{width:90%; height:auto; max-width:576px; background:#fff; position:fixed; top:0; left:-100%; z-index:10000; border-radius:2px;}
+.dialog_main h1{width:100%; height:56px; line-height:56px; font-size:16px; text-align:center; border-bottom:1px solid #c8c7cc;}
+.dialog_main li{width:100%; height:56px; line-height:56px; font-size:14px; padding:0 10%; box-sizing:border-box; border-bottom:1px solid #c8c7cc;}
+.dialog_main a{width:50%; height:40px; font-size:16px; text-align:center; line-height:40px; border-radius:2px; margin:10px auto; background:#ff4c00; display:block; color:#fff; margin:20px auto;}
+.dialog_close{width:30px; height:30px; position:absolute; top:-10px; right:-10px; background:url(../images/close.png) no-repeat; background-size:100% 100%;}

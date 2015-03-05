@@ -102,6 +102,17 @@ function countdown(seconds){
 }
 
 function submitOrder(){
+	var car_id = $("input[type=hidden][name=car_id]").val();
+	var carName = $("input[type=hidden][name=brand]").val();
+	var serName = $("input[type=hidden][name=sername]").val();
+	var car = $("input[type=hidden][name=car]").val();
+	var logourl = $("input[type=hidden][name=logourl]").val();
+	var cookiecartype = "{id:\""+car_id+"\",brand:\""+carName+"\",logourl:\""+logourl+"\"," +
+	"car:\""+car+"\",sername:\""+serName+"\",isdefault:true}";
+	alert(cookiecartype);
+	WxchatClient.addCarType(cookiecartype);
+	return;
+	
 	var address = $("input[type=text][name=address]");
 	if(address.val() == "" || address.val() == "详细地址"){
 		WxchatClient.Dialog.show("详细地址不能为空", function(){
@@ -159,6 +170,14 @@ function submitOrder(){
 		dataType:"json",
 		success:function(r){
 			if(r && r.orderid){
+				var car_id = $("input[type=hidden][name=car_id]").val();
+				var carName = $("input[type=hidden][name=brand]").val();
+				var serName = $("input[type=hidden][name=sername]").val();
+				var car = $("input[type=hidden][name=car]").val();
+				var logourl = $("input[type=hidden][name=logourl]").val();
+				var cookiecartype = "{id:\""+car_id+"\",brand:\""+carName+"\",logourl:\""+logourl+"\"," +
+				"car:\""+car+"\",sername:\""+serName+"\",isdefault:true}";
+				WxchatClient.addCarType(cookiecartype);
 				WxchatClient.Dialog.show("订单提交成功！", function(){
 					window.location.href="<%=path + Constants.ROOT %>/order/ready?orderId="+r.orderid;
 				});
@@ -187,6 +206,10 @@ function submitOrder(){
 	<input type="hidden" name="reserve_time_string" value=""/>
 	<input type="hidden" name="region_code" value=""/>
 	<input type="hidden" name="car_id" value="${carId }"/>
+	<input type="hidden" name="brand" value="${brand }" />
+	<input type="hidden" name="sername" value="${sername }" />
+	<input type="hidden" name="car" value="${car }" />
+	<input type="hidden" name="logourl" value="${logourl }" />
 	<c:forEach items="${service_fees_checked }" var="com" varStatus="cStatus">
 		<c:if test="${com == '1'}">
 			<input type="hidden" name="service_fees.type" value="${service_fees_type[cStatus.index] }"/>

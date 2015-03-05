@@ -4,11 +4,11 @@ $.extend(WxchatClient, {
 		clientHeight:0,
 		_init:function(){
 			var bg = $(document.createElement("div"));
-			bg.addClass("tc_bg");
+			bg.addClass("dialog_bg");
 			$(document.body).append(bg);
 			var main = $(document.createElement("div"));
-			main.addClass("tcmain");
-			main.html("<div class=\"close\"></div><ul><li id=\"xm_dialog_content\"></li></ul>");
+			main.addClass("dialog_main");
+			main.html("<div class=\"dialog_close\"></div><ul><li id=\"xm_dialog_content\"></li></ul>");
 			$(document.body).append(main);
 			// 设定首页焦点图尺寸
 			var wxd = this;
@@ -22,24 +22,24 @@ $.extend(WxchatClient, {
 			}
 			contentLi = $("#xm_dialog_content");
 			contentLi.html(content);
-			$(".tc_bg").fadeIn();
+			$(".dialog_bg").fadeIn();
 			var wxc = this;
-			var tc_h = $(".tcmain").height();
-			$(".tcmain").css({
+			var tc_h = $(".dialog_main").height();
+			$(".dialog_main").css({
 				"top" : (wxc.clientHeight - tc_h) / 2
 			});
 			if (wxc.clientWidth > 640) {
-				$(".tc_bg").css({
+				$(".dialog_bg").css({
 					"left" : "50%",
 					"margin-left" : "-320px"
 				});
 			} else {
-				$(".tc_bg").css({
+				$(".dialog_bg").css({
 					"left" : "0",
 					"margin-left" : "0"
 				});
 			}
-			var myCarTypeSel = $(".tcmain");
+			var myCarTypeSel = $(".dialog_main");
 			if (wxc.clientWidth > 640) {
 				myCarTypeSel.animate({
 					"left" : "50%",
@@ -51,7 +51,7 @@ $.extend(WxchatClient, {
 					"margin-left" : "0"
 				});
 			}
-			$(".tc_bg,.close,.tcmain li,.other").click(function() {
+			$(".dialog_bg,.dialog_close,.dialog_main li,.other").click(function() {
 				wxc.close();
 				if($.type(callback) == "function"){
 					callback();
@@ -59,8 +59,8 @@ $.extend(WxchatClient, {
 			});
 		},
 		close:function(){
-			$(".tc_bg").hide();
-			$(".tcmain").animate({
+			$(".dialog_bg").hide();
+			$(".dialog_main").animate({
 				"left" : "-100%"
 			});
 		}

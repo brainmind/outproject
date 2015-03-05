@@ -97,7 +97,9 @@ public class CarController extends BaseController {
 	}
 	
 	@RequestMapping("/selItem")
-	public String itemSel(){
+	public String itemSel(HttpServletRequest request){
+		String carId = request.getParameter("carId");
+		request.setAttribute("carId", carId);
 		return "serviceitem/itemsel";
 	}
 }

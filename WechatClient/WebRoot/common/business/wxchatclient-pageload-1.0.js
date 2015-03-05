@@ -66,7 +66,8 @@ function initHref(){
 						dl.empty();
 						for(var i=0; i<cars.length; i++){
 							var dd = $(document.createElement("dd"));
-							dd.html("<a dataid=\""+cars[i].id+"\" rel=\"thirdselect\" target=\""+targetId+"\">"+cars[i].label+"</a>");
+							var remark = cars[i].remark != null ? cars[i].remark : "";
+							dd.html("<a dataid=\""+cars[i].id+"\" label=\""+cars[i].label+"\" rel=\"thirdselect\" target=\""+targetId+"\">"+cars[i].label+" "+remark+"</a>");
 							dl.append(dd);
 						}
 						initHref();
@@ -76,7 +77,7 @@ function initHref(){
 		}else if(rel == "thirdselect"){
 			$this.parent().on("click",function(){
 				var id = $this.attr("dataid");
-				var car = $this.text();
+				var car = $this.attr("label");
 				var brand = container.data("brand");
 				var serie = container.data("serie");
 				var cookiecartype = "{id:\""+id+"\",brand:\""+brand.label+"\",logourl:\""+brand.logourl+"\"," +

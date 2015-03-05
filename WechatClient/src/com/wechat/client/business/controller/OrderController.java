@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -71,6 +72,10 @@ public class OrderController extends BaseController{
 	public String toOrder(HttpServletRequest request){
 		String type = request.getParameter("type");
 		String carId = request.getParameter("car_id");
+		String brand = request.getParameter("brand");
+		String sername = request.getParameter("sername");
+		String car = request.getParameter("car");
+		String logourl = request.getParameter("logourl");
 		String[] commoditys_checked = request.getParameterValues("commodities.checked");
 		String[] commoditys_id = request.getParameterValues("commodities.id");
 		String[] commoditys_label = request.getParameterValues("commodities.label");
@@ -95,6 +100,10 @@ public class OrderController extends BaseController{
 		request.setAttribute("service_fees_cId", service_fees_cId);
 		request.setAttribute("type", type);
 		request.setAttribute("carId", carId);
+		request.setAttribute("brand", brand);
+		request.setAttribute("sername", sername);
+		request.setAttribute("car", car);
+		request.setAttribute("logourl", logourl);
 		return "order/toorder";
 	}
 	
@@ -213,7 +222,14 @@ public class OrderController extends BaseController{
 	}
 	
 	@RequestMapping("/history")
-	public String history(){
+	public String history(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		LoginUser user = (LoginUser)session.getAttribute(Constants.USER_SESSION_KEY);
+		if(user == null){
+			user = new LoginUser();
+			user.setOpenid("12345688");
+			session.setAttribute(Constants.USER_SESSION_KEY, user);
+		}
 		return "order/finishorder";
 	}
 	

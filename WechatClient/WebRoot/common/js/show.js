@@ -76,12 +76,12 @@ window.onload = function() {
 			"margin-left" : "0"
 		});
 	}
-	$(".idx_car_o,.idx_car_a").click(function() {
-		var backurl = $(this).attr("backurl");
+	$(".idx_car_o,.idx_car_a").parent().click(function() {
+		var backurl = $(this).children("a").attr("backurl");
 		if(backurl == null){
 			backurl = "";
 		}
-		if(WxchatClient.currentCarType() == null){
+		if(WxchatClient.getDefaultCarType() == null){
 			window.location.href = contextPath+projectRoot+"/car/sel?backurl="+backurl;
 			return false;
 		}

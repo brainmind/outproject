@@ -155,7 +155,7 @@ $(document).ready(function () {
             <li><a href="<%=path + Constants.ROOT %>/order/service?type=1" rel="services"><img src="<%=path %>/styles/images/idx_nav1.png">日常保养</a></li>
             <li><a href="<%=path + Constants.ROOT %>/order/service?type=2" rel="services"><img src="<%=path %>/styles/images/idx_nav2.png">更换电瓶</a></li>
             <li><a href="<%=path + Constants.ROOT %>/order/service?type=3" rel="services"><img src="<%=path %>/styles/images/idx_nav3.png">更换刹车片</a></li>
-            <li><a href="<%=path + Constants.ROOT %>/order/service?type=4" rel="services"><img src="<%=path %>/styles/images/idx_nav4.png">加装PM2.5空调滤膜</a></li>
+            <li><a href="<%=path + Constants.ROOT %>/order/service?type=4" rel="services" title="加装PM2.5空调滤膜"><img src="<%=path %>/styles/images/idx_nav4.png">加装空调滤膜</a></li>
             <li><a href="<%=path + Constants.ROOT %>/order/service?type=5" rel="services"><img src="<%=path %>/styles/images/idx_nav5.png">更换轮胎</a></li>
             <li></li>
         </ul>

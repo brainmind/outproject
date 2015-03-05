@@ -158,15 +158,7 @@ public class JsonFactory{
 		String json = "{\"data\":{\"brands\":[{\"label\":\"奥迪\",\"first_letter\":\"A\",\"logo_url\":\"http: //meicheng.com/brand/logo1.jpg\",\"series\":[{\"label\":\"A4\",\"cars\":[{\"id\":\"34d822d000ds2331a33333se3\",\"label\":\"1.8T(2002.3-2009)\"},{\"id\":\"33d822d000ds2331a33333se3\",\"label\":\"2.0(2002.3-2009)\"}]}]}]} }";
 		JsonFactory jf = new JsonFactory();
 		List<Brands> bList = new ArrayList<Brands>();
-		try {
-			ResultData<List<Brands>> rd = jf.getJson(json, bList);
-			System.out.println(rd.getData());
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		String j = "[asidfjalsdkfjaisdf]";
+		System.out.println(j.substring(0, j.length()-1));
 	}
 }
