@@ -43,12 +43,11 @@ $(document).ready(function () {
 								commprice += sprice + parseFloat(serviceFee.price);
 							}
 						}
-						var li = null;
+						var li = $("li[categoryid="+categoryid+"]");;
 						var commodityInfo = "<div class=\"day_pic\"><img src=\""+commodity["pic_url"]+"\" height=\"100%\"></div>"+
 						"<div class=\"day_title\" data-id=\""+commodity["id"]+"\" category-id=\""+categoryid+"\" data-number=\""+commodity["number"]+"\">"+
 						"<h1>"+commodity["label"]+" SN ("+commodity["number"]+")</h1><h2><span>用量：1</span><span>"+commprice.toFixed(2)+"</span></h2></div>";
-						if(commodity.recommand != "1"){
-							li = $("li[categoryid="+categoryid+"]");
+						if(commodity.recommand != "1" || li[0]){
 							if(li[0] && li.is("li")){
 								var commodityDL = $("li[categoryid="+categoryid+"] > div.day_more > dl");
 								var dd = $(document.createElement("dd"));
@@ -191,9 +190,9 @@ function applyService(){
 <input type="hidden" name="logourl" value="" />
 <div class="wapper">
 	<div class="add_top">
-    	<div class="add_logo"><img src="<%=path %>/styles/images/4.png"></div>
+    	<div class="add_logo"><img src="<%=path %>/styles/images/idx_logo.png"></div>
         <div class="add_car add_cars">
-        	<h1>奥迪 A3 （进口）<br/>1.4TFSI 手动 </h1>
+        	<h1>&nbsp;</h1>
             <a href="#" class="idx_car_a" backurl="/order/service_1q1_type=${type}">更改车型</a>
         </div>      
 	</div>

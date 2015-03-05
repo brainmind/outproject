@@ -102,17 +102,6 @@ function countdown(seconds){
 }
 
 function submitOrder(){
-	var car_id = $("input[type=hidden][name=car_id]").val();
-	var carName = $("input[type=hidden][name=brand]").val();
-	var serName = $("input[type=hidden][name=sername]").val();
-	var car = $("input[type=hidden][name=car]").val();
-	var logourl = $("input[type=hidden][name=logourl]").val();
-	var cookiecartype = "{id:\""+car_id+"\",brand:\""+carName+"\",logourl:\""+logourl+"\"," +
-	"car:\""+car+"\",sername:\""+serName+"\",isdefault:true}";
-	alert(cookiecartype);
-	WxchatClient.addCarType(cookiecartype);
-	return;
-	
 	var address = $("input[type=text][name=address]");
 	if(address.val() == "" || address.val() == "详细地址"){
 		WxchatClient.Dialog.show("详细地址不能为空", function(){

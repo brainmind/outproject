@@ -23,7 +23,6 @@ $(function(){
 		dataType:"json",
 		success:function(r){
 			if(r && $.type(r) == "object"){
-				
 				$("td.car_name").html(r.brand+" "+r.series+ " " + r.output +"<br/>"+r.productYear);
 				var logo = r.brandPicPath == null || r.brandPicPath == "" ? "<%=path %>/styles/images/idx_logo.png" : r.brandPicPath;
 				$("div.add_logo > img").attr("src", logo);
@@ -41,13 +40,23 @@ $(function(){
 						var li = $(document.createElement("li"));
 						container.append(li);
 						var commPrice = parseFloat(isNaN(commdoty.total_price)?"0":commdoty.total_price);
+						var serviceFee = null;
+						for(var k=0; k<r["service_fees"].length; k++){
+							if(r["service_fees"][k].category_id == commdoty.category_id){
+								serviceFee = r["service_fees"][k];
+							}
+						}
+						if(serviceFee && serviceFee.price){
+							commPrice += parseFloat(serviceFee.price);
+						}
 						totalPrice += commPrice;
+						var commodityName = commdoty.label.length > 15 ? commdoty.label.substring(0, 15)+"...":commdoty.label;
 						li.html("<div class=\"xd\" style=\"display:block;\"></div>"+
 				            	"<div class=\"day_name\">"+commdoty.category_label+"</div>"+
 				                "<div class=\"day_pic\"><img src=\""+commdoty.pic_url+"\" height=\"100%\"></div>"+
 				                "<div class=\"no_arrow\">"+
 				                "	<div class=\"h_border\">"+
-				                "		<h1>"+commdoty.label+" SN ("+commdoty.number+")</h1>"+
+				                "		<h1 title=\""+commdoty.label+"\">"+commodityName+" SN ("+commdoty.number+")</h1>"+
 				                "    </div>"+
 				                "    <h2><span class=\"border_left\">用量："+commdoty.number+"</span><span>"+commPrice.toFixed(2)+"</span></h2>"+
 				                "</div>");
@@ -57,13 +66,15 @@ $(function(){
 				if(serviceFees && $.type(serviceFees) == "array"){
 					for(var i=0; i<serviceFees.length; i++){
 						var fee = serviceFees[i];
-						var feePrice = parseFloat(isNaN(fee.price)?"0":fee.price);
-						totalPrice += feePrice;
-						var li = $(document.createElement("li"));
-						container.append(li);
-						li.html("<div class=\"xd\" style=\"display:block;\"></div><div class=\"day_name\" title=\""+fee["title"]+"\">"+fee["title"]+"</div>"+
-								"<div class=\"day_pic\"><img src=\"<%=path %>/styles/images/7.jpg\" height=\"100%\"></div>"+
-								"<div class=\"day_title\"><h1>"+fee["title"]+"工时费</h1><h2><span></span>&nbsp;<span>"+feePrice+"</span></h2></div>");
+						if(fee.category_id == 0){
+							var feePrice = parseFloat(isNaN(fee.price)?"0":fee.price);
+							totalPrice += feePrice;
+							var li = $(document.createElement("li"));
+							container.append(li);
+							li.html("<div class=\"xd\" style=\"display:block;\"></div><div class=\"day_name\" title=\""+fee["title"]+"\">工时费</div>"+
+									"<div class=\"day_pic\"><img src=\"<%=path %>/styles/images/7.jpg\" height=\"100%\"></div>"+
+									"<div class=\"day_title\"><h1>"+fee["title"]+"</h1><h2><span></span>&nbsp;<span>"+feePrice.toFixed(2)+"</span></h2></div>");
+						}
 					}
 				}
 				$("#total_price").html(totalPrice.toFixed(2));

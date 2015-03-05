@@ -91,7 +91,6 @@ var WxchatClient={
 			for(var i = 0; i < properties.length; i++){
 				var pro = properties[i].split("=");
 				pro[0] = pro[0].replace(/ /g, "");
-				alert(properties[i]);
 				if(pro[0] == WxchatClient.Cookie_CarType_Key){
 					isNotExits = false;
 					var cookie_val = unescape(pro[1]);

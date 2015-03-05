@@ -85,22 +85,11 @@ window.onload = function() {
 			window.location.href = contextPath+projectRoot+"/car/sel?backurl="+backurl;
 			return false;
 		}
-		$(".tc_bg").fadeIn();
 		var myCarTypeSel = $(".tcmain");
-		if (width > 640) {
-			myCarTypeSel.animate({
-				"left" : "50%",
-				"margin-left" : "-288px"
-			});
-		} else {
-			myCarTypeSel.animate({
-				"left" : "5%",
-				"margin-left" : "0"
-			});
-		}
-		var myCarTypeList = WxchatClient.Cookie.getCookieVal(WxchatClient.Cookie_CarType_Key);
 		var ul = $("ul", myCarTypeSel);
+		var myCarTypeList = WxchatClient.Cookie.getCookieVal(WxchatClient.Cookie_CarType_Key);
 		if(myCarTypeList){
+			ul.empty();
 			if($.type(myCarTypeList)=="array" && myCarTypeList.length > 0){
 				for(var i=0; i<myCarTypeList.length; i++){
 					var carType = myCarTypeList[i];
@@ -121,14 +110,6 @@ window.onload = function() {
 			}
 			ul.children("li").on("click", function(){
 				var $li = $(this);
-				var isdefault = $li.attr("isdefault");
-				if(isdefault || isdefault == "true"){
-					$(".tc_bg").hide();
-					$(".tcmain").animate({
-						"left" : "-100%"
-					});
-					return false;
-				}
 				var id = $li.attr("dataid");
 				var brand = $li.attr("brand");
 				var sername = $li.attr("serie");
@@ -138,10 +119,30 @@ window.onload = function() {
 				"car:\""+car+"\",sername:\""+sername+"\",isdefault:"+isdefault+"}";
 				WxchatClient.setCurrentCarType(cookiecartype);
 				$(".idx_car").html("<h1>"+brand+" "+sername+"<br/>"+car+"</h1><a href=\"#\" class=\"idx_car_a\" backurl=\""+backurl+"\">更改车型</a>");
+				$(".tc_bg").hide();
+				$(".tcmain").animate({
+					"left" : "-100%"
+				});
+			});
+		}
+		$(".tc_bg").fadeIn();
+		var tc_h = $(".tcmain").height();
+		$(".tcmain").css({
+			"top" : (height - tc_h) / 2
+		});
+		if (width > 640) {
+			myCarTypeSel.animate({
+				"left" : "50%",
+				"margin-left" : "-288px"
+			});
+		} else {
+			myCarTypeSel.animate({
+				"left" : "5%",
+				"margin-left" : "0"
 			});
 		}
 	});
-	$(".tc_bg,.close,.tcmain li,.other").click(function() {
+	$(".tc_bg,.close").click(function() {
 		$(".tc_bg").hide();
 		$(".tcmain").animate({
 			"left" : "-100%"
@@ -179,7 +180,8 @@ function updateTotalPrice(li){
 			}
 		}
 	});
-	var strPrice = $("div.day_list > ul > li[categoryid=0] > div.day_title > h2 > span:last").text();
+	var strPrice = $("div.day_list > ul > li[type=fees][categoryid=0] > div.day_title > h2 > span:last").text();
+	alert(strPrice);
 	totalPrice += parseFloat(strPrice);
 	$("#totalprice").html(totalPrice.toFixed(2));
 	//更新隐藏域

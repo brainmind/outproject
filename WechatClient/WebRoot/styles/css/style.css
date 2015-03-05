@@ -154,7 +154,7 @@ box-sizing:border-box; font-family:\5FAE\8F6F\96C5\9ED1; line-height:39px; borde
 .add_btn a:nth-child(2){float:right; background:#b3b3b3;}
 .add_an{width:100%; height:100%; overflow:hidden;}
 .add_an li{width:49%; height:65px; border-bottom:1px solid #e6e6e6; box-sizing:border-box; float:left; font-size:14px; padding-top:9px; padding-left:4%; margin-top:1px; margin-left:1px;}
-.add_an li.pro_click{border:1px solid #ff4c00; background:#e6e6e6 url(../images/xz.png) right bottom no-repeat; background-size:27px auto;}
+.add_an li.pro_click{border:1px solid #ff4c00; background:url(../images/xz.png) right bottom no-repeat; background-size:27px auto;}
 /*.add_an li:nth-child(odd){border-right:1px solid #e6e6e6;}*/
 .add_an li img{width:43px; vertical-align:middle; padding-right:10px;}
 

@@ -63,6 +63,9 @@ $(document).ready(function () {
 	});
 
 	var carType = WxchatClient.currentCarType();
+	if(carType == null){
+		carType = WxchatClient.getDefaultCarType();
+	}
 	if(carType && carType != null && carType != ""){
 		//显示当前车型
 		$(".idx_car_o").hide();
@@ -167,8 +170,6 @@ $(document).ready(function () {
     <div class="close"></div>
     <h1>我的车型库</h1>
     <ul>
-        <li >本田 歌诗图 2.4L 2013年产</li>
-        <li>本田 歌诗图 2.4L 2013年产</li>
     </ul>
     <a href="<%=path %>/<%=Constants.ROOT %>/car/sel" class="other">其它车型</a>
 </div>
