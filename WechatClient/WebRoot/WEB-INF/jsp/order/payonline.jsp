@@ -26,7 +26,7 @@ $(function(){
 		dataType:"json",
 		success:function(r){
 			if(r && $.type(r) == "object"){
-				$("#contact").html(r.contact);
+				r.contact.length<5 ? $("#contact").html(r.contact) :$("#contact").html(r.contact.substring(0,3)+'...');
 				$("#mobile").html(r.mobile);
 				$("#address").html("<strong>地址：</strong>" + r.address);
 				var totalPrice = 0;
