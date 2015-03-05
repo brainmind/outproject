@@ -208,10 +208,11 @@ function initRenderingCommandotyService(){
 			$("div.day_more").hide();
 			$("div.day_title").removeClass("day_cur");
 		}
-		$(this).toggleClass("day_cur");
-		$(this).parent().next(".day_more").toggle();
+		if($(this).parent().next(".day_more").find("dd").length){
+			$(this).toggleClass("day_cur");
+			$(this).parent().next(".day_more").toggle();
+		}
 	});
-	
 	$(".day_more dd").unbind("click");
 	$(".day_more dd").click(function() {
 		var dd = $(this);
