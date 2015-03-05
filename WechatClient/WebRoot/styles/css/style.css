@@ -171,8 +171,8 @@ box-sizing:border-box; font-family:\5FAE\8F6F\96C5\9ED1; line-height:39px; borde
 .addpro img{height:10px; vertical-align:middle; padding-right:5px;}
 
 .day_list{width:100%; height:auto; background:#f1f1f1;}
-.day_list li{width:100%; height:100%; overflow:hidden; background:#fff; position:relative;}
-.day_name{width:22%; height:85px; float:left; box-sizing:border-box; border-top:1px solid #cbcbcb; border-bottom:1px solid #cbcbcb; background:#fff; text-align:center; overflow:hidden; font-size:14px; font-weight:bold; color:#9b9b9b; margin-bottom:2px;
+.day_list li{width:100%; height:100%; overflow:hidden; background:#f1f1f1; position:relative;}
+.day_name{width:22%; height:85px; float:left; box-sizing:border-box; border-top:1px solid #cbcbcb; border-bottom:1px solid #cbcbcb; background:#fff; text-align:center; overflow:hidden; font-size:14px; font-weight:bold; color:#9b9b9b; margin-bottom:6px;
 box-sizing:border-box; display: -webkit-box;-webkit-box-orient: vertical;-webkit-box-pack: center;-webkit-box-align: center;}
 .day_pic{width:22%; height:85px; float:left; border-left:1px solid #cbcbcb; border-top:1px solid #cbcbcb; border-bottom:1px solid #cbcbcb; background:#fff; box-sizing:border-box; text-align:center; overflow:hidden;
 box-sizing:border-box; display:-webkit-box;-webkit-box-orient: vertical;-webkit-box-pack: center;-webkit-box-align: center;}
@@ -186,12 +186,12 @@ box-sizing:border-box; display:-webkit-box;-webkit-box-orient: vertical;-webkit-
 .day_list_o .day_title{background:#fff; padding:6% 0 0 3%;}
 
 .day_more{width:100%; height:auto; clear:both; display:none;}
-.day_more dd{width:100%; height:85px; margin-bottom:4px;}
+.day_more dd{width:100%; height:85px; margin-bottom:4px; background-color:#fff;}
 .day_more .day_pic{margin-left:22%;}
 .day_more .day_title{background:#fff;}
 .day_more dd.dd_cur .day_pic,.day_more dd.dd_cur .day_title{background:#f1f0f0;}
 
-.xz{width:22%; height:85px; border:1px solid #ff4c00; background:url(../images/xz.png) right bottom no-repeat; box-sizing:border-box; position:absolute; top:0; left:0; background-size:27px auto; display:none;}
+.xz{width:22%; height:85px; border:2px solid #ff4c00; background:url(../images/xz.png) right bottom no-repeat; box-sizing:border-box; position:absolute; top:0; left:0; background-size:27px auto; display:none;}
 .xd{width:22%; height:85px; border:1px solid #ff4c00; background:url(../images/xz.png) right bottom no-repeat; box-sizing:border-box; position:absolute; top:0; left:0; background-size:27px auto; display:none;}
 
 
