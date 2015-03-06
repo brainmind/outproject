@@ -103,7 +103,7 @@ $(document).ready(function () {
 						var feeTitle = serviceFee["category_id"]=="0"?"工时费":serviceFee["title"];
 						li.html("<div class=\"xd\" style=\"display:block;\"></div><div class=\"day_name\" title=\""+feeTitle+"\">"+feeTitle+"</div>"+
 								"<div class=\"day_pic\"><img src=\"<%=path %>/styles/images/7.jpg\" height=\"100%\"></div>"+
-								"<div class=\"day_title\"><h1>"+serviceFee["title"]+"</h1><h2><span></span>&nbsp;<span>"+price+"</span></h2></div>"+
+								"<div class=\"day_title\" style='background:#fff;'><h1>"+serviceFee["title"]+"</h1><h2><span></span>&nbsp;<span>"+price+"</span></h2></div>"+
 								"<input type=\"hidden\" name=\"service_fees.checked\" value=\"1\"/>"+
 								"<input type=\"hidden\" name=\"service_fees.type\" value=\""+serviceFee["type"]+"\"/>"+
 								"<input type=\"hidden\" name=\"service_fees.title\" value=\""+serviceFee["title"]+"\"/>"+
