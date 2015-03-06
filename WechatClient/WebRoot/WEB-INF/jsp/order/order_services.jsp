@@ -41,12 +41,19 @@ $(document).ready(function () {
 							}
 							if(serviceFee && serviceFee.price){
 								commprice += sprice + parseFloat(serviceFee.price);
+							}else{
+								commprice = sprice;
 							}
 						}
-						var li = $("li[categoryid="+categoryid+"]");;
+						var li = $("li[categoryid="+categoryid+"]");
+						var commoditymsg='';
+						if(commodity.id==''){
+							commoditymsg ="<h1 style='margin-top:15px;'>"+commodity["label"] +"</h1>";
+						}else{
+							commoditymsg ="<h1>"+commodity["label"]+"</h1><h2><span>用量："+commodity["number"]+"</span><span>"+commprice.toFixed(2)+"</span></h2>";
+						}
 						var commodityInfo = "<div class=\"day_pic\"><img src=\""+commodity["pic_url"]+"\" height=\"100%\"></div>"+
-						"<div class=\"day_title\" data-id=\""+commodity["id"]+"\" category-id=\""+categoryid+"\" data-number=\""+commodity["number"]+"\">"+
-						"<h1>"+commodity["label"]+"</h1><h2><span>用量："+commodity["number"]+"</span><span>"+commprice.toFixed(2)+"</span></h2></div>";
+						"<div class=\"day_title\" data-id=\""+commodity["id"]+"\" category-id=\""+categoryid+"\" data-number=\""+commodity["number"]+"\">"+commoditymsg+"</div>";
 						if(commodity.recommand != "1" || li[0]){
 							if(li[0] && li.is("li")){
 								var commodityDL = $("li[categoryid="+categoryid+"] > div.day_more > dl");
@@ -96,7 +103,7 @@ $(document).ready(function () {
 						var feeTitle = serviceFee["category_id"]=="0"?"工时费":serviceFee["title"];
 						li.html("<div class=\"xd\" style=\"display:block;\"></div><div class=\"day_name\" title=\""+feeTitle+"\">"+feeTitle+"</div>"+
 								"<div class=\"day_pic\"><img src=\"<%=path %>/styles/images/7.jpg\" height=\"100%\"></div>"+
-								"<div class=\"day_title\"><h1>"+serviceFee["title"]+"</h1><h2><span></span>&nbsp;<span>"+price+"</span></h2></div>"+
+								"<div class=\"day_title\" style='background:#fff;'><h1>"+serviceFee["title"]+"</h1><h2><span></span>&nbsp;<span>"+price+"</span></h2></div>"+
 								"<input type=\"hidden\" name=\"service_fees.checked\" value=\"1\"/>"+
 								"<input type=\"hidden\" name=\"service_fees.type\" value=\""+serviceFee["type"]+"\"/>"+
 								"<input type=\"hidden\" name=\"service_fees.title\" value=\""+serviceFee["title"]+"\"/>"+

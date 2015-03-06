@@ -58,6 +58,9 @@ $.extend(WxchatClient, {
 			}
 			if(dl.length > 0){
 				for(var i=0; i<dl.length; i++){
+					if(i>0 && id=='province_selectId'){   // zhuqingsong  更改 其他省份先隐藏
+						continue;										//
+					}														//
 					var d = dl[i];
 					var option = $(document.createElement("option"));
 					option.attr("value", d.id);

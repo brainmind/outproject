@@ -181,7 +181,6 @@ function updateTotalPrice(li){
 		}
 	});
 	var strPrice = $("div.day_list > ul > li[type=fees][categoryid=0] > div.day_title > h2 > span:last").text();
-	alert(strPrice);
 	totalPrice += parseFloat(strPrice);
 	$("#totalprice").html(totalPrice.toFixed(2));
 	//更新隐藏域

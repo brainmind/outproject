@@ -82,7 +82,7 @@ function addService(){
         <li category_id="2"><a href="#" rel="services"><img src="<%=path %>/styles/images/idx_nav2.png">更换电瓶</a></li>
         <li category_id="3"><a href="#" rel="services"><img src="<%=path %>/styles/images/idx_nav3.png">更换刹车片</a></li>
         <li category_id="4"><a href="#" rel="services" title="加装PM2.5空调滤膜"><img src="<%=path %>/styles/images/idx_nav4.png">加装空调滤膜</a></li>
-        <li category_id="5"><a href="#" rel="services"><img src="<%=path %>/styles/images/idx_nav5.png">更换轮胎</a></li>
+        <%-- <li category_id="5"><a href="#" rel="services"><img src="<%=path %>/styles/images/idx_nav5.png">更换轮胎</a></li> --%>
     </ul>
     <div class="add_btn">
     	<a href="javascript:addService();">确定</a>

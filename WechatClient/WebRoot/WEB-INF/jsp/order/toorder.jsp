@@ -18,34 +18,38 @@
 $(function(){
 	WxchatClient.Region.getProvinces(function(r){
 		WxchatClient.Select.bulid("province_selectId","province",r);
+		var bj = '7b6fefc9cb9711e3a770025041000001';
 		$("#province_selectId").on("change", function(){
 			var $this = $(this);
+			if($this.val()!=bj){																		
+				WxchatClient.Select.bulid("province_selectId","province",r);   //zhuqingsong  更改
+				return false;
+			}
 			WxchatClient.Region.getCities($this.val(), function(c){
 				WxchatClient.Select.bulid("citye_selectId","city", c);
 				$("#citye_selectId").on("change", function(){
 					var $city = $(this);
 					WxchatClient.Region.getDistricts($city.val(), function(d){
-						WxchatClient.Select.bulid("district_selectId","district", d);
+						//WxchatClient.Select.bulid("district_selectId","district", d);   //zhuqingsong  更改
 					});
 				});
 				
 				WxchatClient.Region.getDistricts($("#citye_selectId").val(), function(d){
-					WxchatClient.Select.bulid("district_selectId","district", d);
+					WxchatClient.Select.bulid("citye_selectId","city", d);
 				});
 			});
 		});
-		
 		WxchatClient.Region.getCities($("#province_selectId").val(), function(c){
 			WxchatClient.Select.bulid("citye_selectId","city", c);
 			$("#citye_selectId").on("change", function(){
 				var $city = $(this);
 				WxchatClient.Region.getDistricts($city.val(), function(d){
-					WxchatClient.Select.bulid("district_selectId","district", d);
+					//WxchatClient.Select.bulid("district_selectId","district", d);   //zhuqingsong  更改
 				});
 			});
 			
 			WxchatClient.Region.getDistricts($("#citye_selectId").val(), function(d){
-				WxchatClient.Select.bulid("district_selectId","district", d);
+				WxchatClient.Select.bulid("citye_selectId","city", d);
 			});
 			
 		});
