@@ -56,7 +56,7 @@ $(function(){
 				                "<div class=\"day_pic\"><img src=\""+commdoty.pic_url+"\" height=\"100%\"></div>"+
 				                "<div class=\"no_arrow\">"+
 				                "	<div class=\"h_border\">"+
-				                "		<h1 title=\""+commdoty.label+"\">"+commodityName+" SN ("+commdoty.number+")</h1>"+
+				                "		<h1 title=\""+commdoty.label+"\">"+commodityName+"</h1>"+
 				                "    </div>"+
 				                "    <h2><span class=\"border_left\">用量："+commdoty.number+"</span><span>"+commPrice.toFixed(2)+"</span></h2>"+
 				                "</div>");
