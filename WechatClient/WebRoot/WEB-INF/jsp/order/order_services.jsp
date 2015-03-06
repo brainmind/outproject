@@ -41,12 +41,19 @@ $(document).ready(function () {
 							}
 							if(serviceFee && serviceFee.price){
 								commprice += sprice + parseFloat(serviceFee.price);
+							}else{
+								commprice = sprice;
 							}
 						}
-						var li = $("li[categoryid="+categoryid+"]");;
+						var li = $("li[categoryid="+categoryid+"]");
+						var commoditymsg='';
+						if(commodity.id==''){
+							commoditymsg ="<h1 style='margin-top:15px;'>"+commodity["label"] +"</h1>";
+						}else{
+							commoditymsg ="<h1>"+commodity["label"]+" SN ("+commodity["number"]+")</h1><h2><span>用量：1</span><span>"+commprice.toFixed(2)+"</span></h2>";
+						}
 						var commodityInfo = "<div class=\"day_pic\"><img src=\""+commodity["pic_url"]+"\" height=\"100%\"></div>"+
-						"<div class=\"day_title\" data-id=\""+commodity["id"]+"\" category-id=\""+categoryid+"\" data-number=\""+commodity["number"]+"\">"+
-						"<h1>"+commodity["label"]+" SN ("+commodity["number"]+")</h1><h2><span>用量：1</span><span>"+commprice.toFixed(2)+"</span></h2></div>";
+						"<div class=\"day_title\" data-id=\""+commodity["id"]+"\" category-id=\""+categoryid+"\" data-number=\""+commodity["number"]+"\">"+commoditymsg+"</div>";
 						if(commodity.recommand != "1" || li[0]){
 							if(li[0] && li.is("li")){
 								var commodityDL = $("li[categoryid="+categoryid+"] > div.day_more > dl");
