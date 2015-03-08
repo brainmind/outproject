@@ -18,6 +18,10 @@
 <link rel="stylesheet" href="<%=path %>/styles/css/jqm-demos.css">
 <script type="text/javascript" src="<%=path %>/common/js/index.js"></script>
 <script type="text/javascript" src="<%=path %>/common/js/jquery.mobile-1.4.5.min.js"></script>
+<script src="<%=path %>/common/ws/mobileFix.mini.js"></script>
+<script src="<%=path %>/common/ws/exif.js"></script>
+<script src="<%=path %>/common/ws/lrz.js"></script>
+<script src="<%=path %>/common/js/index.upload.js"></script>
 <script type="text/javascript">
 	function recommendOrder(){
 		var form = $(document.orderForm);
@@ -47,6 +51,17 @@
 				}
 			}
 		});
+	}
+	
+	function uploadback(r){
+		if(!r.error){
+			var span = $("#uploadimgs");
+			var img = $(document.createElement("img"));
+			img.attr("src", r.path + r.name);
+			img.css({width:"31px", height:"31px"});
+			span.append(img);
+		}
+		WxchatClient.Dialog.close();
 	}
 </script>
 </head>
@@ -99,6 +114,14 @@
         		</c:when>
         		</c:choose>
         	</c:forEach>
+        		<li>
+                 	<div class="add_pic margin"><strong>上传图片：</strong></div>
+                    <div class="pic_list margin">
+                    	<img src="<%=path %>/styles/images/pic.jpg" type="imgupload"/>
+                    	<span id="uploadimgs">
+                    	</span>
+                    </div>
+                 </li>
             </ul>
         </div>
         <a id="submitcomment" href="javascript:recommendOrder();" class="ensure" style="color:#fff; font-weight:normal;">提交评价</a>

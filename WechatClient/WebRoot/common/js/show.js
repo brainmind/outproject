@@ -111,10 +111,16 @@ window.onload = function() {
 			ul.children("li").on("click", function(){
 				var $li = $(this);
 				var id = $li.attr("dataid");
+				if(backurl != ""){
+					var url = backurl.replace("_1q1_","?")+"&car_id="+id;
+					window.location.href = contextPath + projectRoot + url;
+					return false;
+				}
 				var brand = $li.attr("brand");
 				var sername = $li.attr("serie");
 				var car = $li.attr("car");
 				var logourl = $li.attr("logourl");
+				var isdefault = $li.attr("isdefault");
 				var cookiecartype = "{id:\""+id+"\",brand:\""+brand+"\",logourl:\""+logourl+"\"," +
 				"car:\""+car+"\",sername:\""+sername+"\",isdefault:"+isdefault+"}";
 				WxchatClient.setCurrentCarType(cookiecartype);

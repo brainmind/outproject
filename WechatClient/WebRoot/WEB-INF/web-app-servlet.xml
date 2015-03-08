@@ -97,10 +97,8 @@
 			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
 	</mvc:interceptors>
 	
-	<mvc:resources mapping="/common/**" location="/common/"
-		cache-period="31536000" />
-	<mvc:resources mapping="/report-viewer/**" location="/report-viewer/"
-		cache-period="31536001" />
-	<mvc:resources mapping="/styles/**" location="/styles/"
-	    cache-period="31536002" />
+	<mvc:resources mapping="/common/**" location="/common/" cache-period="31536000" />
+	<mvc:resources mapping="/report-viewer/**" location="/report-viewer/" cache-period="31536001" />
+	<mvc:resources mapping="/styles/**" location="/styles/" cache-period="31536002" />
+	<mvc:resources mapping="/upload/**" location="/upload/" cache-period="31536003" />
 </beans>
