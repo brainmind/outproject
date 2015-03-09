@@ -227,8 +227,8 @@ function submitOrder(){
 	        </select>
 	        <select name="city" id="citye_selectId">
 	        </select>
-	        <select name="district" id="district_selectId">
-	        </select>
+	        <!-- <select name="district" id="district_selectId">
+	        </select> -->
         </div>
         <div class="add_text"><input name="address" type="text" value="" tiptxt="详细地址"></div>
         <p>目前仅提供北京地区五环内及回龙观天通苑地区上门服务</p>
