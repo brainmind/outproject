@@ -70,7 +70,7 @@ a,button,input{-webkit-tap-highlight-color:rgba(255,0,0,0); outline:none; color:
 .che_btn{width:60%; height:40px; border:1px solid #b4b4b4; border-radius:2px; margin:10px auto;}
 .che_btn span{width:50%; height:40px; float:left; font-size:15px; line-height:40px; text-align:center; display:block;}
 .che_btn span.click{background:#ff4b00; color:#fff;}
-.che_pic{position:relative; width:100%;}
+.che_pic{position:relative; width:100%; height:100%; overflow:hidden;}
 .che_pic li{width:100%; height:auto; float:left;}
 .che_cx dd{width:100%; height:44px; box-sizing:border-box; font-size:14px; padding:10px 15px; border-bottom:1px solid #c8c7cc;}
 .che_cx dd a{display:block; color:#333;}

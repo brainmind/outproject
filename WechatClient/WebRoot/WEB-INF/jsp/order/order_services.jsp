@@ -46,14 +46,16 @@ $(document).ready(function () {
 							}
 						}
 						var li = $("li[categoryid="+categoryid+"]");
-						var commoditymsg='';
+						var commoditymsg='',dtit = '';
 						if(commodity.id==''){
+							dtit = '<div class=\"day_title\" style="background:#fff;"';
 							commoditymsg ="<h1 style='margin-top:15px;'>"+commodity["label"] +"</h1>";
 						}else{
+							dtit = '<div class=\"day_title\"';
 							commoditymsg ="<h1>"+commodity["label"]+"</h1><h2><span>用量："+commodity["number"]+"</span><span>"+commprice.toFixed(2)+"</span></h2>";
 						}
 						var commodityInfo = "<div class=\"day_pic\"><img src=\""+commodity["pic_url"]+"\" height=\"100%\"></div>"+
-						"<div class=\"day_title\" data-id=\""+commodity["id"]+"\" category-id=\""+categoryid+"\" data-number=\""+commodity["number"]+"\">"+commoditymsg+"</div>";
+							  dtit +" data-id=\""+commodity["id"]+"\" category-id=\""+categoryid+"\" data-number=\""+commodity["number"]+"\">"+commoditymsg+"</div>";
 						if(commodity.recommand != "1" || li[0]){
 							if(li[0] && li.is("li")){
 								var commodityDL = $("li[categoryid="+categoryid+"] > div.day_more > dl");
@@ -71,7 +73,13 @@ $(document).ready(function () {
 							servName = servName.substring(0,2)+"<br/>"+servName.substring(2, servName.length);
 						}
 						li.attr("type", "services");
-						li.html("<div class=\"xz\" style=\"display:block;\"></div><div class=\"day_name\">"+servName+"</div>"+
+						var commodityxz = '';
+						if(commodity.id==''){
+							commodityxz = '<div class=\"xz\"></div>';
+						}else{
+							commodityxz = '<div class=\"xz\" style=\"display:block;\"></div>';
+						}
+						li.html(commodityxz + "<div class=\"day_name\">"+servName+"</div>"+
 								"<div id=\"commodity_cur"+categoryid+"\">"+commodityInfo+"</div><div class=\"day_more\"><dl></dl></div>"+
 								"<input type=\"hidden\" name=\"commodities.checked\" value=\"1\"/>"+
 								"<input type=\"hidden\" name=\"commodities.id\" value=\""+commodity["id"]+"\"/>"+
@@ -96,8 +104,8 @@ $(document).ready(function () {
 						li.appendTo(container);
 						var price = 0.00;
 						if(!isNaN(serviceFee["price"])){
-							price = parseFloat(serviceFee["price"]).toFixed(2);
-							totalPrice += parseFloat(serviceFee["price"]);
+							price = parseFloat(serviceFee["price"]).toFixed(2);		
+							 totalPrice += parseFloat(serviceFee["price"]);
 						}
 						li.attr("type", "fees");
 						var feeTitle = serviceFee["category_id"]=="0"?"工时费":serviceFee["title"];
