@@ -59,6 +59,10 @@
 			var img = $(document.createElement("img"));
 			img.attr("src", r.path + r.name);
 			img.css({width:"31px", height:"31px"});
+			img.on("click", function(){
+				WxchatClient.Dialog.show("<img src=\""+r.path + r.name+"\" width=\"100\" height=\"100\"/>");
+				return false;
+			});
 			span.append(img);
 		}
 		WxchatClient.Dialog.close();

@@ -177,11 +177,13 @@ function submitOrder(){
 				window.setTimeout(function(){
 					window.location.href="<%=path + Constants.ROOT %>/order/ready?orderId="+r.orderid;
 				}, 2000);
+			}else if(r && r.code && r.code == 40002){
+				WxchatClient.Dialog.show("验证码输入错误,提交失败！");
 			}else{
 				WxchatClient.Dialog.show("订单提交失败！");
-				submitbut.attr("href", href);
-				submitbut.removeClass("pay_unlock");
 			}
+			submitbut.attr("href", href);
+			submitbut.removeClass("pay_unlock");
 		},
 		error:function(){
 			WxchatClient.Dialog.show("订单提交失败！后台处理报错.");
