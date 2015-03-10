@@ -60,7 +60,7 @@
 			img.attr("src", r.path + r.name);
 			img.css({width:"31px", height:"31px"});
 			span.append(img);
-			span.append("<input type=\"hidden\" name=\"picpath\" value=\""+r.path+r.name+"\"/>");
+			span.append("<input type=\"hidden\" name=\"file\" value=\""+r.path+r.name+"\"/>");
 		}
 		WxchatClient.Dialog.close();
 	}
