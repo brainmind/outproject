@@ -135,6 +135,7 @@ $(document).ready(function () {
 		}
 	});
 	
+	var	backurl = "";
 	var carType = WxchatClient.currentCarType();
 	if(carType && carType != null && carType != ""){
 		var carName = carType.brand;
@@ -147,7 +148,11 @@ $(document).ready(function () {
 		$("input[type=hidden][name=sername]").val(serName);
 		$("input[type=hidden][name=car]").val(car);
 		$("input[type=hidden][name=logourl]").val(carType.logourl);
-	}
+	}else{
+		window.location.href = contextPath+projectRoot+"/car/sel?backurl="+backurl;
+		return false;
+	}		
+	
 	
 	var isSelf = $("input[type=checkbox][name=isSelfService]");
 	isSelf.on("click",function(){
