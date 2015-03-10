@@ -215,7 +215,7 @@ function applyService(){
     <div class="day_list">
     	<ul>
     	</ul>
-        <a href="<%=path + Constants.ROOT %>/car/selItem?carId=${carId }" class="addpro"><img src="<%=path %>/styles/images/2.png">添加新项</a>
+        <a href="<%=path + Constants.ROOT %>/car/selItem?carId=${carId }&type=${type}" class="addpro"><img src="<%=path %>/styles/images/2.png">添加新项</a>
     </div>
 </div>
 <div class="checkbox">
