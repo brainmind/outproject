@@ -22,6 +22,28 @@ public class BaseBean implements Serializable{
 	private String unionid;
 	private String version;
 	private String vin17;
+	private String worker_id;
+	private String work_order_state;
+	private String work_order_id;
+
+	public String getWorker_id() {
+		return worker_id;
+	}
+	public void setWorker_id(String worker_id) {
+		this.worker_id = worker_id;
+	}
+	public String getWork_order_state() {
+		return work_order_state;
+	}
+	public void setWork_order_state(String work_order_state) {
+		this.work_order_state = work_order_state;
+	}
+	public String getWork_order_id() {
+		return work_order_id;
+	}
+	public void setWork_order_id(String work_order_id) {
+		this.work_order_id = work_order_id;
+	}
 	/**
 	 * @return the app
 	 */
