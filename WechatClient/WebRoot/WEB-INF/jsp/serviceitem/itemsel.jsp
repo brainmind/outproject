@@ -2,6 +2,7 @@
 <%@ page import="com.wechat.client.utils.*" %>
 <%
 	String path = request.getContextPath();
+	String types = request.getParameter("type");
 %>
 <!DOCTYPE HTML>
 <html>
@@ -24,7 +25,10 @@ $(function(){
 		$("div.add_logo > img").attr("src", logourl);
 		$("div.add_car > h1").first().html(carName+" "+serName+"<br/>"+car);
 	}
-	
+	var typeArr = "<%=types %>".split(',');
+	for(i in typeArr){
+		$(".wapper li[category_id="+typeArr[i]+"]").addClass("pro_click");
+	}
 	/*
 	$.ajax({
 		url:"<%=path %>/<%=Constants.ROOT %>/order/service.json",
