@@ -59,11 +59,8 @@
 			var img = $(document.createElement("img"));
 			img.attr("src", r.path + r.name);
 			img.css({width:"31px", height:"31px"});
-			img.on("click", function(){
-				WxchatClient.Dialog.show("<img src=\""+r.path + r.name+"\" width=\"100\" height=\"100\"/>");
-				return false;
-			});
 			span.append(img);
+			span.append("<input type=\"hidden\" name=\"picpath\" value=\""+r.path+r.name+"\"/>");
 		}
 		WxchatClient.Dialog.close();
 	}
@@ -111,21 +108,14 @@
         		<li>
                  	<div class="add_pic margin"><strong>${item.label }：</strong></div>
                     <div class="pic_list margin">
-                    	<img src="<%=path %>/styles/images/pic.jpg">
-                        <img src="<%=path %>/styles/images/pic01.jpg">
+                    	<img src="<%=path %>/styles/images/pic.jpg" type="imgupload"/>
+                        <span id="uploadimgs">
+                    	</span>
                     </div>
                  </li>
         		</c:when>
         		</c:choose>
         	</c:forEach>
-        		<li>
-                 	<div class="add_pic margin"><strong>上传图片：</strong></div>
-                    <div class="pic_list margin">
-                    	<img src="<%=path %>/styles/images/pic.jpg" type="imgupload"/>
-                    	<span id="uploadimgs">
-                    	</span>
-                    </div>
-                 </li>
             </ul>
         </div>
         <a id="submitcomment" href="javascript:recommendOrder();" class="ensure" style="color:#fff; font-weight:normal;">提交评价</a>
