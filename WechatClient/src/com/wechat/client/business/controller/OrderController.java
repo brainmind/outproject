@@ -235,7 +235,7 @@ public class OrderController extends BaseController{
 	
 	@RequestMapping("/recommend")
 	public String recommendOrder(HttpServletRequest request, HttpServletResponse response){
-		String orderId = "01F8874F685D4A8DB1A2EFBC1BAF6E03";//request.getParameter("orderId");
+		String orderId = request.getParameter("orderId");
 		LoginUser user = getLoginUser(request, response);
 		String param = HttpEntityUtils.toParameterString(user).substring(1);
 		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();

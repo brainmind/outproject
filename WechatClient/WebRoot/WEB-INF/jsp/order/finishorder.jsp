@@ -64,8 +64,8 @@ $(function(){
                     "<td colspan=\"4\" class=\"car_name\">"+carlabel+"</td></tr>"+
                   	"<tr><td colspan=\"4\" class=\"full_care\">大保养服务</td></tr>"+
                   	"<tr><td colspan=\"4\" height=\"8\"></td></tr>"+
-                  	"<tr><td class=\"fol\"><span class=\"fol\">联系人：</span></td><td class=\"nametel fol w40\">"+orderContact+"</td><td class=\"fol\"><span class=\"fol\">手机号：</span></td>"+
-                  	"<td class=\"nametel fol\">"+order.mobile+"</td></tr></table>");
+                  	"<tr><td>联系人：</td><td class=\"nametel\">"+orderContact+"</td><td>手机号：</td>"+
+                  	"<td class=\"nametel\">"+order.mobile+"</td></tr></table>");
 				}
 			}
 		}
@@ -179,11 +179,11 @@ function recommend(id){
                     <td colspan="4" height="10"></td>
                   </tr>
                   <tr>
-                <td class="fol"><span class="fol">联系人：</span></td>
-                <td class="nametel fol" id="contact"></td>
-                <td class="fol ml20">手机号：</td>
-                <td class="nametel fol" id="mobile"></td>
-              </tr>
+                    <td>联系人：</td>
+                    <td class="nametel" id="contact"></td>
+                    <td>手机号：</td>
+                    <td class="nametel" id="mobile"></td>
+                  </tr>
                 </table>
             </div>      
             </a>

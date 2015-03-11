@@ -163,12 +163,15 @@ window.onload = function() {
 		var more = $(".more_content");
 		if (more.is(":hidden")) {
 			more.show();
-			$(this).find("img").attr("src",
+			var historyBar = $(this);
+			historyBar.find("img").attr("src",
 					contextPath + "/styles/images/click_more_off.png");
+			$("html,body").animate({scrollTop: historyBar.offset().top}, 500);
 		} else {
 			more.hide();
 			$(this).find("img").attr("src",
 					contextPath + "/styles/images/click_more.png");
+			$("html,body").animate({scrollTop: $("#myorderdetail").offset().top}, 500);
 		}
 	});
 	// 获取表格的第一列
