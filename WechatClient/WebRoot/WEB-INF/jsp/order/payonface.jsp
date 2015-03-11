@@ -28,13 +28,13 @@ $(function(){
                 <td class="order_number">订单号：${order_number }</td>
               </tr>
               <tr>
-                <td><div class="success_note">您已成功提交 <span id="carinfospan"></span> 上门保养服务。</div></td>
+                <td><div class="success_note"><p>您已成功提交 <br/><span id="carinfospan"></span> 上门保养服务。</p></div></td>
               </tr>
               <tr>
                 <td class="tips01"><br/>我们会及时与您联系服务事宜，请您的手机保持畅通。</td>
               </tr>
               <tr>
-                <td class="contact">客服热线：400－898－9988</td>
+                <td class="contact">客服热线：<strong>400－898－9988</strong></td>
               </tr>
               <tr><td height="30"></td></tr>
             </table>

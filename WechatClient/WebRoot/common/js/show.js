@@ -33,7 +33,7 @@ window.onload = function() {
 	renderServices();
 
 	/* 日常保养 */
-	initRenderingCommandotyService();
+	// initRenderingCommandotyService();
 	
 	/* 车辆选择 */
 	renderSelectByVIN();
@@ -111,11 +111,6 @@ window.onload = function() {
 			ul.children("li").on("click", function(){
 				var $li = $(this);
 				var id = $li.attr("dataid");
-				if(backurl != ""){
-					var url = backurl.replace("_1q1_","?")+"&car_id="+id;
-					window.location.href = contextPath + projectRoot + url;
-					return false;
-				}
 				var brand = $li.attr("brand");
 				var sername = $li.attr("serie");
 				var car = $li.attr("car");
@@ -124,6 +119,11 @@ window.onload = function() {
 				var cookiecartype = "{id:\""+id+"\",brand:\""+brand+"\",logourl:\""+logourl+"\"," +
 				"car:\""+car+"\",sername:\""+sername+"\",isdefault:"+isdefault+"}";
 				WxchatClient.setCurrentCarType(cookiecartype);
+				if(backurl != ""){
+					var url = backurl.replace("_1q1_","?")+"&car_id="+id;
+					window.location.href = contextPath + projectRoot + url;
+					return false;
+				}
 				$(".idx_car").html("<h1>"+brand+" "+sername+"<br/>"+car+"</h1><a href=\"#\" class=\"idx_car_a\" backurl=\""+backurl+"\">更改车型</a>");
 				$(".tc_bg").hide();
 				$(".tcmain").animate({
@@ -214,13 +214,18 @@ function updateTotalPrice(li){
 
 function initRenderingCommandotyService(){
 	$("div.day_list > ul > li > div > div.day_title").click(function() {
-		if(!$(this).hasClass("day_cur")){
+/*		if(!$(this).hasClass("day_cur")){
 			$("div.day_more").hide();
 			$("div.day_title").removeClass("day_cur");
-		}
-		if($(this).parent().next(".day_more").find("dd").length){
-			$(this).toggleClass("day_cur");
-			$(this).parent().next(".day_more").toggle();
+		}*/	
+		if($(this).parent().next(".day_more").is(":hidden")){
+			$(this).addClass("day_cur");
+			$(this).parent().next(".day_more").show();
+			$(this).parents("li").siblings("li[type=services]").find(".day_title").removeClass("day_cur");
+			$(this).parents("li").siblings("li[type=services]").find(".day_more").hide();
+		}else{
+			$(this).removeClass("day_cur");
+			$(this).parent().next(".day_more").hide();
 		}
 	});
 	$(".day_more dd").unbind("click");

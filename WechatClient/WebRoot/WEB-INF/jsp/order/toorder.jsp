@@ -176,7 +176,7 @@ function submitOrder(){
 				});
 				window.setTimeout(function(){
 					window.location.href="<%=path + Constants.ROOT %>/order/ready?orderId="+r.orderid;
-				}, 2000);
+				}, 3000);
 			}else if(r && r.code && r.code == 40002){
 				WxchatClient.Dialog.show("验证码输入错误,提交失败！");
 			}else{
