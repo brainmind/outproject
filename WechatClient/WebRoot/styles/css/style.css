@@ -263,7 +263,7 @@ overflow: hidden;}
 .status_processes li:nth-child(1){ margin-left:0px;}
 .status_processes li:nth-child(2){ position:absolute; left:50%; margin-left:-24px;}
 .status_processes li:nth-child(3){ margin-right:0px; float:right; text-align:right;}
-.status_processes li:nth-child(3) span{ width:72px; text-align:center; color:#ccc;}
+.status_processes li.changable span{ width:72px; text-align:center; color:#ccc;}
 .changable span{text-align:center; color:#ccc;}
 .half{background:url(../images/yes.png) 24px 8px no-repeat; background-size:100% 2px; height:60px; width:50%;}
 .hundred_percent{background:url(../images/yes.png) 24px 8px no-repeat; background-size:100% 2px; height:60px; width:100%;}

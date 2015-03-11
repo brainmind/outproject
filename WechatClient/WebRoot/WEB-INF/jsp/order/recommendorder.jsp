@@ -60,7 +60,11 @@
 			img.attr("src", r.path + r.name);
 			img.css({width:"31px", height:"31px"});
 			span.append(img);
-			span.append("<input type=\"hidden\" name=\"file\" value=\""+r.path+r.name+"\"/>");
+			var fId = span.attr("field-id");
+			var filevals = $("#value"+fId);
+			if(filevals.val() != ""){
+				filevals.val(filevals.val()+","+r.name);
+			}
 		}
 		WxchatClient.Dialog.close();
 	}
@@ -109,7 +113,8 @@
                  	<div class="add_pic margin"><strong>${item.label }：</strong></div>
                     <div class="pic_list margin">
                     	<img src="<%=path %>/styles/images/pic.jpg" type="imgupload"/>
-                        <span id="uploadimgs">
+                    	<input type="hidden" name="value" id="value${item.field_id }" value=""/>
+                        <span id="uploadimgs" field-id="${item.field_id }">
                     	</span>
                     </div>
                  </li>

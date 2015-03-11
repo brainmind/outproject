@@ -111,22 +111,42 @@ function showStatAndLog(order,isShow, p){
 	$("#address", saldiv).html("<strong>地址：</strong>" + order.address);
 	var stat = order.state?parseInt(order.state):1;
 	$("div.status_processes > ul > li", saldiv).each(function(i){
-		if(stat==100 && i==1){
+		var img = null;
+		if(stat == 1 && i == 0){
+			$(this).removeClass();
+			img = $(this).children("img");
+			var src = img.attr("src").replace("_off.", ".");
+			img.attr("src", src);
+		}else if(stat == 1){
+			$(this).removeClass();
 			$(this).addClass("changable");
-		}
-		if(stat==300 && i==2){
-			$(this).addClass("changable");
+			img = $(this).children("img");
+			var src = img.attr("src").replace("_off.", ".").replace(".", "_off.");
+			img.attr("src", src);
+		}else{
+			if((stat==100 || stat==300) && i==1){
+				$(this).removeClass("changable");
+				img = $(this).children("img");
+			}
+			if(stat==300 && i==2){
+				$(this).removeClass("changable");
+				img = $(this).children("img");
+			}
+			if(img != null && img[0]){
+				var src = img.attr("src").replace("_off.", ".");
+				img.attr("src", src);
+			}
 		}
 	});
-	$("div.status_processes > div", saldiv).removeClass(function(){
-		if(isNaN(stat) || stat == 1){
-			$(this).removeClass("half");
-		}else if(stat == 100){
-			$(this).toggleClass("half");
-		}else if(stat == 300){
-			$(this).toggleClass("hundred_percent");
-		}
-	});
+	var proline = $("div.status_processes > div", saldiv);
+	if(isNaN(stat) || stat == 1){
+		proline.removeClass();
+	}else if(stat == 100 || stat == 300){
+		proline.addClass("half");
+	}
+	if(stat == 300){
+		proline.addClass("hundred_percent");
+	}
 	var logs = order.logs;
 	var logUl = $("div.content > ul", saldiv);
 	logUl.html("<li>订单日志</li>");
@@ -192,7 +212,7 @@ function recommend(id){
     	<p class="my_order_num my_order_address" id="address"><strong>地址：</strong></p>
    	   <div class="now">
 	     	<p class="status"><strong>订单状态：</strong></p>
-	        <div class="status_process">
+	        <div>
 	        	<div class="status_processes">
 	            	<ul>
 	                	<li><img src="<%=path %>/styles/images/status.png"><span>已预约</span></li>
