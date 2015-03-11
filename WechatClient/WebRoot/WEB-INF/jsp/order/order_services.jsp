@@ -23,6 +23,7 @@ $(document).ready(function () {
 			if($.type(r) == "object"){
 				var container = $("div.day_list > ul");
 				var totalPrice = 0;
+				var commcd = new Array();
 				if(r.commodities && r.commodities.length > 0){
 					r.commodities.sort(function(a,b){
 						return a.category_id>b.category_id?1:-1;
@@ -30,9 +31,12 @@ $(document).ready(function () {
 					for(var i=0; i<r.commodities.length; i++){
 						var commodity = r.commodities[i];
 						var categoryid = commodity["category_id"];
-						var commprice = 0.00, sprice = 0.00;
-						if(!isNaN(commodity["total_price"])){
+						var commprice = 0.00, sprice = 0.00, ischecked = 0;
+						commcd[categoryid] = ischecked;
+						if(!isNaN(commodity["total_price"]) && commodity.id != null && commodity.id != ""){
 							sprice = parseFloat(commodity["total_price"]);
+							ischecked = 1;
+							commcd[categoryid] = ischecked;
 							var serviceFee = null;
 							for(var k=0; k<r["service_fees"].length; k++){
 								if(r["service_fees"][k].category_id == categoryid){
@@ -81,7 +85,7 @@ $(document).ready(function () {
 						}
 						li.html(commodityxz + "<div class=\"day_name\">"+servName+"</div>"+
 								"<div id=\"commodity_cur"+categoryid+"\">"+commodityInfo+"</div><div class=\"day_more\"><dl></dl></div>"+
-								"<input type=\"hidden\" name=\"commodities.checked\" value=\"1\"/>"+
+								"<input type=\"hidden\" name=\"commodities.checked\" value=\""+ischecked+"\"/>"+
 								"<input type=\"hidden\" name=\"commodities.id\" value=\""+commodity["id"]+"\"/>"+
 								"<input type=\"hidden\" name=\"commodities.label\" value=\""+commodity["label"]+"\"/>"+
 								"<input type=\"hidden\" name=\"commodities.number\" value=\""+commodity["number"]+"\"/>"+
@@ -104,20 +108,23 @@ $(document).ready(function () {
 						li.appendTo(container);
 						var price = 0.00;
 						if(!isNaN(serviceFee["price"])){
-							price = parseFloat(serviceFee["price"]).toFixed(2);		
-							 totalPrice += parseFloat(serviceFee["price"]);
+							price = parseFloat(serviceFee["price"]).toFixed(2);	
+							if((serviceFee["category_id"] == 0 || commcd[serviceFee["category_id"]] == "1")){
+								totalPrice += parseFloat(serviceFee["price"]);
+							}
 						}
 						li.attr("type", "fees");
 						var feeTitle = serviceFee["category_id"]=="0"?"工时费":serviceFee["title"];
 						li.html("<div class=\"xd\" style=\"display:block;\"></div><div class=\"day_name\" title=\""+feeTitle+"\">"+feeTitle+"</div>"+
 								"<div class=\"day_pic\"><img src=\"<%=path %>/styles/images/7.jpg\" height=\"100%\"></div>"+
 								"<div class=\"day_title\" style='background:#fff;'><h1>"+serviceFee["title"]+"</h1><h2><span></span>&nbsp;<span>"+price+"</span></h2></div>"+
-								"<input type=\"hidden\" name=\"service_fees.checked\" value=\"1\"/>"+
+								"<input type=\"hidden\" name=\"service_fees.checked\" value=\""+(serviceFee["category_id"] == "0" ? "1" : commcd[serviceFee["category_id"]])+"\"/>"+
 								"<input type=\"hidden\" name=\"service_fees.type\" value=\""+serviceFee["type"]+"\"/>"+
 								"<input type=\"hidden\" name=\"service_fees.title\" value=\""+serviceFee["title"]+"\"/>"+
 								"<input type=\"hidden\" name=\"service_fees.price\" value=\""+price+"\"/>"+
 								"<input type=\"hidden\" name=\"service_fees.category_id\" value=\""+serviceFee["category_id"]+"\"/>");
 						li.attr("typeid", serviceFee["type"]);
+						li.attr("fee-checked", serviceFee["category_id"] == "0" ? "1" : commcd[serviceFee["category_id"]]);
 						li.attr("categoryid", serviceFee["category_id"]);
 						if(serviceFee["category_id"] != 0){
 							li.hide();
@@ -177,13 +184,25 @@ function isSelfService(isSelf){
 		$("div.day_list > ul > li > input[type=hidden][name='service_fees.checked']").val(1);
 	}else{
 		$("div.day_list > ul > li[type=services]").show();
-		$("div.day_list > ul > li > input[type=hidden][name='commodities.checked']").val(1);
 		var price = 0.00, totalPrice = 0.00;
-		$("div.day_list > ul > li > input[type=hidden][name='commodities.price']").each(function(){
-			price += parseFloat($(this).val());
+		var toDoorFee = $("div.day_list > ul > li[type=fees][categoryid=0] > input[type=hidden][name='service_fees.price']").val();
+		$("div.day_list > ul > li[type=services]").each(function(){
+			var sli = $(this);
+			var category_id = sli.attr("categoryid");
+			var commodities_checked = $("input[type=hidden][name='commodities.checked']", sli);
+			var isChecked = $("div.xz", sli).is(":hidden");
+			if(isChecked){
+				commodities_checked.val(0);
+				$("div.day_list > ul > li[type=fees][categoryid="+category_id+"] > input[type=hidden][name='service_fees.checked']").val(0);
+			}else{
+				var serviceFee = $("div.day_list > ul > li[type=fees][categoryid="+category_id+"] > input[type=hidden][name='service_fees.price']").val();
+				var commodiFee = $("input[type=hidden][name='commodities.price']", sli).val();
+				commodities_checked.val(1);
+				price += parseFloat(serviceFee) + parseFloat(commodiFee);
+			}
 		});
 		var tp = $("#totalprice");
-		totalPrice = parseFloat(tp.text()) + price;
+		totalPrice = parseFloat(toDoorFee) + price;
 		tp.html(totalPrice.toFixed(2));
 		$("div.day_list > ul > li[type=fees][categoryid!=0]").hide();
 	}
