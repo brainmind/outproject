@@ -114,7 +114,7 @@ a,button,input{-webkit-tap-highlight-color:rgba(255,0,0,0); outline:none; color:
 .addlist.add_click h1{background:url(../images/che_vin_bg2.png) no-repeat 0px center; background-size:17px 17px;}
 
 .ser_nr li{width:100%; height:40px; margin-bottom:10px; line-height:40px; box-sizing:border-box; padding:0px 12px; overflow:hidden; font-size:14px;}
-.ser_nr li.bor{border:1px solid #b4b4b4; border-radius:2px;}
+.ser_nr li.bor{border:1px solid #b4b4b4; border-radius:5px;}
 .ser_nr li:nth-child(1){padding:0 10px 0px 10px;}
 .ser_nr li:nth-child(4){padding:0;}
 .ser_nr li:nth-child(5){padding:0; height:13px;}
@@ -127,14 +127,14 @@ box-sizing:border-box; font-family:\5FAE\8F6F\96C5\9ED1; line-height:39px; borde
 .ser_nr li p.time span{color:#ff4c00}
 .ser_nr li p.ball{width:13px; height:13px; border-radius:50%; background:#ff4c00; float:left; margin-right:5px;}
 .ser_nr li p.entry{float:left; line-height:13px;}
-.ser_nr li .yzm{width:50%; float:right; height:40px; font-size:16px; text-align:center; line-height:40px; border-radius:2px; background:#ff4c00; display:block; color:#fff}
-.ser_nr li .yzm_disabled{width:50%; float:right; height:40px; font-size:16px; text-align:center; line-height:40px; border-radius:2px; background:#939393; display:block; color:#fff}
+.ser_nr li .yzm{width:45%; float:right; height:40px; font-size:16px; text-align:center; line-height:40px; border-radius:5px; background:#ff4c00; display:block; color:#fff}
+.ser_nr li .yzm_disabled{width:45%; float:right; height:40px; font-size:16px; text-align:center; line-height:40px; border-radius:5px; background:#939393; display:block; color:#fff}
 .ser_nr li input{width:100%; height:39px; background:none; border:none; font-family:Arial, Microsoft YaHei; color:#666;}
 
 .r_dz p{font-size:14px; line-height:16px; padding:5px 0;}
-.add_text{width:100%; height:40px; margin-bottom:5px; line-height:40px; box-sizing:border-box; padding:0px 12px; overflow:hidden; border:1px solid #b4b4b4; border-radius:2px;}
+.add_text{width:100%; height:40px; margin-bottom:5px; line-height:40px; box-sizing:border-box; padding:0px 12px; overflow:hidden; border:1px solid #b4b4b4; border-radius:5px;}
 .add_text input{width:100%; height:39px; background:none; border:none; font-family:Arial, Microsoft YaHei; color:#666; font-size:14px;}
-.add_sel{width:100%; height:40px; margin-bottom:5px; line-height:40px; box-sizing:border-box; padding:0px 10px; overflow:hidden; border:1px solid #b4b4b4; border-radius:2px;}
+.add_sel{width:100%; height:40px; margin-bottom:5px; line-height:40px; box-sizing:border-box; padding:0px 10px; overflow:hidden; border:1px solid #b4b4b4; border-radius:5px;}
 .add_sel select{float:left; height:39px; background:url(../images/3.png) no-repeat right center; background-size:auto 5px;
 box-sizing:border-box; font-family:\5FAE\8F6F\96C5\9ED1; line-height:39px; border:none; -webkit-appearance:none; -moz-appearance:none; font-size:12px;}
 .add_sel select:nth-child(1){float:left; background:url(../images/3.png) no-repeat 90% center; background-size:auto 5px; border-right:1px solid #b4b4b4; box-sizing:border-box; width:30%;}

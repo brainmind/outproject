@@ -51,7 +51,7 @@ $(function(){
 						}
 						totalPrice += commPrice;
 						var commodityName = commdoty.label.length > 15 ? commdoty.label.substring(0, 15)+"...":commdoty.label;
-						li.html("<div class=\"xd\" style=\"display:block;\"></div>"+
+						li.html("<div class=\"xd\" style=\"display:none;\"></div>"+
 				            	"<div class=\"day_name\">"+commdoty.category_label+"</div>"+
 				                "<div class=\"day_pic\"><img src=\""+commdoty.pic_url+"\" height=\"100%\"></div>"+
 				                "<div class=\"no_arrow\">"+
@@ -71,9 +71,9 @@ $(function(){
 							totalPrice += feePrice;
 							var li = $(document.createElement("li"));
 							container.append(li);
-							li.html("<div class=\"xd\" style=\"display:block;\"></div><div class=\"day_name\" title=\""+fee["title"]+"\">工时费</div>"+
+							li.html("<div class=\"xd\" style=\"display:none;\"></div><div class=\"day_name\" title=\""+fee["title"]+"\">工时费</div>"+
 									"<div class=\"day_pic\"><img src=\"<%=path %>/styles/images/7.jpg\" height=\"100%\"></div>"+
-									"<div class=\"day_title\"><h1>"+fee["title"]+"</h1><h2><span></span>&nbsp;<span>"+feePrice.toFixed(2)+"</span></h2></div>");
+									"<div class=\"day_title\" style=\"background:#fff;\"><h1>"+fee["title"]+"</h1><h2><span></span>&nbsp;<span>"+feePrice.toFixed(2)+"</span></h2></div>");
 						}
 					}
 				}
