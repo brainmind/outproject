@@ -33,7 +33,7 @@ window.onload = function() {
 	renderServices();
 
 	/* 日常保养 */
-	initRenderingCommandotyService();
+	// initRenderingCommandotyService();
 	
 	/* 车辆选择 */
 	renderSelectByVIN();
@@ -214,13 +214,18 @@ function updateTotalPrice(li){
 
 function initRenderingCommandotyService(){
 	$("div.day_list > ul > li > div > div.day_title").click(function() {
-		if(!$(this).hasClass("day_cur")){
+/*		if(!$(this).hasClass("day_cur")){
 			$("div.day_more").hide();
 			$("div.day_title").removeClass("day_cur");
-		}
-		if($(this).parent().next(".day_more").find("dd").length){
-			$(this).toggleClass("day_cur");
-			$(this).parent().next(".day_more").toggle();
+		}*/	
+		if($(this).parent().next(".day_more").is(":hidden")){
+			$(this).addClass("day_cur");
+			$(this).parent().next(".day_more").show();
+			$(this).parents("li").siblings("li[type=services]").find(".day_title").removeClass("day_cur");
+			$(this).parents("li").siblings("li[type=services]").find(".day_more").hide();
+		}else{
+			$(this).removeClass("day_cur");
+			$(this).parent().next(".day_more").hide();
 		}
 	});
 	$(".day_more dd").unbind("click");
