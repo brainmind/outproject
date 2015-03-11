@@ -73,10 +73,10 @@ $(function(){
                 <td colspan="4" height="10"></td>
               </tr>
               <tr>
-                <td>联系人：</td>
-                <td class="nametel" id="contact">王犟</td>
-                <td>手机号：</td>
-                <td class="nametel" id="mobile">18600755941</td>
+                <td class="fol"><span class="fol">联系人：</span></td>
+                <td class="nametel fol" id="contact">王犟</td>
+                <td class="fol ml20">手机号：</td>
+                <td class="nametel fol" id="mobile">18600755941</td>
               </tr>
             </table>
         </div>      

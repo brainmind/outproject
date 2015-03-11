@@ -37,12 +37,12 @@ $(function(){
 					contentLink.attr("id", order.orderid);
 					contentLink.data("order", order);
 					contentLink.on("click", function(){
-						var order_id = $(this).attr("id");
+						var $this = $(this);
+						var order_id = $this.attr("id");
 						var pre_order_id = $("input[type=hidden][name=orderId]").val();
 						if(pre_order_id != order_id){
-							var order = $(this).data("order");
-							viewOrderDetail(order_id, order);
-							$("html,body").animate({scrollTop: $("#myorderdetail").offset().top}, 500);
+							var orderData = $this.data("order");
+							showStatAndLog(orderData, true, $this);
 						}
 						return false;
 					});
@@ -64,8 +64,8 @@ $(function(){
                     "<td colspan=\"4\" class=\"car_name\">"+carlabel+"</td></tr>"+
                   	"<tr><td colspan=\"4\" class=\"full_care\">大保养服务</td></tr>"+
                   	"<tr><td colspan=\"4\" height=\"8\"></td></tr>"+
-                  	"<tr><td>联系人：</td><td class=\"nametel\">"+orderContact+"</td><td>手机号：</td>"+
-                  	"<td class=\"nametel\">"+order.mobile+"</td></tr></table>");
+                  	"<tr><td class=\"fol\"><span class=\"fol\">联系人：</span></td><td class=\"nametel fol w40\">"+orderContact+"</td><td class=\"fol\"><span class=\"fol\">手机号：</span></td>"+
+                  	"<td class=\"nametel fol\">"+order.mobile+"</td></tr></table>");
 				}
 			}
 		}
@@ -85,12 +85,32 @@ function viewOrderDetail(id, order){
 	$("#contact").html(orderContact);
 	$("#mobile").html(order.mobile);
 	$("input[type=hidden][name=orderId]").val(id);
-	$("#address").html("<strong>地址：</strong>" + order.address);
 	$("input[type=hidden][name='order_number']").val(order.order_number);
 	$("#order_number").html("<strong>订单编号：</strong>" + order.order_number);
 	$("div.order_img > img").attr("src", order.brand_logo);
+	showStatAndLog(order, false);
+}
+
+function showStatAndLog(order,isShow, p){
+	var saldiv = $(document);
+	if(isShow){
+		saldiv = $("#statusandlog_flag");
+		if(saldiv[0]){
+		}else{
+			saldiv = $("#statusandlogs").clone();
+			saldiv.attr("id", "statusandlog_flag");
+		}
+		p.parent().after(saldiv);
+		$("html,body").animate({scrollTop: p.offset().top}, 500);
+		$("a.ensure", saldiv).attr("href", "javascript:void(0);");
+		$("a.ensure", saldiv).on("click", function(){
+			recommend(order.orderid);
+			return false;
+		});
+	}
+	$("#address", saldiv).html("<strong>地址：</strong>" + order.address);
 	var stat = order.state?parseInt(order.state):1;
-	$("div.status_processes > ul > li").each(function(i){
+	$("div.status_processes > ul > li", saldiv).each(function(i){
 		if(stat==100 && i==1){
 			$(this).addClass("changable");
 		}
@@ -98,7 +118,7 @@ function viewOrderDetail(id, order){
 			$(this).addClass("changable");
 		}
 	});
-	$("div.status_processes > div").removeClass(function(){
+	$("div.status_processes > div", saldiv).removeClass(function(){
 		if(isNaN(stat) || stat == 1){
 			$(this).removeClass("half");
 		}else if(stat == 100){
@@ -108,7 +128,7 @@ function viewOrderDetail(id, order){
 		}
 	});
 	var logs = order.logs;
-	var logUl = $("div.content > ul");
+	var logUl = $("div.content > ul", saldiv);
 	logUl.html("<li>订单日志</li>");
 	if(logs && logs.length > 0){
 		for(var i=0; i<logs.length; i++){
@@ -127,8 +147,13 @@ function getOrderDetail(){
 	window.location.href="<%=path + Constants.ROOT%>/order/ready?orderId="+order_id;
 }
 
-function recommend(){
-	var order_id = $("input[type=hidden][name=orderId]").val();
+function recommend(id){
+	var order_id = "";
+	if(id && id != null && id != ""){
+		order_id = id;
+	}else{
+		order_id = $("input[type=hidden][name=orderId]").val();
+	}
 	window.location.href="<%=path + Constants.ROOT %>/order/recommend?orderId="+order_id;
 }
 </script>
@@ -154,30 +179,31 @@ function recommend(){
                     <td colspan="4" height="10"></td>
                   </tr>
                   <tr>
-                    <td>联系人：</td>
-                    <td class="nametel" id="contact"></td>
-                    <td>手机号：</td>
-                    <td class="nametel" id="mobile"></td>
-                  </tr>
+                <td class="fol"><span class="fol">联系人：</span></td>
+                <td class="nametel fol" id="contact"></td>
+                <td class="fol ml20">手机号：</td>
+                <td class="nametel fol" id="mobile"></td>
+              </tr>
                 </table>
             </div>      
             </a>
 	</div>
+	<div id="statusandlogs">
     	<p class="my_order_num my_order_address" id="address"><strong>地址：</strong></p>
    	   <div class="now">
-     	<p class="status"><strong>订单状态：</strong></p>
-        <div class="status_process">
-        	<div class="status_processes">
-            	<ul>
-                	<li><img src="<%=path %>/styles/images/status.png"><span>已预约</span></li>
-                    <li class="changable"><img src="<%=path %>/styles/images/status_off.png"><span>配货中</span></li>
-                    <li class="changable"><img src="<%=path %>/styles/images/status_off.png"><span>服务完成</span></li>
-                </ul>
-                <div class="clearfix half"></div> <!--class为half的时候表示正在配货，class为hundred_percent时，表示服务已完成！-->
-            </div>
-            <div class="assessment"><a href="javascript:recommend();" class="ensure">立即评价</a></div>
-        </div>
-     </div>
+	     	<p class="status"><strong>订单状态：</strong></p>
+	        <div class="status_process">
+	        	<div class="status_processes">
+	            	<ul>
+	                	<li><img src="<%=path %>/styles/images/status.png"><span>已预约</span></li>
+	                    <li class="changable"><img src="<%=path %>/styles/images/status_off.png"><span>配货中</span></li>
+	                    <li class="changable"><img src="<%=path %>/styles/images/status_off.png"><span>服务完成</span></li>
+	                </ul>
+	                <div class="clearfix half"></div> <!--class为half的时候表示正在配货，class为hundred_percent时，表示服务已完成！-->
+	            </div>
+	            <div class="assessment"><a href="javascript:recommend();" class="ensure">立即评价</a></div>
+	        </div>
+	     </div>
        <div class="clear"></div>
        <div class="order_log">
 		<div class="content">
@@ -186,9 +212,10 @@ function recommend(){
             	<li>订单日志</li>
             </ul>
         </div>
+		</div>
      </div>
      <a href="javascript:void(0);" class="address click_more">更多历史订单<img src="<%=path %>/styles/images/click_more.png"></a>
-        <div class="bg01 more_content">
+        <div class="bg01 more_content" style="background:#ffffff;">
     	</div>
     </div>
 </div>

@@ -119,10 +119,10 @@ function payonface(){
                 <td colspan="4" height="10"></td>
               </tr>
               <tr>
-                <td>联系人：</td>
-                <td class="nametel" id="contact"></td>
-                <td>手机号：</td>
-                <td class="nametel" id="mobile"></td>
+                <td class="fol"><span class="fol">联系人：</span></td>
+                <td class="nametel fol" id="contact"></td>
+                <td class="fol ml20">手机号：</td>
+                <td class="nametel fol" id="mobile"></td>
               </tr>
             </table>
         </div>      
