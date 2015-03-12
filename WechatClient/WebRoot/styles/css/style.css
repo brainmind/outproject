@@ -46,14 +46,14 @@ a,button,input{-webkit-tap-highlight-color:rgba(255,0,0,0); outline:none; color:
 
 /* 1-主页 */
 .wapper{position:relative; max-width:640px; margin:auto; min-height:100%; background:#fff;}
-.idx_top{width:100%; height:105px; border-bottom:1px solid #ccc; border-top:1px solid #ccc; margin-bottom:5px;}
-.idx_logo{width:40%; height:100%; box-sizing:border-box; border-right:1px solid #ccc; background:url(../images/idx_logo.png) no-repeat center center; background-size:auto 38px; float:left; overflow:hidden;}
+.idx_top{width:100%; height:105px; border-bottom:1px solid #DADADA; border-top:1px solid #DADADA; margin-bottom:5px;}
+.idx_logo{width:40%; height:100%; box-sizing:border-box; border-right:1px solid #DADADA; background:url(../images/idx_logo.png) no-repeat center center; background-size:auto 38px; float:left; overflow:hidden;}
 .idx_car_o{width:60%; height:100%; overflow:hidden;}
 .idx_car_o a{background:url(../images/idx_car_o.png) no-repeat center center; background-size:auto 53px; display:block; width:100%; height:100%;}
 .idx_car{width:60%; height:100%; overflow:hidden; display:none}
 .idx_car h1{font-size:16px; text-align:left; margin-left:10%; padding-top:20px; line-height:25px; color:#151515;}
 .idx_car a{display:block; text-align:right; font-size:16px; width:100%; box-sizing:border-box; padding-right:10%; color:#333; text-decoration:underline;}
-.idx_nav{width:100%; height:220px; border-top:1px solid #ccc;}
+.idx_nav{width:100%; height:220px; border-top:1px solid #DADADA;}
 .idx_nav li{width:33%; height:110px; padding-top:15px; box-sizing:border-box; border-bottom:1px solid #f0f0f0; border-right:1px solid #f0f0f0; overflow:hidden; text-align:center; font-size:14px; color:#333; float:left;}
 .idx_nav li a{display:block; font-size:14px; color:#333}
 .idx_nav li img{display:block; width:55px; height:55px; margin:0 auto;padding-bottom:5px;}
@@ -67,7 +67,7 @@ a,button,input{-webkit-tap-highlight-color:rgba(255,0,0,0); outline:none; color:
 .close{width:30px; height:30px; position:absolute; top:-10px; right:-10px; background:url(../images/close.png) no-repeat; background-size:100% 100%;}
 
 /* 车辆选择 */
-.che_btn{width:60%; height:40px; border:1px solid #b4b4b4; border-radius:2px; margin:10px auto;}
+.che_btn{width:60%; height:40px; border:1px solid #b4b4b4; border-radius:5px; margin:10px auto; background-color:#f2f2f2;}
 .che_btn span{width:50%; height:40px; float:left; font-size:15px; line-height:40px; text-align:center; display:block;}
 .che_btn span.click{background:#ff4b00; color:#fff;  }
 .che_pic{position:relative; width:100%; height:100%; overflow:hidden;}
@@ -80,7 +80,7 @@ a,button,input{-webkit-tap-highlight-color:rgba(255,0,0,0); outline:none; color:
 .che_c dd a{display:block; color:#333;}
 
 .che_vin{width:84%; height:auto; border:1px solid #b4b4b4; border-radius:2px; margin:10px auto; box-sizing:border-box;}
-.ensure{width:84%; height:40px; font-size:16px; text-align:center; line-height:40px; border-radius:2px; margin:10px auto; background:#ff4c00; display:block; color:#fff}
+.ensure{width:84%; height:40px; font-size:16px; text-align:center; line-height:40px; border-radius:5px; margin:10px auto; background:#ff4c00; display:block; color:#fff}
 .che_vin h1{width:100%; height:35px; border-bottom:1px solid #e3e3e3; line-height:35px; font-size:14px; text-indent:20px;}
 .che_vin h1 span{color:#666;}
 .che_vin h2{width:100%; height:35px; border-bottom:1px solid #e3e3e3; line-height:35px; font-size:14px; text-align:center; font-weight:100;}
@@ -92,7 +92,7 @@ a,button,input{-webkit-tap-highlight-color:rgba(255,0,0,0); outline:none; color:
 
 .vinbox{width:84%; margin:0 auto;}
 .vinbox p:nth-child(1){font-size:14px; line-height:30px;}
-.vinbox p:nth-child(2){border:1px solid #b4b4b4; border-radius:2px; margin-bottom:10px; line-height:40px; box-sizing:border-box; padding:0px 12px; overflow:hidden;}
+.vinbox p:nth-child(2){border:1px solid #b4b4b4; border-radius:5px; margin-bottom:10px; line-height:40px; box-sizing:border-box; padding:0px 12px; overflow:hidden;}
 .vinbox input{width:100%; height:35px; background:none; border:none; font-family:Arial, Microsoft YaHei; color:#666;}
 
 
@@ -193,7 +193,7 @@ overflow: hidden; float:left; width:100%;}
 .day_more .day_title{background:#fff;}
 .day_more dd.dd_cur .day_pic,.day_more dd.dd_cur .day_title{background:#fee4cb;}
 
-.xz{width:22%; height:85px; border:2px solid #ff4c00; background:url(../images/xz.png) right bottom no-repeat; box-sizing:border-box; position:absolute; top:0; left:0; background-size:27px auto; display:none;}
+.xz{width:22%; height:85px; border:1px solid #ff4c00; background:url(../images/xz.png) right bottom no-repeat; box-sizing:border-box; position:absolute; top:0; left:0; background-size:27px auto; display:none;}
 .xd{width:22%; height:85px; border:1px solid #ff4c00; background:url(../images/xz.png) right bottom no-repeat; box-sizing:border-box; position:absolute; top:0; left:0; background-size:27px auto; display:none;}
 
 
@@ -230,7 +230,7 @@ overflow: hidden;}
 .no_arrow h2 { box-sizing:border-box; width:100%;}
 .no_arrow h2 span{color:#666; width:40%; float:left; display:block; height:35px; line-height:35px; padding-left:5%;}
 .no_arrow h2 span:nth-child(2){color:#ff4c00; padding-left:5%;}
-.pay{width:64%; height:40px; font-size:16px; text-align:center; line-height:40px; border-radius:2px; margin:30px auto; background:#ff4c00; display:block; color:#fff}
+.pay{width:64%; height:40px; font-size:16px; text-align:center; line-height:40px; border-radius:2px; margin:20px auto; background:#ff4c00; display:block; color:#fff}
 .pay_unlock{ background:#939393;}
 .border_left{ border-right:1px solid #ccc;}
 /**订单提交成功**/
