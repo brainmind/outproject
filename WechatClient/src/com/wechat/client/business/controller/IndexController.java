@@ -29,10 +29,14 @@ import com.wechat.client.utils.TxtFileUtil;
 public class IndexController extends BaseController {
 	@RequestMapping("/index")
 	public String index(HttpServletRequest request){
+		String openId = request.getParameter("openId");
 		HttpSession session = request.getSession();
-		LoginUser user = new LoginUser();
-		user.setOpenid("12345688");
-		session.setAttribute(Constants.USER_SESSION_KEY, user);
+		LoginUser user = (LoginUser)session.getAttribute(Constants.USER_SESSION_KEY);
+		if(user == null){
+			user = new LoginUser();
+			user.setOpenid(openId);
+			session.setAttribute(Constants.USER_SESSION_KEY, user);
+		}
 		return "wx_index";
 	}
 	
