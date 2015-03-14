@@ -223,11 +223,12 @@ public class OrderController extends BaseController{
 	
 	@RequestMapping("/history")
 	public String history(HttpServletRequest request){
+		String openId = request.getParameter("openId");
 		HttpSession session = request.getSession();
 		LoginUser user = (LoginUser)session.getAttribute(Constants.USER_SESSION_KEY);
 		if(user == null){
 			user = new LoginUser();
-			user.setOpenid("12345688");
+			user.setOpenid(openId);
 			session.setAttribute(Constants.USER_SESSION_KEY, user);
 		}
 		return "order/finishorder";

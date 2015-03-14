@@ -31,6 +31,36 @@ public class JsonHttpRequestUtil {
 			connect.connect();
 			if(connect.getResponseCode() == 200){
 				String json = readContent(connect.getInputStream());
+				log.info("GET:"+json);
+				return json;
+			}
+			code = 500;
+		} catch (MalformedURLException e) {
+			msg = "不是正确的URL";
+			log.error(msg, e);
+		} catch (IOException e) {
+			msg = "读取URL时发生错误";
+			log.error(msg, e);
+		}finally {
+			if(connect != null){
+				connect.disconnect();
+			}
+		}
+		return "{\"code\":"+code+",\"msg\":\""+msg+"\"}";
+	}
+	
+	public String doGet(String accessUrl, boolean isNoRoot){
+		HttpURLConnection connect = null;
+		int code = 0;
+		String msg = "";
+		try {
+			URL url = new URL(isNoRoot ? accessUrl : basePath + accessUrl);
+			connect = (HttpURLConnection)url.openConnection();
+			connect.setConnectTimeout(10000);
+			connect.connect();
+			if(connect.getResponseCode() == 200){
+				String json = readContent(connect.getInputStream());
+				log.info("GET:"+json);
 				return json;
 			}
 			code = 500;
@@ -55,6 +85,41 @@ public class JsonHttpRequestUtil {
 		String msg = "";
 		try {
 			URL url = new URL(basePath + accessUrl);
+			//URL url = new URL("http://192.168.1.182:8080/WechatClient/dtds/test");
+			connect = (HttpURLConnection)url.openConnection();
+			connect.setConnectTimeout(10000);
+			connect.setRequestMethod("POST");
+			connect.addRequestProperty("Content-Type", "application/json;charset=utf-8");
+			connect.setDoOutput(true);
+			writeContent(connect.getOutputStream(), param);
+			log.info("提交内容："+param);
+			connect.connect();
+			code = connect.getResponseCode();
+			log.info("返回代码："+code);
+			if(code == 200){
+				String json = readContent(connect.getInputStream());
+				return json;
+			}
+		} catch (MalformedURLException e) {
+			msg = "不是正确的URL";
+			log.error(msg, e);
+		} catch (IOException e) {
+			msg = "读取URL时发生错误";
+			log.error(msg, e);
+		}finally {
+			if(connect != null){
+				connect.disconnect();
+			}
+		}
+		return "{\"code\":"+code+",\"msg\":\""+msg+"\"}";
+	}
+	
+	public String doPost(String accessUrl, String param, boolean isNoRoot){
+		HttpURLConnection connect = null;
+		int code = 0;
+		String msg = "";
+		try {
+			URL url = new URL(isNoRoot ? accessUrl : basePath + accessUrl);
 			//URL url = new URL("http://192.168.1.182:8080/WechatClient/dtds/test");
 			connect = (HttpURLConnection)url.openConnection();
 			connect.setConnectTimeout(10000);
