@@ -1,15 +1,10 @@
 package com.wechat.client.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonGenerationException;
@@ -17,7 +12,6 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
-import org.xml.sax.SAXException;
 
 import com.wechat.client.business.controller.WxCallBackController;
 import com.wechat.client.business.model.WxMenu;
@@ -107,13 +101,27 @@ public class WxMenusFactory {
 		
 	}
 	
-	public static void main(String[] args){
+	/*public static void main(String[] args){
 		WxMenusFactory wf = new WxMenusFactory();
 		try {
 			File f = new File("d:\\template.xml");
 			FileInputStream fis = new FileInputStream(f);
-			Map<String, String> map = XmlReaderUtil.read(fis);
-			System.out.println(map);
+			Map<String, String> xmlMap = XmlReaderUtil.read(fis);
+			System.out.println(xmlMap);
+			String toUserName = xmlMap.get("ToUserName");
+			String fromUserName = xmlMap.get("FromUserName");
+			String msgType = xmlMap.get("MsgType");
+			String event = xmlMap.get("Event");
+			String eventKey = xmlMap.get("EventKey");
+			TextMessage tm = new TextMessage();
+			tm.setToUserName(fromUserName);
+			tm.setFromUserName(toUserName);
+			tm.setCreateTime(new Date().getTime());
+			tm.setMsgType(msgType);
+			tm.setFuncFlag(1);
+			tm.setContent("test");
+			String xml = MessageUtil.textMessageToXml(tm);
+			System.out.println(xml);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (ParserConfigurationException e) {
@@ -123,5 +131,5 @@ public class WxMenusFactory {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 }	

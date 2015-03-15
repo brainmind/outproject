@@ -5,10 +5,8 @@
  */
 package com.wechat.client.business.controller;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Date;
@@ -47,6 +45,7 @@ public class WxCallBackController extends BaseController {
 	private String Token = PropertiesUtils.getValue("wx_token");
 	private String AppId = PropertiesUtils.getValue("wx_appid");
 	private String AppSecret = PropertiesUtils.getValue("wx_appsecret");
+	private String newsLogo = PropertiesUtils.getValue("wx_news_logo");
 	@RequestMapping(value="/valid", method=RequestMethod.GET)
 	public void validate(HttpServletRequest request, HttpServletResponse response){
 		String signature = request.getParameter("signature");
@@ -77,7 +76,7 @@ public class WxCallBackController extends BaseController {
 			HttpSession session = request.getSession();
 			long curTime = new Date().getTime();
 			Map<String, Object> map = (Map<String, Object>)session.getAttribute(Constants.AccessToken_SESSION_KEY);
-			if(map == null || (map != null && ((long)map.get("expires")) - curTime < 1000)){
+			if(map == null || (map != null && ((Long)map.get("expires")) - curTime < 1000)){
 				JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
 				String param = "&appid="+AppId+"&secret="+AppSecret;
 				String str = jr.doGet(WxUrls.AccessToken+param);
@@ -121,7 +120,9 @@ public class WxCallBackController extends BaseController {
 	}
 	
 	@RequestMapping(value="/valid", method=RequestMethod.POST)
-	public void recevice(HttpServletRequest request, HttpServletResponse response){
+	public void recevice(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out = response.getWriter();
 		try {
 			InputStream is = request.getInputStream();
 			Map<String, String> xmlMap = XmlReaderUtil.read(is);
@@ -131,44 +132,58 @@ public class WxCallBackController extends BaseController {
 			String msgType = xmlMap.get("MsgType");
 			String event = xmlMap.get("Event");
 			String eventKey = xmlMap.get("EventKey");
-			String openId = "";
-			if(StringUtils.isNotEmpty(fromUserName)){
-				openId = fromUserName;
-			}
-			if("event".equals(msgType.toLowerCase()) && "click".equals(event.toLowerCase())){
-				if("SMALLHORSE_SERVICE".equals(eventKey)){
-					request.setAttribute("url", "http://122.115.62.107/WechatClient/dtds/index?openId="+openId);
-				}else if("SMALLHORSE_ORDER".equals(eventKey)){
-					request.setAttribute("url", "http://122.115.62.107/WechatClient/dtds/order/history?openId="+openId);
-				}else if("SMALLHORSE_REPORT".equals(eventKey)){
-					request.setAttribute("url", "http://122.115.62.107/WechatClient/dtds/order/history?openId="+openId);
+			if("event".equals(msgType)){
+				String openId = "";
+				if(StringUtils.isNotEmpty(fromUserName)){
+					openId = fromUserName;
+				}
+				String url = "";
+				String title = "";
+				if("click".equals(event.toLowerCase())){
+					if("SMALLHORSE_SERVICE".equals(eventKey)){
+						title = "服务预约";
+						url="http://122.115.62.107/WechatClient/dtds/index?openId="+openId;
+					}else if("SMALLHORSE_ORDER".equals(eventKey)){
+						title = "历史订单";
+						url="http://122.115.62.107/WechatClient/dtds/order/history?openId="+openId;
+					}else if("SMALLHORSE_REPORT".equals(eventKey)){
+						title = "车检报告";
+						url="http://122.115.62.107/WechatClient/dtds/order/history?openId="+openId;
+					}
+					
+					StringBuffer xml = new StringBuffer();
+					xml.append("<xml>"+
+								"<ToUserName><![CDATA["+fromUserName+"]]></ToUserName>"+
+								"<FromUserName><![CDATA["+toUserName+"]]></FromUserName>"+
+								"<CreateTime>"+(new Date().getTime()/1000)+"</CreateTime>"+
+								"<MsgType><![CDATA[news]]></MsgType>"+
+								"<FuncFlag>1</FuncFlag>"+
+								"<ArticleCount>1</ArticleCount>"+
+								"<Articles><item>"+
+								"<Title><![CDATA[小马上门-"+title+"]]></Title>"+
+								"<Description><![CDATA[打造一站式汽车维修保养服务]]></Description>"+
+								"<PicUrl><![CDATA["+newsLogo+"]]></PicUrl>"+
+								"<Url><![CDATA["+url+"]]></Url>"+
+								"</item></Articles>"+
+								"</xml>");
+					out.print(xml.toString());
+					log.info("################### Send text to wxserver: \r\n"+xml.toString());
+					return;
 				}
 			}
-			StringBuffer xml = new StringBuffer();
-			xml.append("<xml>"+
-						"<ToUserName><![CDATA["+fromUserName+"]]</ToUserName>"+
-						"<FromUserName><![CDATA["+toUserName+"]]</FromUserName>"+
-						"<CreateTime>"+new Date().getTime()+"</CreateTime>"+
-						"<MsgType><![CDATA[news]]</MsgType>"+
-						"<ArticleCount>1</ArticleCount>"+
-						"<Articles><item>"+
-						"<Title><![CDATA[小马上门-服务预约]]</Title>"+
-						"<Description><![CDATA[打造一站式汽车维修保养服务]]</Description>"+
-						"<PicUrl><![CDATA[http://122.115.62.107/WechatClient/styles/images/idx_logo.png]]</PicUrl>"+
-						"<Url><![CDATA[http://122.115.62.107/WechatClient/dtds/index?openId="+openId+"]]</Url>"+
-						"</item></Articles>"+
-						"</xml>");
-			log.info("################### Send text to wxserver: \r\n"+xml.toString());
-			PrintWriter out = response.getWriter();
-			out.print(xml.toString());
-			out.flush();
-			out.close();
+			out.print("");
 		} catch (IOException e) {
 			log.error("接收微信服务推送消息处理时，发生错误...", e);
+			out.print("");
 		} catch (ParserConfigurationException e) {
 			log.error("接收微信服务推送消息处理时，发生错误...", e);
+			out.print("");
 		} catch (SAXException e) {
 			log.error("接收微信服务推送消息处理时，发生错误...", e);
+			out.print("");
+		} finally {
+			out.flush();
+			out.close();
 		}
 	}
 }
