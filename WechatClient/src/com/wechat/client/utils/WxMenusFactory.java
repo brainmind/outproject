@@ -101,9 +101,10 @@ public class WxMenusFactory {
 		
 	}
 	
-	/*public static void main(String[] args){
+	public static void main(String[] args){
 		WxMenusFactory wf = new WxMenusFactory();
-		try {
+		wf.createMenus();
+		/*try {
 			File f = new File("d:\\template.xml");
 			FileInputStream fis = new FileInputStream(f);
 			Map<String, String> xmlMap = XmlReaderUtil.read(fis);
@@ -130,6 +131,6 @@ public class WxMenusFactory {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-	}*/
+		}*/
+	}
 }	

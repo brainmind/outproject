@@ -11,6 +11,8 @@ public class LoginUser {
 	private String version="1.0";
 	private String encrypt_type="0";
 	private String timestamp = DateUtil.formatDate(new Date(), "yyyyMMddHHmmssSSS");
+	private String app = "XMSM";
+	private String app_type = "WECHAT";
 
 	public String getMobile() {
 		return mobile;
@@ -47,5 +49,17 @@ public class LoginUser {
 	}
 	public void setOpenid(String openid) {
 		this.openid = openid;
+	}
+	public String getApp() {
+		return app;
+	}
+	public void setApp(String app) {
+		this.app = app;
+	}
+	public String getApp_type() {
+		return app_type;
+	}
+	public void setApp_type(String app_type) {
+		this.app_type = app_type;
 	}
 }

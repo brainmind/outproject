@@ -205,6 +205,7 @@ function submitOrder(){
 	<input type="hidden" name="sername" value="${sername }" />
 	<input type="hidden" name="car" value="${car }" />
 	<input type="hidden" name="logourl" value="${logourl }" />
+	<input type="hidden" name="isServiceOnly" value="${isServiceOnly }" />
 	<c:forEach items="${service_fees_checked }" var="com" varStatus="cStatus">
 		<c:if test="${com == '1'}">
 			<input type="hidden" name="service_fees.type" value="${service_fees_type[cStatus.index] }"/>

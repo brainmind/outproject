@@ -76,6 +76,7 @@ public class OrderController extends BaseController{
 		String sername = request.getParameter("sername");
 		String car = request.getParameter("car");
 		String logourl = request.getParameter("logourl");
+		String isSelfService = request.getParameter("isSelfService");
 		String[] commoditys_checked = request.getParameterValues("commodities.checked");
 		String[] commoditys_id = request.getParameterValues("commodities.id");
 		String[] commoditys_label = request.getParameterValues("commodities.label");
@@ -104,6 +105,7 @@ public class OrderController extends BaseController{
 		request.setAttribute("sername", sername);
 		request.setAttribute("car", car);
 		request.setAttribute("logourl", logourl);
+		request.setAttribute("isServiceOnly", "1".equals(isSelfService)?"Y":"N");
 		return "order/toorder";
 	}
 	
@@ -117,7 +119,7 @@ public class OrderController extends BaseController{
 		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
 		String json = jr.doGet(accessUrl+"?"+param);
 		writeJson(response, json);
-		log.info("获取难码成功");
+		log.info("获取验证码成功");
 	}
 	
 	@RequestMapping("/ready")

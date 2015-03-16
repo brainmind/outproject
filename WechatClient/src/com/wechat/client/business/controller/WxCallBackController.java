@@ -46,6 +46,7 @@ public class WxCallBackController extends BaseController {
 	private String AppId = PropertiesUtils.getValue("wx_appid");
 	private String AppSecret = PropertiesUtils.getValue("wx_appsecret");
 	private String newsLogo = PropertiesUtils.getValue("wx_news_logo");
+	private String Host = PropertiesUtils.getValue("wx_sys_host");
 	@RequestMapping(value="/valid", method=RequestMethod.GET)
 	public void validate(HttpServletRequest request, HttpServletResponse response){
 		String signature = request.getParameter("signature");
@@ -142,13 +143,13 @@ public class WxCallBackController extends BaseController {
 				if("click".equals(event.toLowerCase())){
 					if("SMALLHORSE_SERVICE".equals(eventKey)){
 						title = "服务预约";
-						url="http://122.115.62.107/WechatClient/dtds/index?openId="+openId;
+						url = Host + "WechatClient/dtds/index?openId="+openId;
 					}else if("SMALLHORSE_ORDER".equals(eventKey)){
 						title = "历史订单";
-						url="http://122.115.62.107/WechatClient/dtds/order/history?openId="+openId;
+						url = Host + "WechatClient/dtds/order/history?openId="+openId;
 					}else if("SMALLHORSE_REPORT".equals(eventKey)){
 						title = "车检报告";
-						url="http://122.115.62.107/WechatClient/dtds/order/history?openId="+openId;
+						url = Host + "WechatClient/dtds/order/history?openId="+openId;
 					}
 					
 					StringBuffer xml = new StringBuffer();

@@ -1,3 +1,8 @@
+package com.wechat.client.business.model;
+
+import java.math.BigDecimal;
+import java.util.List;
+
 /**
  * @Title: XmOrderVO.java 
  * @Package com.global.vo 
@@ -6,19 +11,11 @@
  * @date 2015-2-2 上午9:45:49 
  * @version V1.0 
  */
-package com.wechat.client.business.model;
-
-import java.math.BigDecimal;
-import java.util.List;
-
-/**
- * @author user
- *
- */
 public class XmOrderVO {
 	private String orderid;//订单id
 	private String order_number;//订单编号
 	private String car_id;//车ID
+	private String isServiceOnly; //是否自带配件
 	private String contact;//联系人
 	private String mobile;//联系电话
 	private String region_code;//区域编码
@@ -251,5 +248,11 @@ public class XmOrderVO {
 	}
 	public void setBean(BaseBean bean) {
 		this.bean = bean;
+	}
+	public String getIsServiceOnly() {
+		return isServiceOnly;
+	}
+	public void setIsServiceOnly(String isServiceOnly) {
+		this.isServiceOnly = isServiceOnly;
 	}
 }
