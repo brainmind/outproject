@@ -77,14 +77,15 @@ $(document).ready(function () {
 							servName = servName.substring(0,2)+"<br/>"+servName.substring(2, servName.length);
 						}
 						li.attr("type", "services");
-						var commodityxz = '';
+						var commodityxz = '',commodityVal='';
 						if(commodity.id==''){
 							commodityxz = '<div class=\"xz\"></div>';
 						}else{
 							commodityxz = '<div class=\"xz\" style=\"display:block;\"></div>';
+							commodityVal = "<dd>"+commodityInfo+"</dd>";
 						}
 						li.html(commodityxz + "<div class=\"day_name\">"+servName+"</div>"+
-								"<div id=\"commodity_cur"+categoryid+"\">"+commodityInfo+"</div><div class=\"day_more\"><dl></dl></div>"+
+								"<div id=\"commodity_cur"+categoryid+"\">"+commodityInfo+"</div><div class=\"day_more\"><dl>"+commodityVal+"</dl></div>"+
 								"<input type=\"hidden\" name=\"commodities.checked\" value=\""+ischecked+"\"/>"+
 								"<input type=\"hidden\" name=\"commodities.id\" value=\""+commodity["id"]+"\"/>"+
 								"<input type=\"hidden\" name=\"commodities.label\" value=\""+commodity["label"]+"\"/>"+

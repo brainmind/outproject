@@ -217,7 +217,7 @@ function initRenderingCommandotyService(){
 /*		if(!$(this).hasClass("day_cur")){
 			$("div.day_more").hide();
 			$("div.day_title").removeClass("day_cur");
-		}*/	
+		}*/		
 		if($(this).parent().next(".day_more").is(":hidden")){
 			$(this).addClass("day_cur");
 			$(this).parent().next(".day_more").show();
@@ -235,9 +235,9 @@ function initRenderingCommandotyService(){
 		dd.addClass("dd_cur");
 		$(".day_more").hide();
 		var curDiv = dd.parent().parent().prev();
-		var curCommodify = curDiv.html();
-		curDiv.html(dd.html());
-		dd.html(curCommodify);
+		//var curCommodify = curDiv.html();
+				curDiv.html(dd.html());
+				//dd.html(curCommodify);
 		$("div.day_title", curDiv).on("click", function(){
 			if(!$(this).hasClass("day_cur")){
 				$("div.day_more").hide();

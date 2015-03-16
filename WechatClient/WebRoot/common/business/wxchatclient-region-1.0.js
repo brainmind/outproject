@@ -37,7 +37,7 @@ $.extend(WxchatClient, {
 			var today = new Date();
 			var weekdays = new Array();
 			for(var i=0; i<7; i++){
-				var tempDay = DUtil.getNewDate(today, i, "day");
+				var tempDay = DUtil.getNewDate(today, i+1, "day");
 				weekdays[i] = {id:DUtil.format(tempDay, "yyyy-MM-dd"), name:DUtil.format(tempDay,"M月d日 星期w")};
 			}
 			return weekdays;

@@ -66,16 +66,23 @@ $(function(){
 				if(serviceFees && $.type(serviceFees) == "array"){
 					for(var i=0; i<serviceFees.length; i++){
 						var fee = serviceFees[i];
-						if(fee.category_id == 0){
-							var feePrice = parseFloat(isNaN(fee.price)?"0":fee.price);
+						var feePrice = parseFloat(isNaN(fee.price)?"0":fee.price);
+						var li = $(document.createElement("li"));
+						var feeHtml = "<div class=\"xd\" style=\"display:none;\"></div><div class=\"day_name\" title=\""+fee["title"]+"\">工时费</div>"+
+												"<div class=\"day_pic\"><img src=\"<%=path %>/styles/images/7.jpg\" height=\"100%\"></div>"+
+												"<div class=\"day_title\" style=\"background:#fff;\"><h1>"+fee["title"]+"</h1><h2><span></span>&nbsp;<span>"+feePrice.toFixed(2)+"</span></h2></div>";
+						if(commdoties.length>0){
+							if(fee.category_id == 0){
+								totalPrice += feePrice;
+								container.append(li);
+								li.html(feeHtml);
+								break;
+							}
+						}else{
 							totalPrice += feePrice;
-							var li = $(document.createElement("li"));
 							container.append(li);
-							li.html("<div class=\"xd\" style=\"display:none;\"></div><div class=\"day_name\" title=\""+fee["title"]+"\">工时费</div>"+
-									"<div class=\"day_pic\"><img src=\"<%=path %>/styles/images/7.jpg\" height=\"100%\"></div>"+
-									"<div class=\"day_title\" style=\"background:#fff;\"><h1>"+fee["title"]+"</h1><h2><span></span>&nbsp;<span>"+feePrice.toFixed(2)+"</span></h2></div>");
-							break;
-						}
+							li.html(feeHtml);
+						}	
 					}
 				}
 				$("#total_price").html(totalPrice.toFixed(2));

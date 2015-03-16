@@ -26,6 +26,7 @@ $(function(){
 					var order = r.orders[i];
 					if(i==0){
 						viewOrderDetail(order.orderid, order);
+						continue;
 					}
 					var orderNumber = $(document.createElement("p"));
 					orderNumber.addClass("my_order_num");
