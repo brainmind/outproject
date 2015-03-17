@@ -11,6 +11,7 @@ public class Constants {
 	public static final String USER_SESSION_KEY = "wxchatclient_sesn";
 
 	public static final String AccessToken_SESSION_KEY = "wxchatclient_token";
+	public static final String JSAPITicket_SESSION_KEY = "wxchatclient_ticket";
 	
 	
 	

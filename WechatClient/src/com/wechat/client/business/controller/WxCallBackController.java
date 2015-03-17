@@ -14,28 +14,25 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.xml.sax.SAXException;
 
 import com.wechat.client.business.model.WxMenus;
-import com.wechat.client.utils.Constants;
 import com.wechat.client.utils.DecriptUtil;
 import com.wechat.client.utils.JsonHttpRequestUtil;
 import com.wechat.client.utils.PropertiesUtils;
 import com.wechat.client.utils.WxMenusFactory;
 import com.wechat.client.utils.WxUrls;
+import com.wechat.client.utils.WxUtils;
 import com.wechat.client.utils.XmlReaderUtil;
 
 @Controller
@@ -43,8 +40,6 @@ import com.wechat.client.utils.XmlReaderUtil;
 public class WxCallBackController extends BaseController {
 	private Logger log = Logger.getLogger(WxCallBackController.class);
 	private String Token = PropertiesUtils.getValue("wx_token");
-	private String AppId = PropertiesUtils.getValue("wx_appid");
-	private String AppSecret = PropertiesUtils.getValue("wx_appsecret");
 	private String newsLogo = PropertiesUtils.getValue("wx_news_logo");
 	private String Host = PropertiesUtils.getValue("wx_sys_host");
 	@RequestMapping(value="/valid", method=RequestMethod.GET)
@@ -71,34 +66,9 @@ public class WxCallBackController extends BaseController {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	private String getToken(HttpServletRequest request){
-		try {
-			HttpSession session = request.getSession();
-			long curTime = new Date().getTime();
-			Map<String, Object> map = (Map<String, Object>)session.getAttribute(Constants.AccessToken_SESSION_KEY);
-			if(map == null || (map != null && ((Long)map.get("expires")) - curTime < 1000)){
-				JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
-				String param = "&appid="+AppId+"&secret="+AppSecret;
-				String str = jr.doGet(WxUrls.AccessToken+param);
-				log.info("AccessToken:"+str);
-				map = new ObjectMapper().readValue(str, new TypeReference<Map<String, Object>>() {});
-				map.put("expires", new Date().getTime());
-				session.setAttribute(Constants.AccessToken_SESSION_KEY, map);
-			}
-			return (String)map.get("access_token");
-		} catch (JsonParseException e) {
-			log.error("JSON convert failure ...", e);
-		} catch (JsonMappingException e) {
-			log.error("JSON convert failure ...", e);
-		} catch (IOException e) {
-			log.error("JSON convert failure ...", e);
-		}
-		return "";
-	}
 	
 	private void createMenus(HttpServletRequest request){
-		String accessToken = getToken(request);
+		String accessToken = WxUtils.getToken(request);
 		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
 		WxMenus menus = WxMenusFactory.createWxMenus();
 		try {
