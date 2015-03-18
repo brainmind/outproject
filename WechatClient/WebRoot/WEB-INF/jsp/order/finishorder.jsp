@@ -37,9 +37,10 @@ $(function(){
 					var contentLink = $(document.createElement("a"));
 					contentLink.attr("id", order.orderid);
 					contentLink.data("order", order);
+					var order_id='';
 					contentLink.on("click", function(){
 						var $this = $(this);
-						var order_id = $this.attr("id");
+						order_id = $this.attr("id");
 						var pre_order_id = $("input[type=hidden][name=orderId]").val();
 						if(pre_order_id != order_id){
 							var orderData = $this.data("order");
@@ -66,7 +67,14 @@ $(function(){
                   	"<tr><td colspan=\"4\" class=\"full_care\">大保养服务</td></tr>"+
                   	"<tr><td colspan=\"4\" height=\"8\"></td></tr>"+
                   	"<tr><td>联系人：</td><td class=\"nametel\">"+orderContact+"</td><td>手机号：</td>"+
-                  	"<td class=\"nametel\">"+order.mobile+"</td></tr></table>");
+                  	"<td class=\"nametel\">"+order.mobile+"</td></tr></table><div class=\"more_icon\"></div>");
+					$(".order_font .more_icon").click(function(event){	
+						if(order_id==''){
+							order_id = $(this).parent().parent("a").attr("id");
+						}
+						getOrderDetail(order_id);
+						event.stopPropagation(); 
+					});
 				}
 			}
 		}
@@ -163,8 +171,10 @@ function showStatAndLog(order,isShow, p){
 	}
 }
 
-function getOrderDetail(){
-	var order_id = $("input[type=hidden][name=orderId]").val();
+function getOrderDetail(order_id){
+	if(order_id==''){
+		var order_id = $("input[type=hidden][name=orderId]").val();
+	}
 	window.location.href="<%=path + Constants.ROOT%>/order/ready?orderId="+order_id;
 }
 
@@ -186,7 +196,7 @@ function recommend(id){
     	<input type="hidden" name="orderId" value=""/>
         <p class="my_order_num" id="order_number"><strong>订单编号：</strong></p>
        <div class="add_top more">
-      	 <a href="javascript:getOrderDetail();">
+      	 <a href="javascript:getOrderDetail('');">
             <div class="add_logo order_img"><img src="<%=path %>/styles/images/10.jpg"></div>
             <div class="order_font">
                 <table width="100%" border="0">
