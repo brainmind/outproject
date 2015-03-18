@@ -82,7 +82,7 @@ $(document).ready(function () {
 							commodityxz = '<div class=\"xz\"></div>';
 						}else{
 							commodityxz = '<div class=\"xz\" style=\"display:block;\"></div>';
-							commodityVal = "<dd>"+commodityInfo+"</dd>";
+							commodityVal = "<dd  class=\"dd_cur\">"+commodityInfo+"</dd>";
 						}
 						li.html(commodityxz + "<div class=\"day_name\">"+servName+"</div>"+
 								"<div id=\"commodity_cur"+categoryid+"\">"+commodityInfo+"</div><div class=\"day_more\"><dl>"+commodityVal+"</dl></div>"+
