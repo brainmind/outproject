@@ -74,17 +74,41 @@ $(function(){
 				    // 则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
 					WxchatClient.Dialog.show("微信JS验证成功！");
 				});
-				
-				wx.error(function(res){
-				    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
-					WxchatClient.Dialog.show("微信JS验证失败！"+res);
-				});
 			}
 		}
 	});
 });
 
 function surePay(){
+	if (typeof WeixinJSBridge != "undefined"){
+		$.ajax({
+			url:"<%=path %>/pay/config?url="+window.location.href,
+			type:"get",
+			dataType:"json",
+			success:function(r){
+				if(r && r.code && r.code == "200"){
+					WeixinJSBridge.invoke(
+				       'getBrandWCPayRequest', {
+				           "appId" : r.appid,     //公众号名称，由商户传入     
+				           "timeStamp": r.timestamp,  //时间戳，自1970年以来的秒数     
+				           "nonceStr" : r.noncestr,   //随机串     
+				           "package" : "prepay_id=u802345jgfjsdfgsdg888",     
+				           "signType" : "MD5",         //微信签名方式:     
+				           "paySign" : "70EA570631E4BB79628FBCA90534C63FF7FADD89" //微信签名 
+				       },
+				       function(res){     
+				           if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+				        	 //使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+				        	 
+				           }     
+				       }
+				   );
+				}
+			}
+		});
+	}else{
+		alert("请使用微信浏览器打开.");
+	}
 }
 </script>
 </head>

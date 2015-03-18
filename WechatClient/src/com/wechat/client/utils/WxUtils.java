@@ -19,6 +19,8 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
+import com.wechat.client.utils.DecriptUtil.DecrType;
+
 public class WxUtils {
 	private static Logger log = Logger.getLogger(WxUtils.class);
 	private static String AppId = PropertiesUtils.getValue("wx_appid");
@@ -93,6 +95,21 @@ public class WxUtils {
 		shaAry.put("noncestr", noncestr);
 		shaAry.put("timestamp", timestamp);
 		shaAry.put("url", url);
+		String signature = getSign(shaAry, DecrType.SHA1);
+		shaAry.put("signature", signature);
+		shaAry.put("appid", AppId);
+		shaAry.remove("jsapi_ticket");
+		shaAry.put("code", "200");
+		log.info("signature map :"+shaAry);
+		return shaAry;
+	}
+	
+	/**
+	 * 微信中生成各种签名的规则
+	 * @param shaAry
+	 * @return
+	 */
+	public static String getSign(Map<String, String> shaAry, DecrType dt){
 		List<Map.Entry<String,String>> shaList = new ArrayList<Map.Entry<String,String>>(shaAry.entrySet());
 		Collections.sort(shaList, new Comparator<Map.Entry<String,String>>() {
 			public int compare(Entry<String, String> o1,
@@ -105,12 +122,7 @@ public class WxUtils {
 			shaMapping += "&"+mapping.getKey()+"="+mapping.getValue();
 		}
 		log.info("key-value map is : "+shaMapping);
-		String signature = DecriptUtil.SHA1(shaMapping);
-		shaAry.put("signature", signature);
-		shaAry.put("appid", AppId);
-		shaAry.remove("jsapi_ticket");
-		shaAry.put("code", "200");
-		log.info("signature map :"+shaAry);
-		return shaAry;
+		String signature = dt.encrypt(shaMapping);
+		return signature;
 	}
 }
