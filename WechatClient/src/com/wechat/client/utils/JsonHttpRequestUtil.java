@@ -11,8 +11,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
+import org.xml.sax.SAXException;
 
 public class JsonHttpRequestUtil {
 	private Logger log = Logger.getLogger(JsonHttpRequestUtil.class);
@@ -149,6 +153,40 @@ public class JsonHttpRequestUtil {
 		return "{\"code\":"+code+",\"msg\":\""+msg+"\"}";
 	}
 	
+	public Map<String, String> doPostXml(String accessUrl, String param){
+		HttpURLConnection connect = null;
+		int code = 0;
+		String msg = "";
+		try {
+			URL url = new URL(accessUrl);
+			connect = (HttpURLConnection)url.openConnection();
+			connect.setConnectTimeout(10000);
+			connect.setRequestMethod("POST");
+			connect.addRequestProperty("Content-Type", "text/plain;charset=utf-8");
+			connect.setDoOutput(true);
+			writeContent(connect.getOutputStream(), param);
+			log.info("提交内容："+param);
+			connect.connect();
+			code = connect.getResponseCode();
+			log.info("返回代码："+code);
+			if(code == 200){
+				Map<String, String> xml = readXml(connect.getInputStream());
+				return xml;
+			}
+		} catch (MalformedURLException e) {
+			msg = "不是正确的URL";
+			log.error(msg, e);
+		} catch (IOException e) {
+			msg = "读取URL时发生错误";
+			log.error(msg, e);
+		}finally {
+			if(connect != null){
+				connect.disconnect();
+			}
+		}
+		return null;
+	}
+	
 	public String readContent(InputStream is){
 		BufferedReader br;
 		StringBuffer content = new StringBuffer();
@@ -165,6 +203,20 @@ public class JsonHttpRequestUtil {
 			log.error("在读取数据流时出错.", e);
 		}
 		return content.toString();
+	}
+	
+	public Map<String, String> readXml(InputStream is){
+		try {
+			Map<String, String> xmlMap = XmlReaderUtil.read(is);
+			return xmlMap;
+		} catch (IOException e) {
+			log.error("在读取数据流时出错.", e);
+		} catch (ParserConfigurationException e) {
+			log.error("在读取数据流时出错.", e);
+		} catch (SAXException e) {
+			log.error("非xml的数据格式", e);
+		}
+		return null;
 	}
 	
 	public void writeContent(OutputStream os, String content){

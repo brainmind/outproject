@@ -52,38 +52,16 @@ $(function(){
 			}
 		}
 	});
-	
-	
-	$.ajax({
-		url:"<%=path %>/pay/config?url="+window.location.href,
-		type:"get",
-		dataType:"json",
-		success:function(r){
-			if(r && r.code && r.code == "200"){
-				wx.config({
-				    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-				    appId: r.appid, // 必填，公众号的唯一标识
-				    timestamp:r.timestamp, // 必填，生成签名的时间戳
-				    nonceStr: r.noncestr, // 必填，生成签名的随机串
-				    signature: r.signature,// 必填，签名，见附录1
-				    jsApiList: ["chooseWXPay"] //必填，需要使用的JS接口列表，所有JS接口列表见附录2
-				});
-				
-				wx.ready(function(){
-				    // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，
-				    // 则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
-					WxchatClient.Dialog.show("微信JS验证成功！");
-				});
-			}
-		}
-	});
 });
 
 function surePay(){
 	if (typeof WeixinJSBridge != "undefined"){
+		var realPrice = parseFloat($("#real_price").text())*100;
+		var goodBody = $("#goodsbody").html();
 		$.ajax({
-			url:"<%=path %>/pay/config?url="+window.location.href,
-			type:"get",
+			url:"<%=path %>/pay/prepay",
+			type:"post",
+			data:"out_trade_no=${order_number }&total_fee="+realPrice+"&good_body="+goodBody,
 			dataType:"json",
 			success:function(r){
 				if(r && r.code && r.code == "200"){
@@ -92,23 +70,43 @@ function surePay(){
 				           "appId" : r.appid,     //公众号名称，由商户传入     
 				           "timeStamp": r.timestamp,  //时间戳，自1970年以来的秒数     
 				           "nonceStr" : r.noncestr,   //随机串     
-				           "package" : "prepay_id=u802345jgfjsdfgsdg888",     
+				           "package" : "prepay_id="+r.prepay_id,     
 				           "signType" : "MD5",         //微信签名方式:     
-				           "paySign" : "70EA570631E4BB79628FBCA90534C63FF7FADD89" //微信签名 
+				           "paySign" : r.sign //微信签名 
 				       },
 				       function(res){     
-				           if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-				        	 //使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
-				        	 
-				           }     
+				           if(res.err_msg == "get_brand_wcpay_request:ok") {
+				        	   //使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+				        	   WxchatClient.Dialog.show("订单支付成功！");
+				        	   registPayInfo(realPrice, 0, "");
+				           }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+				        	   WxchatClient.Dialog.show("订单支付失败！");
+				        	   registPayInfo(realPrice, 1, "用户取消");
+				           }else if(res.err_msg == "get_brand_wcpay_request:fail"){
+				        	   WxchatClient.Dialog.show("订单支付失败！");
+				        	   registPayInfo(realPrice, 1, "支付失败");
+				           }
 				       }
 				   );
+				}else{
+					WxchatClient.Dialog.show("订单支付失败！");
 				}
 			}
 		});
 	}else{
 		alert("请使用微信浏览器打开.");
 	}
+}
+
+function registPayInfo(amount, state, reason){
+	$.ajax({
+	   url:"",
+	   data:"orderId=${orderid }&bank_sequence=${order_number }&amount="+amount+"&state="+state+"&reason="+reason,
+	   type:"get",
+	   dataType:"json",
+	   success:function(r){
+	   }
+   });
 }
 </script>
 </head>
@@ -125,7 +123,7 @@ function surePay(){
                 <td colspan="4" class="car_name"></td>
               </tr>
               <tr>
-                <td colspan="4" class="full_care">大保养服务</td>
+                <td colspan="4" class="full_care" id="goodsbody">大保养服务</td>
               </tr>
               <tr>
                 <td colspan="4" height="10"></td>

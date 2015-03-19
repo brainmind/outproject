@@ -95,7 +95,7 @@ public class WxUtils {
 		shaAry.put("noncestr", noncestr);
 		shaAry.put("timestamp", timestamp);
 		shaAry.put("url", url);
-		String signature = getSign(shaAry, DecrType.SHA1);
+		String signature = getSign(shaAry, DecrType.SHA1, false);
 		shaAry.put("signature", signature);
 		shaAry.put("appid", AppId);
 		shaAry.remove("jsapi_ticket");
@@ -109,7 +109,7 @@ public class WxUtils {
 	 * @param shaAry
 	 * @return
 	 */
-	public static String getSign(Map<String, String> shaAry, DecrType dt){
+	public static String getSign(Map<String, String> shaAry, DecrType dt, boolean toUpperCase){
 		List<Map.Entry<String,String>> shaList = new ArrayList<Map.Entry<String,String>>(shaAry.entrySet());
 		Collections.sort(shaList, new Comparator<Map.Entry<String,String>>() {
 			public int compare(Entry<String, String> o1,
@@ -121,8 +121,12 @@ public class WxUtils {
 		for(Map.Entry<String,String> mapping : shaList){
 			shaMapping += "&"+mapping.getKey()+"="+mapping.getValue();
 		}
+		shaMapping = shaMapping.substring(1);
 		log.info("key-value map is : "+shaMapping);
 		String signature = dt.encrypt(shaMapping);
-		return signature;
+		if(toUpperCase)
+			return signature.toUpperCase();
+		else
+			return signature;
 	}
 }

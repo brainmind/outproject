@@ -45,6 +45,7 @@ public class OrderController extends BaseController{
 	private String OrderDetail = "/orderDetail.json";
 	private String OrderList = "/userOrderList.json";
 	private String Recommend = "/orderCommentInfo.json";
+	private String PayOrderInfo = "/orderPayInfo.json";
 	
 	@RequestMapping("/service")
 	public String service(HttpServletRequest request, HttpServletResponse response){
@@ -221,6 +222,24 @@ public class OrderController extends BaseController{
 		request.setAttribute("orderid", orderId);
 		request.setAttribute("order_number", orderSn);
 		return "order/payonline";
+	}
+	
+	@RequestMapping("/payinfo")
+	public void registOrderPayInfo(HttpServletRequest request, HttpServletResponse response){
+		String orderId = request.getParameter("orderId");
+		String bank_sequence = request.getParameter("bank_sequence");
+		String amount = request.getParameter("amount");
+		String state = request.getParameter("state");
+		String reason = request.getParameter("reason");
+		String param = "{\"orderId\":\""+orderId+"\","+
+					  "\"pay_way\":\"W\","+
+					  "\"bank_sequence\":\""+bank_sequence+"\","+
+					  "\"amount\":"+amount+","+
+					  "\"state\":\""+state+"\","+
+					  "\"reason\":\""+reason+"\"}";
+		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
+		String json = jr.doPost(PayOrderInfo, param);
+		writeJson(response, json);
 	}
 	
 	@RequestMapping("/history")
