@@ -262,7 +262,7 @@ function initRenderingCommandotyService(){
 		}
 		var span = $("input[type=hidden][name='commodities.price']" , $(this).parent());
 		var fee = span.val();
-		if(fee != null && fee != ""){
+		if(fee != null && fee != "" && fee !=0){
 			var totalFee = parseFloat($("#totalprice").text());
 			totalFee += parseFloat(fee)+serviceFee;
 			$("#totalprice").html(totalFee.toFixed(2));
@@ -282,7 +282,7 @@ function initRenderingCommandotyService(){
 		}
 		var span = $("input[type=hidden][name='commodities.price']" , $(this).parent());
 		var fee = span.val();
-		if(fee != null && fee != ""){
+		if(fee != null && fee != "" && fee !=0){
 			var totalFee = parseFloat($("#totalprice").text());
 			totalFee -= (parseFloat(fee) + serviceFee);
 			$("#totalprice").html(totalFee.toFixed(2));
