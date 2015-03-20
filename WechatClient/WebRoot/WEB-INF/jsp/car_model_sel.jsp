@@ -36,7 +36,7 @@ $(document).ready(function () {
 						}
 						var dd = $(document.createElement("dd"));
 						dd.html("<a href=\"<%=path + Constants.ROOT %>/car/serie.json\" rel=\"firstselect\" target=\"cartypelistdivid\">"+
-		                		"<img src=\""+brand["logo_url"]+"\">"+brand["label"]+"</a>");
+		                		"<img src=\""+brand["logo_url"]+"\" onerror=this.src='<%=path %>/styles/images/img_error.png' >"+brand["label"]+"</a>");
 						dd.attr("dataid", brand.id);
 						groupdt.after(dd);
 					}
