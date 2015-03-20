@@ -58,8 +58,8 @@ $(document).ready(function () {
 							dtit = '<div class=\"day_title\"';
 							commoditymsg ="<h1>"+commodity["label"]+"</h1><h2><span>用量："+commodity["number"]+"</span><span>"+commprice.toFixed(2)+"</span></h2>";
 						}
-						var picUrl = commodity["pic_url"]==null ? "<%=path %>/styles/images/null.jpg" : commodity["pic_url"] ; 
-						var commodityInfo = "<div class=\"day_pic\"><img src=\""+ picUrl +"\" height=\"100%\"></div>"+
+						var picUrl = commodity["pic_url"]==null || commodity["pic_url"]=='' ? "<%=path %>/styles/images/null.jpg" : commodity["pic_url"] ; 
+						var commodityInfo = "<div class=\"day_pic\"><img src=\""+ picUrl +"\" height=\"100%\" onerror=this.src='<%=path %>/styles/images/null.jpg' ></div>"+
 							  dtit +" data-id=\""+commodity["id"]+"\" category-id=\""+categoryid+"\" data-number=\""+commodity["number"]+"\">"+commoditymsg+"</div>";
 						if(commodity.recommand != "1" || li[0]){
 							if(li[0] && li.is("li")){
