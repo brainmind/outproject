@@ -76,13 +76,13 @@ public class WxPayController extends BaseController{
 		//String total_fee = request.getParameter("total_fee");
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("appid", AppId);
-		params.put("body", body);
 		params.put("mch_id", MchId);
 		params.put("nonce_str", UUIDUtil.generateUUID());
+		params.put("spbill_create_ip", "115.28.65.171");
+		params.put("body", body);
 		params.put("notify_url", Host+"WechatClient/pay/back");
 		params.put("openid", openId);
 		params.put("out_trade_no", out_trade_no);
-		params.put("spbill_create_ip", "115.28.65.171");
 		params.put("total_fee", "1");
 		params.put("trade_type", "JSAPI");
 		String sign = WxUtils.getSign(params, DecrType.MD5, true);
