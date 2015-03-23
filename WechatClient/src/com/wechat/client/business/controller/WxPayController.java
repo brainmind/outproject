@@ -3,7 +3,6 @@ package com.wechat.client.business.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +21,6 @@ import org.xml.sax.SAXException;
 
 import com.wechat.client.business.model.LoginUser;
 import com.wechat.client.utils.Constants;
-import com.wechat.client.utils.DecriptUtil.DecrType;
 import com.wechat.client.utils.JsonHttpRequestUtil;
 import com.wechat.client.utils.PropertiesUtils;
 import com.wechat.client.utils.UUIDUtil;
@@ -73,31 +71,24 @@ public class WxPayController extends BaseController{
 		String openId = user.getOpenid();
 		String out_trade_no = request.getParameter("out_trade_no");
 		String body = request.getParameter("good_body");
-		//String total_fee = request.getParameter("total_fee");
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("appid", AppId);
-		params.put("mch_id", MchId);
-		params.put("nonce_str", UUIDUtil.generateUUID());
-		params.put("spbill_create_ip", "115.28.65.171");
-		params.put("body", body);
-		params.put("notify_url", Host+"WechatClient/pay/back");
-		params.put("openid", openId);
-		params.put("out_trade_no", out_trade_no);
-		params.put("total_fee", "1");
-		params.put("trade_type", "JSAPI");
-		String sign = WxUtils.getSign(params, DecrType.MD5, true);
+		String total_fee = request.getParameter("total_fee");
+		total_fee = "1";
+		String nonce_str = UUIDUtil.generateUUID();
+		int timestamp = (int)(new Date().getTime()/1000);
+		String sign = WxUtils.getPaySign(openId, out_trade_no, body, total_fee, nonce_str, timestamp);
 		StringBuffer xml = new StringBuffer();
 		xml.append("<xml>")
 		   .append("<appid><![CDATA["+AppId+"]]></appid>")
-		   .append("<body><![CDATA["+body+"]]></body>")
+		   .append("<body><![CDATA[test]]></body>")
 		   .append("<mch_id>"+MchId+"</mch_id>")
-		   .append("<nonce_str><![CDATA["+params.get("nonce_str")+"]]></nonce_str>")
-		   .append("<notify_url><![CDATA["+params.get("notify_url")+"]]></notify_url>")
+		   .append("<nonce_str><![CDATA["+nonce_str+"]]></nonce_str>")
+		   .append("<notify_url><![CDATA["+Host+"WechatClient/pay/back"+"]]></notify_url>")
 		   .append("<openid><![CDATA["+openId+"]]></openid>")
 		   .append("<out_trade_no><![CDATA["+out_trade_no+"]]></out_trade_no>")
 		   .append("<spbill_create_ip><![CDATA[115.28.65.171]]></spbill_create_ip>")
 		   .append("<total_fee>1</total_fee>")
 		   .append("<trade_type><![CDATA[JSAPI]]></trade_type>")
+		   .append("<timestamp>"+timestamp+"</timestamp>")
 		   .append("<sign><![CDATA["+sign+"]]></sign>")
 		   .append("</xml>");
 		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
@@ -107,7 +98,6 @@ public class WxPayController extends BaseController{
 			log.info("prepay result: "+resultXml);
 			if(resultXml != null && "SUCCESS".equals(resultXml.get("return_code").toUpperCase()) && "SUCCESS".equals(resultXml.get("result_code").toUpperCase())){
 				resultXml.put("code", "200");
-				resultXml.put("timestamp", new Date().getTime()/1000+"");
 				String xmlJson = new ObjectMapper().writeValueAsString(resultXml);
 				writeJson(response, xmlJson);
 				return;

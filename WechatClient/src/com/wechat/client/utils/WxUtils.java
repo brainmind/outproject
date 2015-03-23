@@ -25,6 +25,9 @@ public class WxUtils {
 	private static Logger log = Logger.getLogger(WxUtils.class);
 	private static String AppId = PropertiesUtils.getValue("wx_appid");
 	private static String AppSecret = PropertiesUtils.getValue("wx_appsecret");
+	private static String Mch_Key = PropertiesUtils.getValue("wx_mch_key");
+	private static String MchId = PropertiesUtils.getValue("wx_mch_id");
+	private static String Host = PropertiesUtils.getValue("wx_sys_host");
 	
 	@SuppressWarnings("unchecked")
 	public static String getToken(HttpServletRequest request){
@@ -102,6 +105,24 @@ public class WxUtils {
 		shaAry.put("code", "200");
 		log.info("signature map :"+shaAry);
 		return shaAry;
+	}
+	
+	public static String getPaySign(String openId, String out_trade_no, String body, String total_fee, String nonceStr, int timestamp){
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("appid", AppId);
+		params.put("mch_id", MchId);
+		params.put("nonce_str", nonceStr);
+		params.put("spbill_create_ip", "115.28.65.171");
+		params.put("body", body);
+		params.put("notify_url", Host+"WechatClient/pay/back");
+		params.put("openid", openId);
+		params.put("out_trade_no", out_trade_no);
+		params.put("total_fee", total_fee);
+		params.put("trade_type", "JSAPI");
+		params.put("timestamp", timestamp+"");
+		params.put("key", Mch_Key);
+		String sign = getSign(params, DecrType.MD5, true);
+		return sign;
 	}
 	
 	/**
