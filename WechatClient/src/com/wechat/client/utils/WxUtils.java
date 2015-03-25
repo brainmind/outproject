@@ -1,6 +1,8 @@
 package com.wechat.client.utils;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -90,8 +92,9 @@ public class WxUtils {
 	 * @param js_api_ticket
 	 * @param url
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
-	public static Map<String, String> getSignature(String js_api_ticket, String url){
+	public static Map<String, String> getSignature(String js_api_ticket, String url) throws UnsupportedEncodingException{
 		String noncestr = UUIDUtil.generateUUID();
 		String timestamp = System.currentTimeMillis()/1000 + "";
 		Map<String, String> shaAry = new HashMap<String, String>();
@@ -107,20 +110,48 @@ public class WxUtils {
 		log.info("signature map :"+shaAry);
 		return shaAry;
 	}
-	
-	public static String getPaySign(String openId, String out_trade_no, String body, String total_fee, String nonceStr){
+	/**
+	 * 得到订单提交字符串
+	 * @param openId
+	 * @param out_trade_no
+	 * @param body
+	 * @param total_fee
+	 * @param nonceStr
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	public static String getPackage(String out_trade_no, String body, String total_fee) throws UnsupportedEncodingException{
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("appid", AppId);
-		params.put("mch_id", MchId);
-		params.put("nonce_str", nonceStr);
-		params.put("spbill_create_ip", "115.28.65.171");
+		params.put("bank_type", "WX");
 		params.put("body", body);
-		params.put("notify_url", Host+"WechatClient/pay/back");
-		params.put("openid", openId);
+		params.put("partner", MchId);
 		params.put("out_trade_no", out_trade_no);
 		params.put("total_fee", total_fee);
-		params.put("trade_type", "JSAPI");
-		String sign = getSign(getSequenceParam(params, true)+"&key="+MchKey, DecrType.MD5, true);
+		params.put("fee_type", "1");
+		params.put("notify_url", Host+"WechatClient/pay/back");
+		params.put("spbill_create_ip", "115.28.65.171");
+		params.put("input_charset", "UTF-8");
+		String sign = getSign(getSequenceParam(params, true, false)+"&key="+MchKey, DecrType.MD5, true);
+		String strPackage = getSequenceParam(params, true, true)+"&sign="+sign;
+		return strPackage;
+	}
+	/**
+	 * 得到JSAPI签名
+	 * @param strPackage
+	 * @param out_trade_no
+	 * @param timestamp
+	 * @param nonceStr
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	public static String getPaySign(String strPackage, String out_trade_no, String timestamp, String nonceStr) throws UnsupportedEncodingException{
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("appid", AppId);
+		params.put("appkey", PaySign);
+		params.put("noncestr", nonceStr);
+		params.put("package", strPackage);
+		params.put("timestamp", timestamp);
+		String sign = getSign(getSequenceParam(params, true, false), DecrType.SHA1, false);
 		return sign;
 	}
 	
@@ -128,9 +159,10 @@ public class WxUtils {
 	 * 微信中生成各种签名的规则
 	 * @param shaAry
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
-	public static String getSign(Map<String, String> shaAry, DecrType dt, boolean toUpperCase, boolean keyOrVal){
-		String shaMapping = getSequenceParam(shaAry, keyOrVal);
+	public static String getSign(Map<String, String> shaAry, DecrType dt, boolean toUpperCase, boolean keyOrVal) throws UnsupportedEncodingException{
+		String shaMapping = getSequenceParam(shaAry, keyOrVal, false);
 		log.info("key-value map is : "+shaMapping);
 		String signature = dt.encrypt(shaMapping);
 		if(toUpperCase)
@@ -153,7 +185,7 @@ public class WxUtils {
 			return signature;
 	}
 	
-	private static String getSequenceParam(Map<String, String> shaAry, final boolean keyOrVal){
+	private static String getSequenceParam(Map<String, String> shaAry, final boolean keyOrVal, boolean isEncode) throws UnsupportedEncodingException{
 		List<Map.Entry<String,String>> shaList = new ArrayList<Map.Entry<String,String>>(shaAry.entrySet());
 		Collections.sort(shaList, new Comparator<Map.Entry<String,String>>() {
 			public int compare(Entry<String, String> o1,
@@ -175,7 +207,11 @@ public class WxUtils {
 			if(mapping.getValue() == null){
 				continue;
 			}
-			shaMapping += "&"+mapping.getKey()+"="+mapping.getValue();
+			String val = mapping.getValue();
+			if(isEncode){
+				val = URLEncoder.encode(val, "UTF-8");
+			}
+			shaMapping += "&" + mapping.getKey() + "=" + val;
 		}
 		shaMapping = shaMapping.substring(1);
 		log.info("key-values string is:"+shaMapping);

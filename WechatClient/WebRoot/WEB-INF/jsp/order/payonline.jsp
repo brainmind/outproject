@@ -18,7 +18,7 @@
 $(function(){
 	var carType = WxchatClient.currentCarType();
 	$("td.car_name").html(carType.brand+" "+carType.sername+" "+carType.car);
-	var logo = carType.logourl == "" ? "<%=path %>/styles/images/idx_logo.png" : carType.logourl;
+	var logo = carType.logourl == "" ? "<%=path %>/styles/images/null.png" : carType.logourl;
 	$("div.add_logo > img").attr("src", logo);
 	
 	$.ajax({
@@ -65,13 +65,12 @@ function surePay(){
 			dataType:"json",
 			success:function(r){
 				if(r && r.code && r.code == "200"){
-					WeixinJSBridge.invoke(
-				       'getBrandWCPayRequest', {
+					WeixinJSBridge.invoke("getBrandWCPayRequest", {
 				           "appId" : r.appid,     //公众号名称，由商户传入     
 				           "timeStamp": r.timestamp,  //时间戳，自1970年以来的秒数     
 				           "nonceStr" : r.noncestr,   //随机串     
-				           "package" : "prepay_id="+r.prepay_id,     
-				           "signType" : "MD5",         //微信签名方式:     
+				           "package" : r.packages,     
+				           "signType" : "SHA1",         //微信签名方式:     
 				           "paySign" : r.sign //微信签名 
 				       },
 				       function(res){     
@@ -100,11 +99,12 @@ function surePay(){
 
 function registPayInfo(amount, state, reason){
 	$.ajax({
-	   url:"",
+	   url:"<%=path + Constants.ROOT %>/order/payinfo",
 	   data:"orderId=${orderid }&bank_sequence=${order_number }&amount="+amount+"&state="+state+"&reason="+reason,
 	   type:"get",
 	   dataType:"json",
 	   success:function(r){
+		   WxchatClient.Dialog.show("服务确认已支付！");
 	   }
    });
 }

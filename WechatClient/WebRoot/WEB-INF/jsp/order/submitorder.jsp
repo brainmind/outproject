@@ -94,7 +94,7 @@ $(function(){
 
 function payonline(){
 	var form = document.payForm;
-	$(form).attr("action", "<%=path + Constants.ROOT %>/order/payonline");
+	$(form).attr("action", "<%=path + Constants.ROOT %>/order/payonline?showwxpaytitle=1");
 	form.submit();
 }
 

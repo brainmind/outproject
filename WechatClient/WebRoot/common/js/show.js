@@ -1,5 +1,5 @@
 window.onload = function() {
-	$(".loading").hide();
+	//$(".loading").hide();
 	/* 订单管理 */
 	if ($('div').hasClass('hundred_percent')) {
 		$(".changable").find("img").attr("src",

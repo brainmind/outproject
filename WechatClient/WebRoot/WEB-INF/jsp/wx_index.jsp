@@ -174,14 +174,14 @@ $(document).ready(function () {
     <a href="<%=path %>/<%=Constants.ROOT %>/car/sel" class="other">其它车型</a>
 </div>
 <!-- loading -->
-<div class="loading">
+<%--<div class="loading">
     <div class="loadbox">
         <div class="loadtext">loading...</div>
         <div class="circle1"></div>
         <div class="circle2"></div>
     </div>
 </div>
-<!-- /loading -->
+--%><!-- /loading -->
 </body>
 </html>
 
