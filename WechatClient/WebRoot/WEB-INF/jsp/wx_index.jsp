@@ -74,7 +74,7 @@ $(document).ready(function () {
 		var serName = carType.sername;
 		var car = carType.car;
 		$("div.idx_car > h1").first().html(carName+" "+serName+"<br/>"+car);
-		
+		$("div.idx_logo").css({"background":"url("+carType.logourl+") no-repeat center center / 34% 80%"});
 		//加载服务项目
 		/* $.ajax({
 			url:"<%=path + Constants.ROOT %>/order/service.json",
