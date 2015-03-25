@@ -217,7 +217,7 @@ overflow: hidden; float:left; width:100%;}
 overflow: hidden;}
 .order_img{ width:25%;}
 .order_font{ width:75%;overflow:hidden; height:auto; font-size:12px; padding:5px 0px; box-sizing:border-box; position:relative;}
-.order_font .more_icon{width:20px; height:20px; background:#fff url(../images/more.png) right center no-repeat; background-size:20px auto; position:absolute; right:10px; top:50%; margin-top:-10px;}
+.order_font .more_icon{width:20px; height:20px; background:#fff url(../images/more.png) right center no-repeat; background-size:20px auto; position:absolute; right:10px; top:50%; margin-top:-10px; cursor:pointer;}
 .order_font table td{padding-left:10px;}
 .order_font table td.nametel{ padding-left:0px; text-overflow:ellipsis;-o-text-overflow:ellipsis;white-space: nowrap;overflow: hidden;  }
 .car_name{ font-size:16px;}
