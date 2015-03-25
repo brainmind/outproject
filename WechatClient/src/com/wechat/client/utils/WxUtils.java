@@ -25,8 +25,9 @@ public class WxUtils {
 	private static Logger log = Logger.getLogger(WxUtils.class);
 	private static String AppId = PropertiesUtils.getValue("wx_appid");
 	private static String AppSecret = PropertiesUtils.getValue("wx_appsecret");
-	private static String Mch_Key = PropertiesUtils.getValue("wx_mch_key");
 	private static String MchId = PropertiesUtils.getValue("wx_mch_id");
+	private static String MchKey = PropertiesUtils.getValue("wx_mch_key");
+	private static String PaySign = PropertiesUtils.getValue("wx_pay_sign_key");
 	private static String Host = PropertiesUtils.getValue("wx_sys_host");
 	
 	@SuppressWarnings("unchecked")
@@ -98,7 +99,7 @@ public class WxUtils {
 		shaAry.put("noncestr", noncestr);
 		shaAry.put("timestamp", timestamp);
 		shaAry.put("url", url);
-		String signature = getSign(shaAry, DecrType.SHA1, false);
+		String signature = getSign(shaAry, DecrType.SHA1, false, false);
 		shaAry.put("signature", signature);
 		shaAry.put("appid", AppId);
 		shaAry.remove("jsapi_ticket");
@@ -107,7 +108,7 @@ public class WxUtils {
 		return shaAry;
 	}
 	
-	public static String getPaySign(String openId, String out_trade_no, String body, String total_fee, String nonceStr, int timestamp){
+	public static String getPaySign(String openId, String out_trade_no, String body, String total_fee, String nonceStr){
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("appid", AppId);
 		params.put("mch_id", MchId);
@@ -119,9 +120,7 @@ public class WxUtils {
 		params.put("out_trade_no", out_trade_no);
 		params.put("total_fee", total_fee);
 		params.put("trade_type", "JSAPI");
-		params.put("timestamp", timestamp+"");
-		params.put("key", Mch_Key);
-		String sign = getSign(params, DecrType.MD5, true);
+		String sign = getSign(getSequenceParam(params, true)+"&key="+MchKey, DecrType.MD5, true);
 		return sign;
 	}
 	
@@ -130,19 +129,8 @@ public class WxUtils {
 	 * @param shaAry
 	 * @return
 	 */
-	public static String getSign(Map<String, String> shaAry, DecrType dt, boolean toUpperCase){
-		List<Map.Entry<String,String>> shaList = new ArrayList<Map.Entry<String,String>>(shaAry.entrySet());
-		Collections.sort(shaList, new Comparator<Map.Entry<String,String>>() {
-			public int compare(Entry<String, String> o1,
-					Entry<String, String> o2) {
-				return o1.getValue().compareTo(o2.getValue());
-			}
-		});
-		String shaMapping = "";
-		for(Map.Entry<String,String> mapping : shaList){
-			shaMapping += "&"+mapping.getKey()+"="+mapping.getValue();
-		}
-		shaMapping = shaMapping.substring(1);
+	public static String getSign(Map<String, String> shaAry, DecrType dt, boolean toUpperCase, boolean keyOrVal){
+		String shaMapping = getSequenceParam(shaAry, keyOrVal);
 		log.info("key-value map is : "+shaMapping);
 		String signature = dt.encrypt(shaMapping);
 		if(toUpperCase)
@@ -150,4 +138,52 @@ public class WxUtils {
 		else
 			return signature;
 	}
+	
+	/**
+	 * 微信中生成各种签名的规则
+	 * @param shaAry
+	 * @return
+	 */
+	public static String getSign(String shaMapping, DecrType dt, boolean toUpperCase){
+		log.info("key-value map is : "+shaMapping);
+		String signature = dt.encrypt(shaMapping);
+		if(toUpperCase)
+			return signature.toUpperCase();
+		else
+			return signature;
+	}
+	
+	private static String getSequenceParam(Map<String, String> shaAry, final boolean keyOrVal){
+		List<Map.Entry<String,String>> shaList = new ArrayList<Map.Entry<String,String>>(shaAry.entrySet());
+		Collections.sort(shaList, new Comparator<Map.Entry<String,String>>() {
+			public int compare(Entry<String, String> o1,
+					Entry<String, String> o2) {
+				if(o1 == null){
+					return -1;
+				}else if(o2 == null){
+					return 1;
+				}
+				if(keyOrVal){
+					return o1.getKey().compareTo(o2.getKey());
+				}else{
+					return o1.getValue().compareTo(o2.getValue());
+				}
+			}
+		});
+		String shaMapping = "";
+		for(Map.Entry<String,String> mapping : shaList){
+			if(mapping.getValue() == null){
+				continue;
+			}
+			shaMapping += "&"+mapping.getKey()+"="+mapping.getValue();
+		}
+		shaMapping = shaMapping.substring(1);
+		log.info("key-values string is:"+shaMapping);
+		return shaMapping;
+	}
+	/*
+	public static void main(String[] args){
+		String s = getPaySign("123", "123", "test", "1", "15849743655");
+		System.out.println(s);
+	}*/
 }

@@ -73,23 +73,22 @@ public class WxPayController extends BaseController{
 		String body = request.getParameter("good_body");
 		String total_fee = request.getParameter("total_fee");
 		total_fee = "1";
+		body = "test";
 		String nonce_str = UUIDUtil.generateUUID();
-		int timestamp = (int)(new Date().getTime()/1000);
-		String sign = WxUtils.getPaySign(openId, out_trade_no, body, total_fee, nonce_str, timestamp);
+		String sign = WxUtils.getPaySign(openId, out_trade_no, body, total_fee, nonce_str);
 		StringBuffer xml = new StringBuffer();
 		xml.append("<xml>")
-		   .append("<appid><![CDATA["+AppId+"]]></appid>")
-		   .append("<body><![CDATA[test]]></body>")
+		   .append("<appid>"+AppId+"</appid>")
+		   .append("<body>"+body+"</body>")
 		   .append("<mch_id>"+MchId+"</mch_id>")
-		   .append("<nonce_str><![CDATA["+nonce_str+"]]></nonce_str>")
-		   .append("<notify_url><![CDATA["+Host+"WechatClient/pay/back"+"]]></notify_url>")
-		   .append("<openid><![CDATA["+openId+"]]></openid>")
-		   .append("<out_trade_no><![CDATA["+out_trade_no+"]]></out_trade_no>")
-		   .append("<spbill_create_ip><![CDATA[115.28.65.171]]></spbill_create_ip>")
-		   .append("<total_fee>1</total_fee>")
-		   .append("<trade_type><![CDATA[JSAPI]]></trade_type>")
-		   .append("<timestamp>"+timestamp+"</timestamp>")
-		   .append("<sign><![CDATA["+sign+"]]></sign>")
+		   .append("<nonce_str>"+nonce_str+"</nonce_str>")
+		   .append("<notify_url>"+Host+"WechatClient/pay/back</notify_url>")
+		   .append("<openid>"+openId+"</openid>")
+		   .append("<out_trade_no>"+out_trade_no+"</out_trade_no>")
+		   .append("<spbill_create_ip>115.28.65.171</spbill_create_ip>")
+		   .append("<total_fee>"+total_fee+"</total_fee>")
+		   .append("<trade_type>JSAPI</trade_type>")
+		   .append("<sign>"+sign+"</sign>")
 		   .append("</xml>");
 		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
 		try {
@@ -98,6 +97,7 @@ public class WxPayController extends BaseController{
 			log.info("prepay result: "+resultXml);
 			if(resultXml != null && "SUCCESS".equals(resultXml.get("return_code").toUpperCase()) && "SUCCESS".equals(resultXml.get("result_code").toUpperCase())){
 				resultXml.put("code", "200");
+				resultXml.put("timestamp", (new Date().getTime()/1000)+"");
 				String xmlJson = new ObjectMapper().writeValueAsString(resultXml);
 				writeJson(response, xmlJson);
 				return;
