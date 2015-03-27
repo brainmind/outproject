@@ -120,10 +120,11 @@ public class WxUtils {
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
-	public static String getPackage(String out_trade_no, String body, String total_fee) throws UnsupportedEncodingException{
+	public static String getPackage(String orderId, String out_trade_no, String body, String total_fee) throws UnsupportedEncodingException{
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("bank_type", "WX");
 		params.put("body", body);
+		params.put("attach", orderId);
 		params.put("partner", MchId);
 		params.put("out_trade_no", out_trade_no);
 		params.put("total_fee", total_fee);

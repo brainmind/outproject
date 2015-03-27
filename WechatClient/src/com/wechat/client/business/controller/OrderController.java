@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +34,8 @@ import com.wechat.client.business.model.XmOrderVO;
 import com.wechat.client.utils.Constants;
 import com.wechat.client.utils.JsonHttpRequestUtil;
 import com.wechat.client.utils.OrderNoGenerator;
+import com.wechat.client.utils.PropertiesUtils;
+import com.wechat.client.utils.WxUrls;
 import com.wsyb.ray.HttpEntityUtils;
 
 @Controller
@@ -244,13 +247,31 @@ public class OrderController extends BaseController{
 	
 	@RequestMapping("/history")
 	public String history(HttpServletRequest request){
-		String openId = request.getParameter("openId");
-		HttpSession session = request.getSession();
-		LoginUser user = (LoginUser)session.getAttribute(Constants.USER_SESSION_KEY);
-		if(user == null){
-			user = new LoginUser();
-			user.setOpenid(openId);
-			session.setAttribute(Constants.USER_SESSION_KEY, user);
+		String code = request.getParameter("code");
+		String appId = PropertiesUtils.getValue("wx_appid");
+		String appKey = PropertiesUtils.getValue("wx_appsecret");
+		String authAccessUrl = WxUrls.AuthToken+"&appid="+appId+"&secret="+appKey+"&code="+code;
+		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
+		String json = jr.doGet(authAccessUrl, true);
+		try {
+			Map<String, String> tokenJson = new ObjectMapper().readValue(json, new TypeReference<Map<String, String>>(){});
+			String openId = tokenJson.get("openid");
+			if(StringUtils.isNotEmpty(openId)){
+				HttpSession session = request.getSession();
+				LoginUser user = (LoginUser)session.getAttribute(Constants.USER_SESSION_KEY);
+				if(user == null){
+					user = new LoginUser();
+					user.setOpenid(openId);
+					session.setAttribute(Constants.USER_SESSION_KEY, user);
+				}
+				return "order/finishorder";
+			}
+		} catch (JsonParseException e) {
+			log.error("回调页面时，转换token数据有错误.", e);
+		} catch (JsonMappingException e) {
+			log.error("回调页面时，转换token数据有错误.", e);
+		} catch (IOException e) {
+			log.error("回调页面时，转换token数据有错误.", e);
 		}
 		return "order/finishorder";
 	}

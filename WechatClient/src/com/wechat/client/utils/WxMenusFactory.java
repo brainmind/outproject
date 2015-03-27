@@ -30,10 +30,10 @@ public class WxMenusFactory {
 		button.add(menu);
 		
 		menu = new WxMenu();
-		menu.setType("click");
+		menu.setType("view");
 		menu.setName("服务预定");
 		menu.setKey("SMALLHORSE_SERVICE");
-		//menu.setUrl("http://007fsp.oicp.net:888/WechatClient/dtds/index");
+		menu.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx94b4b4b14030bc37&redirect_uri=http://pay.meicheng.com/WechatClient/dtds/authorize&response_type=code&scope=snsapi_base#wechat_redirec");
 		button.add(menu);
 		
 		menu = new WxMenu();
@@ -45,16 +45,16 @@ public class WxMenusFactory {
 		button.add(menu);
 		
 		menu = new WxMenu();
-		menu.setType("click");
+		menu.setType("view");
 		menu.setName("订单");
 		menu.setKey("SMALLHORSE_ORDER");
-		//menu.setUrl("http://007fsp.oicp.net:888/WechatClient/dtds/order/history");
+		menu.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx94b4b4b14030bc37&redirect_uri=http://pay.meicheng.com/WechatClient/dtds/order/history&response_type=code&scope=snsapi_base#wechat_redirec");
 		sub_button.add(menu);
 		menu = new WxMenu();
-		menu.setType("click");
+		menu.setType("view");
 		menu.setName("车检报告");
 		menu.setKey("SMALLHORSE_REPORT");
-		//menu.setUrl("http://007fsp.oicp.net:888/WechatClient/dtds/order/history");
+		menu.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx94b4b4b14030bc37&redirect_uri=http://pay.meicheng.com/WechatClient/dtds/order/history&response_type=code&scope=snsapi_base#wechat_redirec");
 		sub_button.add(menu);
 		
 		WxMenus menus = new WxMenus();

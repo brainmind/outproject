@@ -61,7 +61,7 @@ function surePay(){
 		$.ajax({
 			url:"<%=path %>/pay/prepay",
 			type:"post",
-			data:"out_trade_no=${order_number }&total_fee="+realPrice+"&good_body="+goodBody,
+			data:"orderId=${orderid }&out_trade_no=${order_number }&total_fee="+realPrice+"&good_body="+goodBody,
 			dataType:"json",
 			success:function(r){
 				if(r && r.code && r.code == "200"){
@@ -77,13 +77,13 @@ function surePay(){
 				           if(res.err_msg == "get_brand_wcpay_request:ok") {
 				        	   //使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
 				        	   WxchatClient.Dialog.show("订单支付成功！");
-				        	   registPayInfo(realPrice, 0, "");
+				        	   registPayInfo(realPrice, "y", "");
 				           }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
 				        	   WxchatClient.Dialog.show("订单支付失败！");
-				        	   registPayInfo(realPrice, 1, "用户取消");
+				        	   registPayInfo(realPrice, "n", "用户取消");
 				           }else if(res.err_msg == "get_brand_wcpay_request:fail"){
 				        	   WxchatClient.Dialog.show("订单支付失败！");
-				        	   registPayInfo(realPrice, 1, "支付失败");
+				        	   registPayInfo(realPrice, "n", "支付失败");
 				           }
 				       }
 				   );
@@ -104,7 +104,7 @@ function registPayInfo(amount, state, reason){
 	   type:"get",
 	   dataType:"json",
 	   success:function(r){
-		   WxchatClient.Dialog.show("服务确认已支付！");
+		   //WxchatClient.Dialog.show("服务确认已支付！");
 	   }
    });
 }
