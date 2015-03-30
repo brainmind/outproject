@@ -30,6 +30,10 @@ $(function(){
 				r.contact.length<5 ? $("#contact").html(r.contact) :$("#contact").html(r.contact.substring(0,3)+'...');
 				$("#mobile").html(r.mobile);
 				$("#address").html("<strong>地址：</strong>" + r.address);
+				if(r.payState == "Y"){
+					$("a[rel=paybutton]").remove();
+					$("div.payment").remove();
+				}
 				var totalPrice = 0;
 				var commdoties = r.commodities;
 				if(commdoties && $.type(commdoties) == "array"){
@@ -77,13 +81,13 @@ function surePay(){
 				           if(res.err_msg == "get_brand_wcpay_request:ok") {
 				        	   //使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
 				        	   WxchatClient.Dialog.show("订单支付成功！");
-				        	   registPayInfo(realPrice, "y", "");
+				        	   registPayInfo(realPrice, "Y", "");
 				           }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
 				        	   WxchatClient.Dialog.show("订单支付失败！");
-				        	   registPayInfo(realPrice, "n", "用户取消");
+				        	   registPayInfo(realPrice, "N", "用户取消");
 				           }else if(res.err_msg == "get_brand_wcpay_request:fail"){
 				        	   WxchatClient.Dialog.show("订单支付失败！");
-				        	   registPayInfo(realPrice, "n", "支付失败");
+				        	   registPayInfo(realPrice, "N", "支付失败");
 				           }
 				       }
 				   );
@@ -105,6 +109,9 @@ function registPayInfo(amount, state, reason){
 	   dataType:"json",
 	   success:function(r){
 		   //WxchatClient.Dialog.show("服务确认已支付！");
+		   if(state == "Y"){
+			   window.location.href="<%=path + Constants.ROOT %>/order/payonface?orderid=${orderid }&order_number=${order_number }&payStatus="+state;
+		   }
 	   }
    });
 }
@@ -161,7 +168,7 @@ function registPayInfo(amount, state, reason){
             <li><a href="javascript:;"><strong>银行卡支付</strong></a></li>
         </ul>
     </div>
-    <a href="javascript:surePay();" rel="<%=path + Constants.ROOT %>/order/history" class="pay">确认支付</a>
+    <a href="javascript:surePay();" rel="<%=path + Constants.ROOT %>/order/history" class="pay" rel="paybutton">确认支付</a>
     </div>
 </div>
 </body>

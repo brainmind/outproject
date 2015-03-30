@@ -213,8 +213,10 @@ public class OrderController extends BaseController{
 	public String payOnFace(HttpServletRequest request){
 		String orderId = request.getParameter("orderid");
 		String orderSn = request.getParameter("order_number");
+		String payStatus = request.getParameter("payStatus");
 		request.setAttribute("orderid", orderId);
 		request.setAttribute("order_number", orderSn);
+		request.setAttribute("payStatus", payStatus);
 		return "order/payonface";
 	}
 
@@ -240,6 +242,7 @@ public class OrderController extends BaseController{
 					  "\"amount\":"+amount+","+
 					  "\"state\":\""+state+"\","+
 					  "\"reason\":\""+reason+"\"}";
+		log.info("Pay success post paysatus:"+param);
 		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
 		String json = jr.doPost(PayOrderInfo, param);
 		writeJson(response, json);

@@ -26,7 +26,7 @@ $(function () {
             if(callback && callback != null && callback != ""){
             	eval("callbackfun = function(r){"+callback+"(r);};");
             }
-            // 以下为演示用内容
+            //上传图片
             setTimeout(function () {
                 // 发送到后端
                 var xhr = new XMLHttpRequest();
@@ -42,7 +42,10 @@ $(function () {
                         var result = JSON.parse(xhr.response);
                         if(result.error){
                         	WxchatClient.Dialog.close();
-                        	WxchatClient.Dialog.show('服务端错误，未能保存图片');
+                        	window.setTimeout(function(){
+                        		WxchatClient.Dialog.show('服务端错误，未能保存图片');
+                        	}, 1000);
+                        	
                         }else if(callbackfun != null){
                         	callbackfun(result);
                         }

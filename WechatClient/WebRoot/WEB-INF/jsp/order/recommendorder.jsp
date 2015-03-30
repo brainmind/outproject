@@ -3,11 +3,11 @@
 <%@ page import="com.wechat.client.utils.*" %>
 <%
 	String path = request.getContextPath();
+	String accessPath = PropertiesUtils.getValue("image_access_path");
 %>
 <!DOCTYPE HTML>
 <html>
 <head>
-<!--date:20140121-->
 <title>小马上门汽车保养服务</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="pragma" Content="no-cach" />
@@ -18,10 +18,10 @@
 <link rel="stylesheet" href="<%=path %>/styles/css/jqm-demos.css">
 <script type="text/javascript" src="<%=path %>/common/js/index.js"></script>
 <script type="text/javascript" src="<%=path %>/common/js/jquery.mobile-1.4.5.min.js"></script>
-<script src="<%=path %>/common/ws/mobileFix.mini.js"></script>
-<script src="<%=path %>/common/ws/exif.js"></script>
-<script src="<%=path %>/common/ws/lrz.js"></script>
-<script src="<%=path %>/common/js/index.upload.js"></script>
+<script type="text/javascript" src="<%=path %>/common/ws/mobileFix.mini.js"></script>
+<script type="text/javascript" src="<%=path %>/common/ws/exif.js"></script>
+<script type="text/javascript" src="<%=path %>/common/ws/lrz.js"></script>
+<script type="text/javascript" src="<%=path %>/common/js/index.upload.js"></script>
 <script type="text/javascript">
 	function recommendOrder(){
 		var form = $(document.orderForm);
@@ -113,9 +113,23 @@
                  	<div class="add_pic margin"><strong>${item.label }：</strong></div>
                     <div class="pic_list margin">
                     	<img src="<%=path %>/styles/images/pic.jpg" type="imgupload"/>
-                    	<input type="hidden" name="value" id="value${item.field_id }" value=""/>
+                    	<input type="file" style="display:none"/>
+                    	<c:set var="imageSrcs" value=""/>
                         <span id="uploadimgs" field-id="${item.field_id }">
+                        	<c:forEach items="${item.files }" var="fi">
+                        		<c:set var="imageSrcs">${imageSrcs == '' ? '' : imageSrcs + ','}${fi.uri }</c:set>
+                        		<img src="<%=path + Constants.ROOT + accessPath %>${fi.uri }" width="61" height="61"/>
+                        	</c:forEach>
                     	</span>
+                    	<input type="hidden" name="value" id="value${item.field_id }" value="${imageSrcs }"/>
+                    </div>
+                 </li>
+        		</c:when>
+        		<c:when test="${item.type == 'text' }">
+        		<li>
+                 	<div class="margin"><strong>${item.label }：</strong></div>
+                    <div class="margin">
+                    	<textarea name="value" id="value${item.field_id }" cols="20" rows="3" style="width: 100%;"></textarea>
                     </div>
                  </li>
         		</c:when>

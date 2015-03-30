@@ -103,7 +103,8 @@ public class WxPayController extends BaseController{
 		String orderId = request.getParameter("attach");
 		String totalfee = request.getParameter("total_fee");
 		try {
-			String state = "1".equals(trade_state) ? "y":"n";
+			log.info("Get callback paydata from wx [trade_state:"+trade_state+", transaction_id:"+transaction_id+", orderId:"+orderId+", totalfee:"+totalfee+"].");
+			String state = "0".equals(trade_state) ? "Y":"N";
 			out = response.getWriter();
 			Map<String, String> xml = XmlReaderUtil.read(request.getInputStream());
 			String openId = "";
@@ -133,7 +134,7 @@ public class WxPayController extends BaseController{
 				log.info("向接口发送数据:"+param);
 				JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
 				jr.doPost(PayOrderInfo, param);
-				log.error("向接口发送订单支付信息成功.");
+				log.info("向接口发送订单支付信息成功.");
 			}catch(Exception e){
 				log.error("向接口发送订单支付信息失败.");
 			}
@@ -148,6 +149,7 @@ public class WxPayController extends BaseController{
 			out.print("fail");
 		} finally {
 			if(out != null){
+				out.flush();
 				out.close();
 			}
 		}
