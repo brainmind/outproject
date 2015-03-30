@@ -119,6 +119,7 @@ window.onload = function() {
 				var cookiecartype = "{id:\""+id+"\",brand:\""+brand+"\",logourl:\""+logourl+"\"," +
 				"car:\""+car+"\",sername:\""+sername+"\",isdefault:"+isdefault+"}";
 				WxchatClient.setCurrentCarType(cookiecartype);
+				$("div.idx_logo").css({"background":"url("+logourl+") no-repeat center center / 34% auto"});
 				if(backurl != ""){
 					var url = backurl.replace("_1q1_","?")+"&car_id="+id;
 					window.location.href = contextPath + projectRoot + url;
