@@ -64,6 +64,8 @@
 			var filevals = $("#value"+fId);
 			if(filevals.val() != ""){
 				filevals.val(filevals.val()+","+r.name);
+			}else{
+				filevals.val(r.name);
 			}
 		}
 		WxchatClient.Dialog.close();
