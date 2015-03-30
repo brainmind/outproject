@@ -77,13 +77,13 @@ function surePay(){
 				           if(res.err_msg == "get_brand_wcpay_request:ok") {
 				        	   //使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
 				        	   WxchatClient.Dialog.show("订单支付成功！");
-				        	   registPayInfo(realPrice, "y", "");
+				        	   registPayInfo(realPrice, "Y", "");
 				           }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
 				        	   WxchatClient.Dialog.show("订单支付失败！");
-				        	   registPayInfo(realPrice, "n", "用户取消");
+				        	   registPayInfo(realPrice, "N", "用户取消");
 				           }else if(res.err_msg == "get_brand_wcpay_request:fail"){
 				        	   WxchatClient.Dialog.show("订单支付失败！");
-				        	   registPayInfo(realPrice, "n", "支付失败");
+				        	   registPayInfo(realPrice, "N", "支付失败");
 				           }
 				       }
 				   );
