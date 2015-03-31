@@ -36,12 +36,12 @@
 			data:form.serialize(),
 			dataType:"json",
 			success:function(r){
-				if(r && r.status && r.status == 200){
+				if(r && r.code && r.code == 200){
 					WxchatClient.Dialog.show("评价提交成功！", function(){
-						window.location.href="<%=path + Constants.ROOT %>/order/ready?orderId="+r.orderid;
+						window.location.href="<%=path + Constants.ROOT %>/order/history";
 					});
 					window.setTimeout(function(){
-						window.location.href="<%=path + Constants.ROOT %>/order/ready?orderId="+r.orderid;
+						window.location.href="<%=path + Constants.ROOT %>/order/history";
 					}, 2000);
 				}else{
 					WxchatClient.Dialog.show("评价提交失败！", function(){
@@ -120,7 +120,7 @@
                         <span id="uploadimgs" field-id="${item.field_id }">
                         	<c:forEach items="${item.files }" var="fi">
                         		<c:set var="imageSrcs">${imageSrcs == '' ? '' : imageSrcs + ','}${fi.uri }</c:set>
-                        		<img src="<%=path + Constants.ROOT + accessPath %>${fi.uri }" width="61" height="61"/>
+                        		<img src="<%=path + accessPath %>${fi.uri }" width="61" height="61"/>
                         	</c:forEach>
                     	</span>
                     	<input type="hidden" name="value" id="value${item.field_id }" value="${imageSrcs }"/>

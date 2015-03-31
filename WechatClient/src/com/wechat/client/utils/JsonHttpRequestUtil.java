@@ -15,6 +15,7 @@ import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 
@@ -89,7 +90,6 @@ public class JsonHttpRequestUtil {
 		String msg = "";
 		try {
 			URL url = new URL(basePath + accessUrl);
-			//URL url = new URL("http://192.168.1.182:8080/WechatClient/dtds/test");
 			connect = (HttpURLConnection)url.openConnection();
 			connect.setConnectTimeout(10000);
 			connect.setRequestMethod("POST");
@@ -102,6 +102,11 @@ public class JsonHttpRequestUtil {
 			log.info("返回代码："+code);
 			if(code == 200){
 				String json = readContent(connect.getInputStream());
+				json = json.replaceAll("\r\n", "");
+				if(StringUtils.isEmpty(json)){
+					json = "{\"code\":"+code+",\"msg\":\""+msg+"\"}";
+				}
+				log.info("Response content:"+json);
 				return json;
 			}
 		} catch (MalformedURLException e) {
@@ -137,6 +142,11 @@ public class JsonHttpRequestUtil {
 			log.info("返回代码："+code);
 			if(code == 200){
 				String json = readContent(connect.getInputStream());
+				json = json.replaceAll("\r\n", "");
+				if(StringUtils.isEmpty(json)){
+					json = "{\"code\":"+code+",\"msg\":\""+msg+"\"}";
+				}
+				log.info("Response content:"+json);
 				return json;
 			}
 		} catch (MalformedURLException e) {

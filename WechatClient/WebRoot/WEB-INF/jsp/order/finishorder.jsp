@@ -111,11 +111,15 @@ function showStatAndLog(order,isShow, p){
 		}
 		p.parent().after(saldiv);
 		$("html,body").animate({scrollTop: p.offset().top}, 500);
-		$("a.ensure", saldiv).attr("href", "javascript:void(0);");
-		$("a.ensure", saldiv).on("click", function(){
-			recommend(order.orderid);
-			return false;
-		});
+		if(order.commented && order.commented == "Y"){
+			$("a.ensure", saldiv).remove();
+		}else{
+			$("a.ensure", saldiv).attr("href", "javascript:void(0);");
+			$("a.ensure", saldiv).on("click", function(){
+				recommend(order.orderid);
+				return false;
+			});
+		}
 	}
 	$("#address", saldiv).html("<strong>地址：</strong>" + order.address);
 	var stat = order.state?parseInt(order.state):1;

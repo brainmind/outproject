@@ -31,8 +31,10 @@ $(function(){
 				$("#address").html("<strong>地址：</strong>" + r.address);
 				$("input[type=hidden][name='order_number']").val(r.orderNumber);
 				$("#order_number").html("<strong>订单编号：</strong>" + r.orderNumber);
+				$("#paystatusbutton").hide();
 				if(r.payState == "Y"){
 					$("a[rel=paybutton]").remove();
+					$("#paystatusbutton").show();
 				}
 				var commdoties = r.commodities;
 				var container = $("div.day_list > ul");
@@ -147,6 +149,7 @@ function payonface(){
     	</div>
     <a href="javascript:payonline();" class="pay" rel="paybutton">在线支付（立减5元）</a>
     <a href="javascript:payonface()" class="pay pay_unlock" rel="paybutton">当面付款</a>
+    <a href="javascript:void(0);" class="pay pay_unlock" id="paystatusbutton">已支付</a>
     </div>
 </div>
 </body>

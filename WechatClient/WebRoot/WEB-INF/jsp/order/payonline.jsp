@@ -30,9 +30,11 @@ $(function(){
 				r.contact.length<5 ? $("#contact").html(r.contact) :$("#contact").html(r.contact.substring(0,3)+'...');
 				$("#mobile").html(r.mobile);
 				$("#address").html("<strong>地址：</strong>" + r.address);
+				$("#paystatusbutton").hide();
 				if(r.payState == "Y"){
 					$("a[rel=paybutton]").remove();
 					$("div.payment").remove();
+					$("#paystatusbutton").show();
 				}
 				var totalPrice = 0;
 				var commdoties = r.commodities;
@@ -169,6 +171,7 @@ function registPayInfo(amount, state, reason){
         </ul>
     </div>
     <a href="javascript:surePay();" rel="<%=path + Constants.ROOT %>/order/history" class="pay" rel="paybutton">确认支付</a>
+    <a href="javascript:void(0);" class="pay pay_unlock" id="paystatusbutton">已支付</a>
     </div>
 </div>
 </body>
