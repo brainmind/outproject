@@ -149,11 +149,17 @@ box-sizing:border-box; font-family:\5FAE\8F6F\96C5\9ED1; line-height:39px; borde
 .add_cars a{display:block; text-align:right; font-size:16px; width:100%; box-sizing:border-box; padding-right:10%; color:#333; text-decoration:underline;}
 .add_cars h1{padding-top:10px;line-height:25px;}
 .add_tj{width:100%; height:36px; text-align:center; line-height:36px; font-weight:bold; color:#ff4c00; font-size:16px; border-bottom:1px solid #e6e6e6;}
-.add_btn{width:100%; height:40px; padding:18px 4%; box-sizing:border-box;}
+.add_btn{width:100%; height:80px; padding:20px 4%; box-sizing:border-box;}
 .add_btn a{width:43%; height:40px; font-size:16px; text-align:center; line-height:40px; border-radius:2px; background:#ff4c00; display:block; color:#fff; float:left;}
 .add_btn a:nth-child(2){float:right; background:#b3b3b3;}
 .add_an{width:100%; height:100%; overflow:hidden;}
-.add_an li{width:49%; height:65px; border-bottom:1px solid #e6e6e6; box-sizing:border-box; float:left; font-size:16px; padding-top:9px; padding-left:4%; margin-top:1px; margin-left:1px;}
+.add_an li{width:49%; height:70px; border-bottom:1px solid #e6e6e6; box-sizing:border-box; float:left; font-size:16px; padding-top:12px; padding-left:2%; margin-top:1px; margin-left:1px;}
+.add_an li a{
+word-break:keep-all;/* 不换行 */
+white-space:nowrap;/* 不换行 */
+overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
+text-overflow:ellipsis;
+}
 .add_an li.pro_click{border:1px solid #ff4c00; background:url(../images/xz.png) right bottom no-repeat; background-size:27px auto;}
 /*.add_an li:nth-child(odd){border-right:1px solid #e6e6e6;}*/
 .add_an li img{width:43px; vertical-align:middle; padding-right:10px;}
