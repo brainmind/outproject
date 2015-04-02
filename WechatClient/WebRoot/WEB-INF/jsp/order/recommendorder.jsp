@@ -57,7 +57,7 @@
 		if(!r.error){
 			var span = $("#uploadimgs");
 			var img = $(document.createElement("img"));
-			img.attr("src", r.path + r.name);
+			img.attr("src", r.imagedata);
 			img.css({width:"31px", height:"31px"});
 			span.append(img);
 			var fId = span.attr("field-id");
@@ -90,7 +90,7 @@
         		<li>
         			<div class="margin"><span><strong>${item.label }(分)：</strong></span><span class="fr"><strong><!--5分--></strong></span></div>
                     <div  class="margin">
-                       <input type="range" name="value" id="range${item.field_id }" data-highlight="true" min="0" max="10" value="5">
+                       <input type="range" name="value" id="range${item.field_id }" data-highlight="true" min="0" max="10" value="${item.value == '' ? 5 : item.value }">
                     </div>
         		</li>
         		</c:when>
@@ -116,14 +116,12 @@
                     <div class="pic_list margin">
                     	<img src="<%=path %>/styles/images/pic.jpg" type="imgupload"/>
                     	<input type="file" style="display:none"/>
-                    	<c:set var="imageSrcs" value=""/>
                         <span id="uploadimgs" field-id="${item.field_id }">
                         	<c:forEach items="${item.files }" var="fi">
-                        		<c:set var="imageSrcs">${imageSrcs == '' ? '' : imageSrcs + ','}${fi.uri }</c:set>
-                        		<img src="<%=path + accessPath %>${fi.uri }" width="61" height="61"/>
+                        		<img src="${fi.thumb_uri }" width="61" height="61"/>
                         	</c:forEach>
                     	</span>
-                    	<input type="hidden" name="value" id="value${item.field_id }" value="${imageSrcs }"/>
+                    	<input type="hidden" name="value" id="value${item.field_id }" value="${item.value }"/>
                     </div>
                  </li>
         		</c:when>
@@ -131,7 +129,7 @@
         		<li>
                  	<div class="margin"><strong>${item.label }：</strong></div>
                     <div class="margin">
-                    	<textarea name="value" id="value${item.field_id }" cols="20" rows="3" style="width: 100%;"></textarea>
+                    	<textarea name="value" id="value${item.field_id }" cols="20" rows="3" style="width: 100%;">${item.value }</textarea>
                     </div>
                  </li>
         		</c:when>
@@ -139,7 +137,12 @@
         	</c:forEach>
             </ul>
         </div>
-        <a id="submitcomment" href="javascript:recommendOrder();" class="ensure" style="color:#fff; font-weight:normal;">提交评价</a>
+        <c:if test="${commented != "Y" }">
+        	<a id="submitcomment" href="javascript:recommendOrder();" class="ensure" style="color:#fff; font-weight:normal;">提交评价</a>
+        </c:if>
+        <c:if test="${commented == "Y" }">
+        	<a id="submitcomment" href="<%=path + Constants.ROOT %>/order/history" class="ensure" style="color:#fff; font-weight:normal;">返回</a>
+        </c:if>
         </form>
     </div>
 </div>

@@ -112,14 +112,13 @@ function showStatAndLog(order,isShow, p){
 		p.parent().after(saldiv);
 		$("html,body").animate({scrollTop: p.offset().top}, 500);
 		if(order.commented && order.commented == "Y"){
-			$("a.ensure", saldiv).remove();
-		}else{
-			$("a.ensure", saldiv).attr("href", "javascript:void(0);");
-			$("a.ensure", saldiv).on("click", function(){
-				recommend(order.orderid);
-				return false;
-			});
+			$("a.ensure", saldiv).html("查看评论");
 		}
+		$("a.ensure", saldiv).attr("href", "javascript:void(0);");
+		$("a.ensure", saldiv).on("click", function(){
+			recommend(order.orderid, order.commented);
+			return false;
+		});
 	}
 	$("#address", saldiv).html("<strong>地址：</strong>" + order.address);
 	var stat = order.state?parseInt(order.state):1;
@@ -182,14 +181,17 @@ function getOrderDetail(order_id){
 	window.location.href="<%=path + Constants.ROOT%>/order/ready?orderId="+order_id;
 }
 
-function recommend(id){
+function recommend(id, commented){
 	var order_id = "";
 	if(id && id != null && id != ""){
 		order_id = id;
 	}else{
 		order_id = $("input[type=hidden][name=orderId]").val();
 	}
-	window.location.href="<%=path + Constants.ROOT %>/order/recommend?orderId="+order_id;
+	if(typeof(commented) == "undefined" || commented == null){
+		commented = "N";
+	}
+	window.location.href="<%=path + Constants.ROOT %>/order/recommend?orderId="+order_id+"&commented="+commented;
 }
 </script>
 </head>

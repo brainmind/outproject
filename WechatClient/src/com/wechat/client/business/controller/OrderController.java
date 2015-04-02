@@ -282,6 +282,7 @@ public class OrderController extends BaseController{
 	@RequestMapping("/recommend")
 	public String recommendOrder(HttpServletRequest request, HttpServletResponse response){
 		String orderId = request.getParameter("orderId");
+		String commented = request.getParameter("commented");
 		LoginUser user = getLoginUser(request, response);
 		String param = HttpEntityUtils.toParameterString(user).substring(1);
 		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
@@ -297,6 +298,7 @@ public class OrderController extends BaseController{
 			log.error("JSON转换失败", e);
 		}
 		request.setAttribute("orderId", orderId);
+		request.setAttribute("commented", commented);
 		return "order/recommendorder";
 	}
 	
