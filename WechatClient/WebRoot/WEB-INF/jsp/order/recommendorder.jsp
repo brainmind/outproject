@@ -96,14 +96,19 @@
         		</c:when>
         		<c:when test="${item.type == 'select' }">
         		<li class="margin">
-        			<input type="hidden" name="value" id="value${item.field_id }" value=""/>
+        			<input type="hidden" name="value" id="value${item.field_id }" value="${item.value }"/>
                  	<table width="80%" border="0">
                       <tr>
                         <td colspan="2" class=""><strong>配送完好度：</strong></td>
                       </tr>
                       <tr>
                       <c:forEach items="${item.options }" var="op" varStatus="ops">
-                      	<td class="assessment_choice"><a href="javascript:void(0);" field-id="${item.field_id }" id="${op.option_id }">${op.label }</a></td>
+                      	<c:if test="${op.option_id == item.value}">
+                      		<td class="assessment_choice"><a href="javascript:void(0);" class="cur" field-id="${item.field_id }" id="${op.option_id }">${op.label }</a></td>
+                      	</c:if>
+                      	<c:if test="${op.option_id != item.value}">
+                      		<td class="assessment_choice"><a href="javascript:void(0);" field-id="${item.field_id }" id="${op.option_id }">${op.label }</a></td>
+                      	</c:if>
                       	<c:if test="${ops.index % 2 == 1 }"></tr><tr></c:if>
                       </c:forEach>
                       </tr>
