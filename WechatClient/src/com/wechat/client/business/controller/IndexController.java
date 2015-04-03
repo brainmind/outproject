@@ -101,4 +101,9 @@ public class IndexController extends BaseController {
 			e.printStackTrace();
 		}
 	}
+	
+	@RequestMapping("/14")
+	public String test14(String s, HttpServletRequest request, HttpServletResponse response, @RequestBody String str){
+		return "14";
+	}
 }

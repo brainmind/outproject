@@ -40,12 +40,6 @@ window.onload = function() {
 	
 	/* 评价 */
 	$(".assessment_choice a").each(function(i){
-		if(i == 0){
-			$(this).addClass("cur");
-			var opId = $(this).attr("id");
-			var fieldId = $(this).attr("field-id");
-			$("#value"+fieldId).val(opId);
-		}
 		$(this).click(function() {
 			$(".assessment_choice a").removeClass("cur");
 			$(this).addClass("cur");
@@ -54,6 +48,10 @@ window.onload = function() {
 			$("#value"+fieldId).val(opId);
 		});
 	});
+	var alist = $(".assessment_choice a.cur");
+    if(alist.size()==0){
+        $(".assessment_choice a:first").addClass("cur");
+    }
 	/* 支付成功 */
 	$(".payment li a").eq(0).addClass("cur");
 	$(".payment li a").click(function() {

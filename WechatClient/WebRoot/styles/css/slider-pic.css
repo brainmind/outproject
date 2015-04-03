@@ -1,0 +1,17 @@
+@charset "utf-8";
+
+/*首页焦点图*/
+.slider-main_visual{ position:relative; width:100%; margin-bottom:5px;}
+.slider-main_visual .slider-xx{width:100%; display:block; opacity:0;}
+.slider-main_image {width:100%; overflow:hidden; margin:0 auto; position:relative;}
+.slider-main_image ul {width:9999px;}
+.slider-main_image li {float:left; width:100%; height:auto;}
+.slider-main_image li a {display:block; width:100%;}
+.slider-main_image li img{ width:100%;}
+.slider-flicking_con{position:absolute; bottom:2%;left:50%; margin-left:-35.5px;}
+.slider-flicking_con span {height:10px;} 
+.slider-flicking_con span a{float:left; width:7px; height:7px; margin:0; padding:0; border-radius:7px; background-color:#fff; display:block; text-indent:-1000px; margin-left:5px;}
+.slider-flicking_con span a.slider-on{background-color:red;}
+#slider-btn_prev,#slider-btn_next{z-index:11111;position:absolute;display:block;width:50px!important;height:50px!important;top:50%;margin-top:-25px;}
+#slider-btn_prev{background:url(../images/hover_left.png) no-repeat left top; background-size:40% auto;left:0px;}
+#slider-btn_next{background:url(../images/hover_right.png) no-repeat right top; background-size:40% auto;right:0px;}

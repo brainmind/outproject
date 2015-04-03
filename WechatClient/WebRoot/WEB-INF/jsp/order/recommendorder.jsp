@@ -142,11 +142,11 @@
         	</c:forEach>
             </ul>
         </div>
-        <c:if test="${commented != "Y" }">
+        <c:if test="${commented != 'Y' }">
         	<a id="submitcomment" href="javascript:recommendOrder();" class="ensure" style="color:#fff; font-weight:normal;">提交评价</a>
         </c:if>
-        <c:if test="${commented == "Y" }">
-        	<a id="submitcomment" href="<%=path + Constants.ROOT %>/order/history" class="ensure" style="color:#fff; font-weight:normal;">返回</a>
+        <c:if test="${commented == 'Y' }">
+        	<a id="submitcomment" href="javascript:window.history.back();" class="ensure" style="color:#fff; font-weight:normal;">返回</a>
         </c:if>
         </form>
     </div>
