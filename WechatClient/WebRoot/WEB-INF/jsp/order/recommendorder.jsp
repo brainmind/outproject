@@ -14,15 +14,21 @@
 <meta name="robots" content="all" />
 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
 <jsp:include page="../common/base.jsp" />
-<link rel="stylesheet" href="<%=path %>/styles/css/jquery.mobile-1.4.5.min.css">
-<link rel="stylesheet" href="<%=path %>/styles/css/jqm-demos.css">
+<link rel="stylesheet" type="text/css" href="<%=path %>/styles/css/jquery.mobile-1.4.5.min.css">
+<link rel="stylesheet" type="text/css" href="<%=path %>/styles/css/jqm-demos.css">
+<link rel="stylesheet" type="text/css" href="<%=path %>/styles/css/slider-pic.css">
 <script type="text/javascript" src="<%=path %>/common/js/index.js"></script>
 <script type="text/javascript" src="<%=path %>/common/js/jquery.mobile-1.4.5.min.js"></script>
 <script type="text/javascript" src="<%=path %>/common/ws/mobileFix.mini.js"></script>
 <script type="text/javascript" src="<%=path %>/common/ws/exif.js"></script>
 <script type="text/javascript" src="<%=path %>/common/ws/lrz.js"></script>
 <script type="text/javascript" src="<%=path %>/common/js/index.upload.js"></script>
+<script type="text/javascript" src="<%=path %>/common/js/touchTouch.jquery.js"></script>
 <script type="text/javascript">
+	$(document).ready(function(){
+		$('#uploadimgs a').touchTouch();
+	});
+
 	function recommendOrder(){
 		var form = $(document.orderForm);
 		var submitBut = $("#submitcomment");
@@ -119,12 +125,16 @@
         		<li>
                  	<div class="add_pic margin"><strong>${item.label }：</strong></div>
                     <div class="pic_list margin">
+                    	<c:if test="${commented != 'Y' }">
                     	<img src="<%=path %>/styles/images/pic.jpg" type="imgupload"/>
                     	<input type="file" style="display:none"/>
-                        <span id="uploadimgs" field-id="${item.field_id }">
+                    	</c:if>
+                        <span>
+                        	<div id="uploadimgs" field-id="${item.field_id }" class="thumbnail">
                         	<c:forEach items="${item.files }" var="fi">
-                        		<img src="${fi.thumb_uri }" width="61" height="61"/>
+                        		<a href="${fi.uri }" style="background-image:url(${fi.thumb_uri })"></a>
                         	</c:forEach>
+                        	</div>
                     	</span>
                     	<input type="hidden" name="value" id="value${item.field_id }" value="${item.value }"/>
                     </div>
@@ -134,7 +144,7 @@
         		<li>
                  	<div class="margin"><strong>${item.label }：</strong></div>
                     <div class="margin">
-                    	<textarea name="value" id="value${item.field_id }" cols="20" rows="3" style="width: 100%;">${item.value }</textarea>
+                    	<textarea name="value" id="value${item.field_id }" cols="20" rows="3" style="width: 100%;" ${commented == 'Y' ? 'readonly':'' }>${item.value }</textarea>
                     </div>
                  </li>
         		</c:when>
