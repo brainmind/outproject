@@ -164,6 +164,7 @@ $(document).ready(function () {
         </ul>
     </div>
     <div class="idx_tel">客服热线：400-898-9988</div>
+    <div class="idx_version">version : 2015-04-09</div>
 </div>
 <div class="tc_bg"></div>
 <div class="tcmain">
