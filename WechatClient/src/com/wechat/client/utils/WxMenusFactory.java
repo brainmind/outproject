@@ -26,7 +26,7 @@ public class WxMenusFactory {
 		WxMenu menu = new WxMenu();
 		menu.setType("view");
 		menu.setName("小马上门");
-		menu.setUrl("http://eqxiu.com/s/WXar09?eqrcode=1");
+		menu.setUrl("http://pay.meicheng.com/WechatClient/dtds/wxshow");
 		button.add(menu);
 		
 		menu = new WxMenu();

@@ -106,4 +106,9 @@ public class IndexController extends BaseController {
 	public String test14(String s, HttpServletRequest request, HttpServletResponse response, @RequestBody String str){
 		return "14";
 	}
+	
+	@RequestMapping("/wxshow")
+	public String wxshow(){
+		return "wx_show";
+	}
 }
