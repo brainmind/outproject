@@ -103,7 +103,7 @@ public class IndexController extends BaseController {
 	}
 	
 	@RequestMapping("/14")
-	public String test14(String s, HttpServletRequest request, HttpServletResponse response, @RequestBody String str){
+	public String test14(HttpServletRequest request, HttpServletResponse response){
 		return "14";
 	}
 	

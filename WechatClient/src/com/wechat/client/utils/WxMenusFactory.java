@@ -54,7 +54,7 @@ public class WxMenusFactory {
 		menu.setType("view");
 		menu.setName("车检报告");
 		menu.setKey("SMALLHORSE_REPORT");
-		menu.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx94b4b4b14030bc37&redirect_uri=http://pay.meicheng.com/WechatClient/dtds/order/history&response_type=code&scope=snsapi_base#wechat_redirec");
+		menu.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx94b4b4b14030bc37&redirect_uri=http://pay.meicheng.com/WechatClient/dtds/car/my&response_type=code&scope=snsapi_base#wechat_redirec");
 		sub_button.add(menu);
 		
 		WxMenus menus = new WxMenus();

@@ -6,106 +6,406 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<!--date:20140121-->
 <title>小马上门汽车保养服务</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="pragma" Content="no-cach" />
 <meta name="robots" content="all" />
 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
-<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
 <link rel="stylesheet" type="text/css" href="<%=path %>/styles/css/reset.min.css">
-<link rel="stylesheet" type="text/css" href="<%=path %>/styles/css/slider-pic.css">
-<script type="text/javascript" src="<%=path %>/common/js/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="<%=path %>/common/js/jquery.event.drag-1.5.min.js"></script>
-<script type="text/javascript" src="<%=path %>/common/js/jquery.touchSlider.js"></script>
-<script type="text/javascript" src="<%=path %>/common/js/touchTouch.jquery.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-	<%-- var imgs = ["<%=path %>/upload/images/test.jpg", "<%=path %>/styles/images/banner/banner02.jpg", "<%=path %>/styles/images/banner/banner03.jpg"];
-	var mainSliderDiv = $(document.createElement("div"));
-	var imgContainer = $(document.createElement("div"));
-	imgContainer.addClass("slider-main_image");
-	mainSliderDiv.append(imgContainer);
-	mainSliderDiv.addClass("slider-main_visual");
-	$(document.body).append(mainSliderDiv);
-	var img1 = $(document.createElement("img"));
-	img1.attr("src", imgs[0]);
-	img1.addClass("slider-xx");
-	imgContainer.append(img1);
-	var ul = $(document.createElement("ul"));
-	imgContainer.append(ul);
-	var alist = "";
-	for(var i=0; i<imgs.length; i++){
-		ul.append("<li><img src=\""+imgs[i]+"\"/></li>");
-		alist += "<a href=\"\">"+(i+1)+"</a>";
-	}
-	imgContainer.append("<a href=\"javascript:;\" id=\"slider-btn_prev\"></a><a href=\"javascript:;\" id=\"slider-btn_next\"></a>");
-	var paging = $(document.createElement("div"));
-	paging.addClass("slider-flicking_con");
-	var span = $(document.createElement("span"));
-	paging.append(span);
-	span.html(alist);
-	mainSliderDiv.append(paging);
-	 --%>
-	$(".slider-main_image").touchSlider({
-		flexible : true,
-		speed : 200,
-		btn_prev : $("#slider-btn_prev"),
-		btn_next : $("#slider-btn_next"),
-		paging : $(".slider-flicking_con a"),
-		counter : function (e) {
-			$(".slider-flicking_con a").removeClass("slider-on").eq(e.current-1).addClass("slider-on");
-		}
-	});
-	/* $(".main_image").bind("mousedown", function() {
-		$dragBln = false;
-	});
-	$(".main_image").bind("dragstart", function() {
-		$dragBln = true;
-	});
-	$(".main_image a").click(function() {
-		if($dragBln) {
-			return false;
-		}
-	}); */
-	
-	$('#showResourcePic a').touchTouch();
-});
-</script>
-<style type="text/css">
-	.thumbnail {position:relative; width:100%; height:61px;}
-	.thumbnail a{display:block; width:61px; height:61px; float:left;}
-</style>
+<link rel="stylesheet" type="text/css" href="<%=path %>/styles/css/style.css">
 </head>
 <body>
-<div id="showResourcePic" class="thumbnail">
-<a href="<%=path %>/styles/images/banner/banner01.jpg" style="background-image:url(<%=path %>/styles/images/banner/banner01.jpg)"></a>
-<a href="<%=path %>/styles/images/banner/banner02.jpg" style="background-image:url(<%=path %>/styles/images/banner/banner01.jpg)"></a>
-<a href="<%=path %>/styles/images/banner/banner03.jpg" style="background-image:url(<%=path %>/styles/images/banner/banner01.jpg)"></a>
-<a href="<%=path %>/styles/images/banner/banner04.jpg" style="background-image:url(<%=path %>/styles/images/banner/banner01.jpg)"></a>
-</div>
-
-<div class="slider-main_visual">
-    <div class="slider-main_image">
-        <img src="<%=path %>/styles/images/banner/banner01.jpg" class="slider-xx">
-        <ul>					
-            <li><img src="<%=path %>/styles/images/banner/banner01.jpg"></li>
-            <li><img src="<%=path %>/styles/images/banner/banner02.jpg"></li>
-            <li><img src="<%=path %>/styles/images/banner/banner03.jpg"></li>
-            <li><img src="<%=path %>/styles/images/banner/banner04.jpg"></li>
-            <li><img src="<%=path %>/styles/images/banner/banner05.jpg"></li>
+<div class="wapper">
+	<div class="submit_order testing_result">
+    	<h1 class="result">爱车检测报告</h1> 
+		<ul>
+        	<li class="text_center">
+            	<div class="car_num"><span>编号：20150989778</span><span class="float_right">2015/2/15</span></div>
+            	<table width="100%" border="0">
+                  <tr>
+                    <td width="25%"><strong>爱车型号：</strong></td>
+                    <td colspan="3">北京现代ix25 6速手自动一体 1.6T尊享版</td>
+                  </tr>
+                  <tr>
+                    <td><strong>车牌号：</strong></td>
+                    <td>京A81D0</td>
+                    <td><strong>检测技师：</strong></td>
+                    <td>李二军</td>
+                  </tr>
+                  <tr>
+                    <td><strong>当前里程：</strong></td>
+                    <td>125090</td>
+                    <td><strong>上次里程：</strong></td>
+                    <td>115090</td>
+                  </tr>
+                  <tr>
+                    <td colspan="4"><strong>此次保养更换配件：</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>机油：</strong></td>
+                    <td colspan="3">壳牌 非凡蓝喜力合成机油 5W-40 4L装</td>
+                  </tr>
+                </table>
+            </li>
+          <li class="tips">
+                	<div class="">根据小马上门本次保养检测，您的爱车存在以下问题，请注意保养并持续关注此检测报告。</div>
+                	<span>1、刹车片厚度不足，为了您的安全，建议更换。</span>
+            </li>
+            <li class="table_list" id="table_list">
+            	<table width="100%" border="0">
+                  <tr>
+                    <td colspan="4" class="table_list_text_center">小马上门检查记录表（46项）</td>
+                  </tr>
+                  <tr>
+                    <td colspan="4" class="table_list_text_center"><span>发动机</span></td>
+                  </tr>
+                  <tr class="gray">
+                    <td width="5%">1</td>
+                    <td>发动机异响</td>
+                    <td>无异响</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr class="gray">
+                    <td>2</td>
+                    <td>发动机皮带松紧</td>
+                    <td>适当</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr class="gray">
+                    <td>3</td>
+                    <td>喷油嘴</td>
+                    <td>加油顺畅</td>
+                    <td><span>不顺畅</span></td>
+                  </tr>
+                  <tr class="gray">
+                    <td>4</td>
+                    <td>节气门</td>
+                    <td>无抖动</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td colspan="3" class="table_list_text_center"><span>机油</span></td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>机油量</td>
+                    <td>中线上下</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>6</td>
+                    <td>机油色泽</td>
+                    <td>光亮无杂物</td>
+                    <td><span>色泽较暗</span></td>
+                  </tr>
+                  <tr>
+                    <td>7</td>
+                    <td>机油泄漏</td>
+                    <td>无漏夜</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr class="gray">
+                    <td>&nbsp;</td>
+                    <td colspan="3" class="table_list_text_center"><span>电瓶</span></td>
+                  </tr>
+                  <tr class="gray">
+                    <td>8</td>
+                    <td>电瓶漏夜</td>
+                    <td>无液无异味</td>
+                    <td>有漏液</td>
+                  </tr>
+                  <tr>
+                    <td>9</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>10</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>11</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr><!--
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>-->
+                </table>
+            </li>
         </ul>
-        <a href="javascript:;" id="slider-btn_prev"></a>
-        <a href="javascript:;" id="slider-btn_next"></a>
-    </div>
-    <div class="slider-flicking_con">
-         <span>
-            <a href="">1</a>
-            <a href="">2</a>
-            <a href="">3</a>
-            <a href="">4</a>
-            <a href="">5</a>
-         </span>
     </div>
 </div>
 </body>

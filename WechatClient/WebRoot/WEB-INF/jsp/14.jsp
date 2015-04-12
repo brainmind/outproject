@@ -71,6 +71,20 @@ $(document).ready(function(){
 	
 	$('#showResourcePic a').touchTouch();
 });
+
+
+function showPic(){
+	var imgs = ["http://192.168.1.105:8888<%=path %>/upload/images/test.jpg", "<%=path %>/styles/images/banner/banner02.jpg", "<%=path %>/styles/images/banner/banner03.jpg"];
+	var height = $(window).height();
+	var width = $(window).width();
+	var mainDiv = $("div.slider-show_image");
+	var image = new Image();
+	image.src = imgs[0];
+	image.onload=function(){
+		var img_w = image.width;
+		image.width = width - 20;
+	};
+}
 </script>
 <style type="text/css">
 	.thumbnail {position:relative; width:100%; height:61px;}
@@ -108,5 +122,16 @@ $(document).ready(function(){
          </span>
     </div>
 </div>
+<div class="slider-show_image">
+	<div class="slider-list_image">
+		<img src="<%=path %>/styles/images/banner/banner01.jpg" class="sigle_image">
+		<ul>
+			<li><img src="<%=path %>/styles/images/banner/banner01.jpg"></li>
+		</ul>
+		<a href="javascript:;" id="slider-btn_prev"></a>
+	    <a href="javascript:;" id="slider-btn_next"></a>
+	</div>
+</div>
+
 </body>
 </html>

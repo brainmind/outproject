@@ -8,14 +8,36 @@
 .slider-main_image li {float:left; width:100%; height:auto;}
 .slider-main_image li a {display:block; width:100%;}
 .slider-main_image li img{ width:100%;}
-.slider-flicking_con{position:absolute; bottom:2%;left:50%; margin-left:-35.5px;}
-.slider-flicking_con span {height:10px;} 
+.slider-flicking_con {
+	height:20px; 
+	margin-left:2px; 
+	margin-right:2px; 
+	bottom:1%; 
+	position:absolute; 
+	width:99%; 
+	background-color:#000; 
+	opacity:0.3;
+	-moz-transition:opacity 1s ease;
+	-webkit-transition:opacity 1s ease;
+	transition:opacity 1s ease;
+}
+.slider-flicking_con span {display:block; margin-left:50%; margin-top:5px;} 
 .slider-flicking_con span a{float:left; width:7px; height:7px; margin:0; padding:0; border-radius:7px; background-color:#fff; display:block; text-indent:-1000px; margin-left:5px;}
-.slider-flicking_con span a.slider-on{background-color:red;}
+.slider-flicking_con span a.slider-on{float:left; background-color:red;}
 #slider-btn_prev,#slider-btn_next{z-index:11111;position:absolute;display:block;width:50px!important;height:50px!important;top:50%;margin-top:-25px;}
 #slider-btn_prev{background:url(../images/hover_left.png) no-repeat left top; background-size:40% auto;left:0px;}
 #slider-btn_next{background:url(../images/hover_right.png) no-repeat right top; background-size:40% auto;right:0px;}
 
+.car_style{ margin-top:10px; background:#fff; width:100%; font-size:15px;}
+.car_style li{ height:50px; line-height:50px; width:90%; box-sizeing:border-box; padding-left:10%; border-bottom:1px solid #e0e0e0;}
+.car_style li dd{ float:left;}
+.car_style li dd:nth-child(1){ width:30%;}
+.car_style li dd:nth-child(2){ width:70%;}
+
+.car_type_list{width:100%; height:192px;}
+.car_type_list .img{display:block;}
+.car_type_list .img img{height:44px;}
+.car_type_list .content{display:block; text-align:left;}
 /*缩略图样式*/
 .thumbnail {position:relative; width:100%; height:61px;}
 .thumbnail a{display:block; width:61px; height:61px; float:left;}
@@ -125,7 +147,6 @@
 }
 
 /* Arrows */
-
 #prevArrow,#nextArrow{
 	border:none;
 	text-decoration:none;
@@ -155,3 +176,11 @@
 	background-position:right top;
 	right:40px;
 }
+
+.slider-show_image { position:relative; width:100%;}
+.slider-show_image .sigle_image{width:100%; display:block; opacity:0;}
+.slider-list_image {width:100%; overflow:hidden; margin:0 auto; position:relative;}
+.slider-list_image ul {width:9999px;}
+.slider-list_image li {float:left; width:100%; height:auto;}
+.slider-list_image li a {display:block; width:100%;}
+.slider-list_image li img{ width:100%;}

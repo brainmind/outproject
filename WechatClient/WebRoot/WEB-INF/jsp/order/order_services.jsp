@@ -184,6 +184,15 @@ function isSelfService(isSelf){
 		tp.html(totalPrice.toFixed(2));
 		$("div.day_list > ul > li[type=fees]").show();
 		$("div.day_list > ul > li > input[type=hidden][name='service_fees.checked']").val(1);
+		$("div.day_list > ul > li[type=fees] > div.xd").each(function(){
+			var $this = $(this);
+			$this.on("click", function(){
+				var li = $this.parent();
+				var isCheckItem = $this.is(":hidden")?0:1;
+				$("input[type=hidden][name='service_fees.checked']", li).val(isCheckItem);
+				return false;
+			});
+		});
 	}else{
 		$("div.day_list > ul > li[type=services]").show();
 		var price = 0.00, totalPrice = 0.00;
@@ -200,6 +209,7 @@ function isSelfService(isSelf){
 				var serviceFee = $("div.day_list > ul > li[type=fees][categoryid="+category_id+"] > input[type=hidden][name='service_fees.price']").val();
 				var commodiFee = $("input[type=hidden][name='commodities.price']", sli).val();
 				commodities_checked.val(1);
+				$("div.day_list > ul > li[type=fees][categoryid="+category_id+"] > input[type=hidden][name='service_fees.checked']").val(1);
 				price += parseFloat(serviceFee) + parseFloat(commodiFee);
 			}
 		});
