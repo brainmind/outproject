@@ -41,6 +41,10 @@
 			}
 		});
 		
+		placeholders.chidren("img").on("click",function(e){
+			hideOverlay();
+		});
+		
 		// Listen for touch events on the body and check if they
 		// originated in #gallerySlider img - the images in the slider.
 		$('body').on('touchstart', '#gallerySlider img', function(e){
