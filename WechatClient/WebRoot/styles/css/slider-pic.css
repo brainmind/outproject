@@ -38,6 +38,7 @@
 .car_type_list .img{display:block;}
 .car_type_list .img img{height:44px;}
 .car_type_list .content{display:block; text-align:left;}
+
 /*缩略图样式*/
 .thumbnail {position:relative; width:100%; height:61px;}
 .thumbnail a{display:block; width:61px; height:61px; float:left;}

@@ -175,6 +175,8 @@ function isSelfService(isSelf){
 	if(isSelf.attr("checked") == "checked"){
 		$("div.day_list > ul > li[type=services]").hide();
 		$("div.day_list > ul > li > input[type=hidden][name='commodities.checked']").val(0);
+		$("div.day_list > ul > li[type=fees]").show();
+		$("div.day_list > ul > li > input[type=hidden][name='service_fees.checked']").val(1);
 		var price = 0.00, totalPrice = 0.00;
 		$("div.day_list > ul > li > input[type=hidden][name='service_fees.price']").each(function(){
 			price += parseFloat($(this).val());
@@ -182,14 +184,25 @@ function isSelfService(isSelf){
 		var tp = $("#totalprice");
 		totalPrice = price;
 		tp.html(totalPrice.toFixed(2));
-		$("div.day_list > ul > li[type=fees]").show();
-		$("div.day_list > ul > li > input[type=hidden][name='service_fees.checked']").val(1);
-		$("div.day_list > ul > li[type=fees] > div.xd").each(function(){
-			var $this = $(this);
-			$this.on("click", function(){
-				var li = $this.parent();
-				var isCheckItem = $this.is(":hidden")?0:1;
-				$("input[type=hidden][name='service_fees.checked']", li).val(isCheckItem);
+		$("div.day_list > ul > li[type=fees][categoryid!=0]").each(function(){
+			var feeLi = $(this);
+			feeLi.children(".day_name").unbind("click");
+			feeLi.unbind("click");
+			feeLi.on("click", function(){
+				var $this = feeLi.children(".xd");
+				var s_price = $("input[type=hidden][name='service_fees.price']", feeLi).val();
+				var isCheckItem = 0;
+				if($this.is(":hidden")){
+					$this.show();
+					totalPrice += parseFloat(s_price);
+					isCheckItem = 1;
+				}else{
+					$this.hide();
+					totalPrice -= parseFloat(s_price);
+					isCheckItem = 0;
+				}
+				$("input[type=hidden][name='service_fees.checked']", feeLi).val(isCheckItem);
+				tp.html(totalPrice.toFixed(2));
 				return false;
 			});
 		});

@@ -250,15 +250,18 @@ public class OrderController extends BaseController{
 	
 	@RequestMapping("/history")
 	public String history(HttpServletRequest request){
-		String code = request.getParameter("code");
-		String appId = PropertiesUtils.getValue("wx_appid");
-		String appKey = PropertiesUtils.getValue("wx_appsecret");
-		String authAccessUrl = WxUrls.AuthToken+"&appid="+appId+"&secret="+appKey+"&code="+code;
-		JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
-		String json = jr.doGet(authAccessUrl, true);
+		String openId = request.getParameter("openId");
 		try {
-			Map<String, String> tokenJson = new ObjectMapper().readValue(json, new TypeReference<Map<String, String>>(){});
-			String openId = tokenJson.get("openid");
+			if(StringUtils.isEmpty(openId)){
+				String code = request.getParameter("code");
+				String appId = PropertiesUtils.getValue("wx_appid");
+				String appKey = PropertiesUtils.getValue("wx_appsecret");
+				String authAccessUrl = WxUrls.AuthToken+"&appid="+appId+"&secret="+appKey+"&code="+code;
+				JsonHttpRequestUtil jr = new JsonHttpRequestUtil();
+				String json = jr.doGet(authAccessUrl, true);
+				Map<String, String> tokenJson = new ObjectMapper().readValue(json, new TypeReference<Map<String, String>>(){});
+				openId = tokenJson.get("openid");
+			}
 			if(StringUtils.isNotEmpty(openId)){
 				HttpSession session = request.getSession();
 				LoginUser user = (LoginUser)session.getAttribute(Constants.USER_SESSION_KEY);
