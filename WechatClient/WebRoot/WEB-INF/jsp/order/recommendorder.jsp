@@ -64,7 +64,7 @@
 			var span = $("#uploadimgs");
 			var img = $(document.createElement("img"));
 			img.attr("src", r.imagedata);
-			img.css({width:"31px", height:"31px"});
+			img.css({width:"61px", height:"61px"});
 			span.append(img);
 			var fId = span.attr("field-id");
 			var filevals = $("#value"+fId);
