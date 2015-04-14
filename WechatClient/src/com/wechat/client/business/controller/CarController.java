@@ -21,7 +21,6 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -132,7 +131,7 @@ public class CarController extends BaseController {
 			if(StringUtils.isNotEmpty(openId)){
 				HttpSession session = request.getSession();
 				LoginUser user = (LoginUser)session.getAttribute(Constants.USER_SESSION_KEY);
-				if(user == null){
+				if(user == null || StringUtils.isEmpty(user.getOpenid())){
 					user = new LoginUser();
 					user.setOpenid(openId);
 					session.setAttribute(Constants.USER_SESSION_KEY, user);
@@ -145,7 +144,7 @@ public class CarController extends BaseController {
 		} catch (IOException e) {
 			log.error("回调页面时，转换token数据有错误.", e);
 		}
-		return "carereport/reports";
+		return "carereport/my_cars";
 	}
 	
 	@RequestMapping("/my.json")
