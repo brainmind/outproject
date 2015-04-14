@@ -179,7 +179,9 @@ function isSelfService(isSelf){
 		$("div.day_list > ul > li > input[type=hidden][name='service_fees.checked']").val(1);
 		var price = 0.00, totalPrice = 0.00;
 		$("div.day_list > ul > li > input[type=hidden][name='service_fees.price']").each(function(){
-			price += parseFloat($(this).val());
+				if(!$(this).siblings(".xd").is(":hidden")){
+					price += parseFloat($(this).val());
+				}
 		});
 		var tp = $("#totalprice");
 		totalPrice = price;
