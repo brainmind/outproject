@@ -70,11 +70,11 @@ $(document).ready(function () {
             	<table width="100%" border="0" id="commoditiestableid">
                   <tr>
                     <td width="25%"><strong>爱车型号：</strong></td>
-                    <td colspan="3">北京现代ix25 6速手自动一体 1.6T尊享版</td>
+                    <td colspan="3">${label }</td>
                   </tr>
                   <tr>
                     <td><strong>车牌号：</strong></td>
-                    <td>京A81D0</td>
+                    <td>${license }</td>
                     <td><strong>检测技师：</strong></td>
                     <td id="workmanid">李二军</td>
                   </tr>

@@ -37,6 +37,7 @@ $(document).ready(function () {
 		                      "<td class=\"fonts\">"+label+"</td></tr>"+
 		                      "</table></li>");
 					$("#cardetailid"+i).data("records", cars[i]["records"]);
+					$("#cardetailid"+i).data("car",{"label":label,"license":cars[i]["license"]});
 				}
 				renderCarList();
 			}
@@ -64,7 +65,10 @@ function renderCarList(){
 				}
 				recordUl.children("li").on("click", function(){
 					var id = $(this).attr("data-id");
-					window.location.href = "<%=path + Constants.ROOT %>/car/report?recordId="+id;
+					var car = li.data("car");
+					var label = encodeURIComponent(car.label);
+					var license = car.license;
+					window.location.href = "<%=path + Constants.ROOT %>/car/report?recordId="+id+"&label="+label+"&license="+license;
 					return false;
 				});
 			}else{

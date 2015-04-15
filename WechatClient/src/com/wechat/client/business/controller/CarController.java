@@ -7,6 +7,7 @@ package com.wechat.client.business.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -159,7 +160,16 @@ public class CarController extends BaseController {
 	@RequestMapping("/report")
 	public String report(HttpServletRequest request){
 		String recordId = request.getParameter("recordId");
+		String label = request.getParameter("label");
+		String license = request.getParameter("license");
 		request.setAttribute("recordId", recordId);
+		try {
+			label = new String(label.getBytes("ISO-8859-1"), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			log.error("不支持的编码");;
+		}
+		request.setAttribute("label", label);
+		request.setAttribute("license", license);
 		return "carereport/report";
 	}
 	
