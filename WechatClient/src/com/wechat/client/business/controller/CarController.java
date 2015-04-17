@@ -7,6 +7,7 @@ package com.wechat.client.business.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,6 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -132,7 +132,7 @@ public class CarController extends BaseController {
 			if(StringUtils.isNotEmpty(openId)){
 				HttpSession session = request.getSession();
 				LoginUser user = (LoginUser)session.getAttribute(Constants.USER_SESSION_KEY);
-				if(user == null){
+				if(user == null || StringUtils.isEmpty(user.getOpenid())){
 					user = new LoginUser();
 					user.setOpenid(openId);
 					session.setAttribute(Constants.USER_SESSION_KEY, user);
@@ -145,7 +145,7 @@ public class CarController extends BaseController {
 		} catch (IOException e) {
 			log.error("回调页面时，转换token数据有错误.", e);
 		}
-		return "carereport/reports";
+		return "carereport/my_cars";
 	}
 	
 	@RequestMapping("/my.json")
@@ -160,7 +160,16 @@ public class CarController extends BaseController {
 	@RequestMapping("/report")
 	public String report(HttpServletRequest request){
 		String recordId = request.getParameter("recordId");
+		String label = request.getParameter("label");
+		String license = request.getParameter("license");
 		request.setAttribute("recordId", recordId);
+		try {
+			label = new String(label.getBytes("ISO-8859-1"), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			log.error("不支持的编码");;
+		}
+		request.setAttribute("label", label);
+		request.setAttribute("license", license);
 		return "carereport/report";
 	}
 	

@@ -185,3 +185,10 @@
 .slider-list_image li {float:left; width:100%; height:auto;}
 .slider-list_image li a {display:block; width:100%;}
 .slider-list_image li img{ width:100%;}
+
+/*****************new add 2015 0413*******************/
+.bgfff{ background:#fff; height:auto;}
+.import li table{ width:80%; margin:0 auto; height:93px;}
+.import li{width:80%; margin:0 auto; padding:10px 0px;}
+.import  .pics{ width:20%; float:left;}
+.import  .fonts{font-size:18px; float:left; width:80%; border-sizing:border-box; }
