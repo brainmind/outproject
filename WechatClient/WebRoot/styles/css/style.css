@@ -134,11 +134,11 @@ box-sizing:border-box; font-family:\5FAE\8F6F\96C5\9ED1; line-height:39px; borde
 .r_dz p{font-size:14px; line-height:16px; padding:5px 0;}
 .add_text{width:100%; height:40px; margin-bottom:5px; line-height:40px; box-sizing:border-box; padding:0px 12px; overflow:hidden; border:1px solid #b4b4b4; border-radius:5px;}
 .add_text input{width:100%; height:39px; background:none; border:none; font-family:Arial, Microsoft YaHei; color:#666; font-size:14px;}
-.add_sel{width:100%; height:40px; margin-bottom:5px; line-height:40px; box-sizing:border-box; padding:0px 10px; overflow:hidden; border:1px solid #b4b4b4; border-radius:5px;}
+.add_sel{width:100%; height:40px; margin-bottom:5px; line-height:40px; box-sizing:border-box; padding:0px 10px 0px 5px; overflow:hidden; border:1px solid #b4b4b4; border-radius:5px;}
 .add_sel select{float:left; height:39px; background:url(../images/3.png) no-repeat right center; background-size:auto 5px;
 box-sizing:border-box; font-family:\5FAE\8F6F\96C5\9ED1; line-height:39px; border:none; -webkit-appearance:none; -moz-appearance:none; font-size:12px;}
-.add_sel select:nth-child(1){float:left; background:url(../images/3.png) no-repeat 90% center; background-size:auto 5px; border-right:1px solid #b4b4b4; box-sizing:border-box; width:30%;}
-.add_sel select:nth-child(2){float:right; width:70%;}
+.add_sel select:nth-child(1){float:left; background:url(../images/3.png) no-repeat 90% center; background-size:auto 5px; border-right:1px solid #b4b4b4; box-sizing:border-box; width:38%;}
+.add_sel select:nth-child(2){float:right; width:62%;}
 
 /* 日常保养 添加新项*/
 .add_top{width:100%; height:84px; border-bottom:1px solid #ccc; border-top:1px solid #ccc;}

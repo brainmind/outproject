@@ -24,7 +24,7 @@
 <div class="wapper_show">
 		<img src="<%=path %>/styles/images/wx_show.jpg"  alt="小马上门" />  
 </div>
-<div class="wapper_more"><a href="http://eqxiu.com/s/WXar09?eqrcode=1">更多介绍</a></div>
+<div class="wapper_more"><a href="http://eqxiu.com/s/WXar09?eqrcode=1">企业介绍</a></div>
 </body>
 </html>
 

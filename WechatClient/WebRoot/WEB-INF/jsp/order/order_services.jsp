@@ -162,7 +162,6 @@ $(document).ready(function () {
 		return false;
 	}		
 	
-	
 	var isSelf = $("input[type=checkbox][name=isSelfService]");
 	isSelf.on("click",function(){
 		var $this = $(this);

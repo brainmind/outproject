@@ -82,10 +82,10 @@ function addService(){
 	</div>
 	<div class="add_tj">保养项目－添加新项</div>
     <ul class="add_an"><!-- <%=path + Constants.ROOT %>/order/service?type=1&car_id=${carId } -->
-    	<li category_id="1"><a href="#" rel="services"><img src="<%=path %>/styles/images/idx_nav1.png">日常保养</a></li>
+    	<li category_id="1"><a href="#" rel="services"><img src="<%=path %>/styles/images/idx_nav1.png">常规保养</a></li>
         <li category_id="2"><a href="#" rel="services"><img src="<%=path %>/styles/images/idx_nav2.png">更换电瓶</a></li>
-        <li category_id="3"><a href="#" rel="services"><img src="<%=path %>/styles/images/idx_nav3.png">更换刹车片</a></li>
-        <li category_id="4"><a href="#" rel="services" title="加装PM2.5空调滤膜"><img src="<%=path %>/styles/images/idx_nav4.png">加装空调滤膜</a></li>
+        <li category_id="3"><a href="#" rel="services"><img src="<%=path %>/styles/images/idx_nav3.png">换刹车片</a></li>
+        <li category_id="4"><a href="#" rel="services" title="加装PM2.5空调滤膜"><img src="<%=path %>/styles/images/idx_nav4.png">空调滤芯膜</a></li>
         <%-- <li category_id="5"><a href="#" rel="services"><img src="<%=path %>/styles/images/idx_nav5.png">更换轮胎</a></li> --%>
     </ul>
     <div class="add_btn">

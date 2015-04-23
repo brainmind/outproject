@@ -42,7 +42,21 @@ function initHref(){
 				var logo_url = $this.children("img").attr("src");
 				var id = $(this).attr("dataid");
 				container.data("brand", {id:id, label:label, logourl:logo_url});
-				WxchatClient.loadJson(url, "brandId="+id, function(series){
+				WxchatClient.loadJson(url, "brandId="+id, function(series){					
+						if(label=='其他'){
+							var otherId = series[0].cars[0].id;
+							var cookiecartype = "{id:\""+otherId+"\",brand:\""+label+"\",logourl:\""+logo_url+"\"," +
+							"car:\"\",sername:\"\",isdefault:true}";
+							WxchatClient.setCurrentCarType(cookiecartype);
+							var backurl = $("input[type=hidden][name=backurl]").val();
+							if(backurl == ""){
+								backurl = "/index";
+							}else{
+								backurl += "&car_id="+otherId;
+							}
+							window.location.href=contextPath+projectRoot+backurl;
+							return ;
+						}	
 					var dl = $("dl.che_c");
 					dl.removeClass();
 					dl.addClass("che_cx");

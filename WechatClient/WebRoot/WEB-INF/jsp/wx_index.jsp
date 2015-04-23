@@ -155,16 +155,16 @@ $(document).ready(function () {
     </div>
     <div class="idx_nav">
         <ul>
-            <li><a href="<%=path + Constants.ROOT %>/order/service?type=1" rel="services"><img src="<%=path %>/styles/images/idx_nav1.png">日常保养</a></li>
+            <li><a href="<%=path + Constants.ROOT %>/order/service?type=1" rel="services"><img src="<%=path %>/styles/images/idx_nav1.png">常规保养</a></li>
             <li><a href="<%=path + Constants.ROOT %>/order/service?type=2" rel="services"><img src="<%=path %>/styles/images/idx_nav2.png">更换电瓶</a></li>
-            <li><a href="<%=path + Constants.ROOT %>/order/service?type=3" rel="services"><img src="<%=path %>/styles/images/idx_nav3.png">更换刹车片</a></li>
-            <li><a href="<%=path + Constants.ROOT %>/order/service?type=4" rel="services" title="加装PM2.5空调滤膜"><img src="<%=path %>/styles/images/idx_nav4.png">加装空调滤膜</a></li>
+            <li><a href="<%=path + Constants.ROOT %>/order/service?type=3" rel="services"><img src="<%=path %>/styles/images/idx_nav3.png">换刹车片</a></li>
+            <li><a href="<%=path + Constants.ROOT %>/order/service?type=4" rel="services" title="加装PM2.5空调滤膜"><img src="<%=path %>/styles/images/idx_nav4.png">空调滤芯膜</a></li>
             <li><%-- <a href="<%=path + Constants.ROOT %>/order/service?type=5" rel="services"><img src="<%=path %>/styles/images/idx_nav5.png">更换轮胎</a> --%></li>
             <li></li>
         </ul>
     </div>
     <div class="idx_tel">客服热线：400-898-9988</div>
-    <div class="idx_version">version : 2015-04-09</div>
+    <div class="idx_version">version : 2015-04-22</div>
 </div>
 <div class="tc_bg"></div>
 <div class="tcmain">

@@ -56,7 +56,7 @@ $(function(){
 						}
 						totalPrice += commPrice;
 						var commodityName = commdoty.label.length > 15 ? commdoty.label.substring(0, 15)+"...":commdoty.label;
-						var picUrl = commdoty.pic_url==null ? "<%=path %>/styles/images/null.jpg" : commdoty.pic_url ; 
+						var picUrl = commdoty["pic_url"]==null || commdoty["pic_url"]=='' ? "<%=path %>/styles/images/default_cId_"+commdoty.category_id+".png" : commdoty["pic_url"] ; 
 						li.html("<div class=\"xd\" style=\"display:none;\"></div>"+
 				            	"<div class=\"day_name\">"+commdoty.category_label+"</div>"+
 				                "<div class=\"day_pic\"><img src=\""+picUrl+"\" height=\"100%\"></div>"+

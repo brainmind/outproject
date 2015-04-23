@@ -18,13 +18,16 @@
 $(function(){
 	WxchatClient.Region.getProvinces(function(r){
 		WxchatClient.Select.bulid("province_selectId","province",r);
-		var bj = '7b6fefc9cb9711e3a770025041000001';
+		var nm = '7e9c132bcb9711e3a770025041000001';
+		var cf = '5dadf856cb9b11e3a770025041000001';
+		//var bjs='53ec9906cb9b11e3a770025041000001';
 		$("#province_selectId").on("change", function(){
 			var $this = $(this);
-			if($this.val()!=bj){																		
+/* 			if($this.val()!=bj ||  $(this).val() !=nm){	
+				alert("111");
 				WxchatClient.Select.bulid("province_selectId","province",r);   //zhuqingsong  更改
 				return false;
-			}
+			} */
 			WxchatClient.Region.getCities($this.val(), function(c){
 				WxchatClient.Select.bulid("citye_selectId","city", c);
 				$("#citye_selectId").on("change", function(){
@@ -33,9 +36,10 @@ $(function(){
 						//WxchatClient.Select.bulid("district_selectId","district", d);   //zhuqingsong  更改
 					});
 				});
-				
 				WxchatClient.Region.getDistricts($("#citye_selectId").val(), function(d){
-					WxchatClient.Select.bulid("citye_selectId","city", d);
+					if($this.val()!=nm){
+						WxchatClient.Select.bulid("citye_selectId","city", d);
+					}
 				});
 			});
 		});
@@ -127,7 +131,7 @@ function submitOrder(){
 		});
 		return;
 	}
-	if(!/^(13[0-9]|15[0-9]|18[0-9]|14[0-9])\d{8}$/.test(mobile)){
+	if(!/^(13[0-9]|15[0-9]|18[0-9]|14[0-9]|17[0-9])\d{8}$/.test(mobile)){
 		WxchatClient.Dialog.show("手机号输入不正确", function(){
 			$("input[type=text][name=mobile]").focus();
 		});
@@ -234,7 +238,7 @@ function submitOrder(){
 	        </select> -->
         </div>
         <div class="add_text"><input name="address" type="text" value="" tiptxt="详细地址"></div>
-        <p>目前仅提供北京地区五环内及回龙观天通苑地区上门服务</p>
+        <p>目前仅提供北京地区五环内及回龙观天通苑及内蒙古赤峰市地区上门服务</p>
         <p><strong>预约服务时间</strong></p>
     </div>
 	<div class="neir ser_nr"> 
@@ -251,18 +255,8 @@ function submitOrder(){
                     <option>2月&nbsp;12日&nbsp;星期四</option>
                 </select>
                 <select name="ordertime" id="ordertimeselectid">
-                	<option value="08:00-09:00" selected>上午08:00－09:00</option>
-                	<option value="09:00-10:00">上午09:00－10:00</option>
-                    <option value="10:00-11:00">上午10:00－11:00</option>
-                    <option value="11:00-12:00">上午11:00－12:00</option>
-                    <option value="12:00-13:00">下午12:00－01:00</option>
-                    <option value="13:00-14:00">下午01:00－02:00</option>
-                    <option value="14:00-15:00">下午02:00－03:00</option>
-                    <option value="15:00-16:00">下午03:00－04:00</option>
-                    <option value="16:00-17:00">下午04:00－05:00</option>
-                    <option value="17:00-18:00">下午05:00－06:00</option>
-                    <option value="18:00-19:00">下午06:00－07:00</option>
-                    <option value="19:00-20:00">下午07:00－08:00</option>
+                	<option value="08:00-8:30" selected>上午</option>
+                	<option value="13:00-13:30" >下午</option>
                 </select>
             </li>
         	<li class="bor">

@@ -56,12 +56,18 @@ $.extend(WxchatClient, {
 			if(dl == false || $.type(dl) != "array"){
 				return;
 			}
+
+			var bj = '7b6fefc9cb9711e3a770025041000001';
+			var nm = '7e9c132bcb9711e3a770025041000001';
 			if(dl.length > 0){
 				for(var i=0; i<dl.length; i++){
-					if(i>0 && id=='province_selectId'){   // zhuqingsong  更改 其他省份先隐藏
-						continue;										//
-					}														//
 					var d = dl[i];
+					if(i>0 && id=='province_selectId'){   // zhuqingsong  更改 其他省份先隐藏\
+						if(  d.id==bj  || d.id==nm){
+						}else{
+							continue;		
+						}																		
+					}
 					var option = $(document.createElement("option"));
 					option.attr("value", d.id);
 					option.html(d.name);
